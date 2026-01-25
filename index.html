@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="de">
+<!--
+TO do´s:
+- Responsive
+-->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap"
+    rel="stylesheet"> <!-- JetBrains Mono Font -->
+  <title>Dennis Poglitsch | Portfolio</title>
+</head>
+
+<body>
+  <!-- Navigationsleiste -->
+  <nav class="nav_leiste">
+    <a href="#Home">Home</a>
+    <a href="#Über_mich">Über mich</a>
+    <a href="#Projekte">Projekte</a>
+    <a href="#Kontakt">Kontakt</a>
+  </nav>
+  <main>
+    <!-- Headerleiste -->
+    <header>
+      <div class="header_content">
+        <span>
+          <a href="https://github.com/DennisPoglitsch" hidden>Github</a>
+          <a>EN | DE</a>
+        </span>
+      </div>
+    </header>
+    <!-- Home Section -->
+    <section id="Home" class="home_wrapper">
+      <!-- Dotgrid Canvas-->
+      <canvas id="dotCanvas" width="600" height="600"></canvas>
+      <div class="home_text">
+        <h1 class="reveal">
+          <span class="reveal_content">
+            Hi, mein Name ist Dennis Poglitsch<span class="punkt_rot">.</span>
+          </span>
+        </h1>
+        <h2 class="reveal">
+          <span class="reveal_content">
+            Ich bin <span id="typing_text"></span>
+          </span>
+        </h2>
+        <div id="typing_image_wrapper">
+          <a href="#Kontakt" class="reveal">
+            <span class="reveal_content">Kontakt zu mir</span>
+          </a>
+          <span class="t800_container">
+            <img id="typing_image" src="images/T-800.png" alt="Bild von Terminator T-800">
+            <img id="t800_eyes" src="images/T-800_augen.png" alt="Bild von Terminator T-800 Augen">
+          </span>
+        </div>
+      </div>
+    </section>
+    <!-- Über mich Section -->
+    <section id="Über_mich" class="über_mich_wrapper">
+      <!-- Innerer Container: Grid-Layout -->
+      <div class="über_mich_inner">
+        <!-- Header (spannt über beide Spalten) -->
+        <div class="über_mich_header_wrapper">
+          <h3 class="reveal">
+            <span class="reveal_content">
+              Über mich<span class="punkt_rot">.</span>
+            </span>
+          </h3>
+          <div class="über_mich_line"></div>
+        </div>
+        <!-- Unten links: Dein Text (steht unter der Überschrift) -->
+        <div class="über_mich_text">
+          <p class="reveal">
+            <span class="reveal_content">
+              <span class="first_word">Technik</span> fasziniert mich nicht nur – sie treibt mich an.<br>
+              Schon seit einiger Zeit tauche ich immer tiefer in die Welt des Programmierens ein und merke jedes Mal:
+              Genau das ist mein Ding. Probleme in Code zu verwandeln, Lösungen zu bauen und zu verstehen, wie Systeme
+              im Hintergrund funktionieren, motiviert mich enorm.<br>
+              <br>
+              Aktuell bin ich auf der Suche nach einer Ausbildung im IT-Bereich, in der ich mein Wissen weiter ausbauen
+              und vor allem praktisch anwenden kann. Ich lerne schnell, arbeite strukturiert und habe richtig Spaß
+              daran, mich in neue Technologien hineinzudenken.<br>
+              <br>
+              Für mich ist Programmieren nicht nur etwas, das „funktionieren muss“ – ich will verstehen, optimieren und
+              ständig besser werden. Mein Ziel ist es, in der IT-Welt Fuß zu fassen und mich langfristig zu einem
+              starken Entwickler weiterzuentwickeln.
+            </span>
+          </p>
+        </div>
+        <!-- Unten rechts: Skills (Überschrift + Liste) -->
+        <div class="skills">
+          <div class="skills_header">
+            <h3>Meine Fähigkeiten<span class="punkt_rot">.</span></h3>
+          </div>
+          <ul>
+            <li class="reveal">
+              <span class="reveal_content">Java</span>
+            </li>
+            <li class="reveal">
+              <span class="reveal_content">Python</span>
+            </li>
+            <li class="reveal">
+              <span class="reveal_content">PHP</span>
+            </li>
+            <li class="reveal">
+              <span class="reveal_content">MySQL</span>
+            </li>
+            <li class="reveal">
+              <span class="reveal_content">JavaScript</span>
+            </li>
+            <li class="reveal">
+              <span class="reveal_content">HTML/CSS</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- Projekte Section -->
+    <section id="Projekte">
+      <div class="projekte_inner">
+        <div class="projekte_header_wrapper">
+          <h3 class="reveal"><span class="reveal_content">Projekte<span class="punkt_rot">.</span></span></h3>
+          <div class="über_mich_line" aria-hidden="true"></div>
+        </div>
+        <div class="projekte_list_wrapper">
+          <div class="projekte_list">
+            <!-- Hier Projekte bearbeiten -->
+            <div class="projekt" data-desc="Klassisches Snake – umgesetzt in Python mit Pyodide direkt im Browser."
+              data-tech="Python, Pyodide, Canvas, HTML, CSS" data-link="" data-project="snake">
+              <div class="projekt_content">
+                <div class="reveal">
+                  <span class="reveal_content"><img src="images/igel.jpg" alt="TwoRobots Screenshot"></span>
+                </div>
+                <div class="projekt_text_wrapper">
+                  <h4 class="projekt_titel reveal">
+                    <span class="reveal_content">TwoRobots</span>
+                  </h4>
+                  <div class="projekt_beschreibung">
+                    <p class="reveal">
+                      <span class="reveal_content">
+                        TwoRobots ist ein Projekt, das Godot mit Golang verbindet.
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="projekt"
+              data-desc="TwoRobots ist ein Projekt, das Godot mit Golang verbindet. Gameplay, Server-Integration und Blockchain-Experimente sind enthalten."
+              data-tech="Godot, Golang, MongoDB, WebGL" data-link="https://tworobots.example.com">
+              <div class="projekt_content">
+                <div class="reveal">
+                  <span class="reveal_content"><img src="images/wisel.jpg" alt="TwoRobots Screenshot"></span>
+                </div>
+                <div class="projekt_text_wrapper">
+                  <h4 class="projekt_titel reveal">
+                    <span class="reveal_content">TwoRobots</span>
+                  </h4>
+                  <div class="projekt_beschreibung">
+                    <p class="reveal">
+                      <span class="reveal_content">
+                        TwoRobots ist ein Projekt, das Godot mit Golang verbindet.
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Weitere Projekte -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Kontakt Section -->
+    <section id="Kontakt">
+      <!-- Überschrift mit Linien -->
+      <div class="kontakt_container">
+        <div class="kontakt_header_wrapper">
+          <div class="kontakt_line"></div>
+          <h3 class="reveal">
+            <span class="reveal_content">
+              Kontakt<span class="punkt_rot">.</span>
+            </span>
+          </h3>
+          <div class="kontakt_line"></div>
+        </div>
+        <!-- Einführungstext -->
+        <p class="kontakt_intro reveal">
+          <span class="reveal_content">
+            Shoot me an email if you want to connect!
+          </span>
+        </p>
+        <!-- Email mit Briefsymbol -->
+        <div class="reveal">
+          <p class="kontakt_email">
+            <span class="reveal_content">
+              <svg class="email_icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                viewBox="0 0 16 16">
+                <path
+                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-5.857 3.514L15 12.383V5.383zM1 5.383v7l5.857-3.486L1 5.383zM14.667 13H1.333a.667.667 0 0 0 .667.667h11.334a.667.667 0 0 0 .667-.667z" />
+              </svg>
+              <a href="mailto:dennis.poglitsch91@gmail.com">dennis.poglitsch91@gmail.com</a>
+            </span>
+          </p>
+        </div>
+        <!-- Kontaktformular -->
+        <form class="kontakt_formular">
+          <div class="honeypot_wrapper">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="formular_reihe">
+            <div class="formular_gruppe">
+              <label class="reveal" for="kontakt_name"><span class="reveal_content">Name</span></label>
+              <div class="reveal">
+                <span class="reveal_content"><input type="text" id="kontakt_name" name="name" placeholder="Dein Name"
+                    required></span>
+              </div>
+            </div>
+            <div class="formular_gruppe">
+              <label class="reveal" for="kontakt_email"><span class="reveal_content">E-Mail</span></label>
+              <div class="reveal">
+                <span class="reveal_content"><input type="email" id="kontakt_email" name="email"
+                    placeholder="Deine E-Mail" required></span>
+              </div>
+            </div>
+          </div>
+          <div class="formular_gruppe">
+            <label class="reveal" for="kontakt_nachricht"><span class="reveal_content">Nachricht</span></label>
+            <div class="reveal">
+              <span class="reveal_content"><textarea id="kontakt_nachricht" name="message"
+                  placeholder="Deine Nachricht..." required></textarea></span>
+            </div>
+            <!-- Erfolgsmeldung dynamisch per JavaScript gesetzt bei änderung der Fehlermeldung liest dies der Screenreader vor -->
+            <p class="kontakt_status" aria-live="polite"></p>
+          </div>
+          <div class="reveal">
+            <span class="reveal_content"><button type="submit" class="kontakt_button">Absenden</button></span>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+  <!-- Modal für Projektdetails -->
+  <div id="projectModal" class="modal" aria-hidden="true">
+    <div class="modal_backdrop" data-modal-close></div>
+    <div class="modal_content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal_close" aria-label="Schließen" data-modal-close>×</button>
+      <h3 id="modalTitle">Titel</h3>
+      <img id="modalImage" src="Projekt_Bild" alt="" class="modal_image">
+      <p id="modalDesc">Beschreibung</p>
+      <!-- Snake Game -->
+      <div id="snake_container" style="display:none; margin-top:20px;">
+        <canvas id="snake_canvas" width="400" height="400"></canvas>
+        <p style="text-align:center; opacity:0.7; margin-top:8px;">
+          Steuerung: Pfeiltasten
+        </p>
+      </div>
+      <!-- Tech-List (Badges) -->
+      <div id="modalTech" class="modal_tech" aria-hidden="true"></div>
+      <!-- Links / Aktionen -->
+      <div id="modalLinks" class="modal_links" aria-hidden="true"></div>
+    </div>
+  </div>
+  <!-- EmailJS einbinden -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <!-- main.js einbinden -->
+  <script src="js/main.js" type="module"></script>
+</body>
+
+</html>
