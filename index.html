@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html lang="de">
-<!--
-TO do´s:
-- Responsive
--->
 
 <head>
   <meta charset="UTF-8">
@@ -11,10 +7,14 @@ TO do´s:
   <link rel="stylesheet" href="style/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <!-- Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- JetBrains Mono Font -->
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap"
-    rel="stylesheet"> <!-- JetBrains Mono Font -->
+    rel="stylesheet">
+  <!-- PyScript/Pyodide einbinden -->
+  <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+  <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
   <title>Dennis Poglitsch | Portfolio</title>
 </head>
 
@@ -31,8 +31,8 @@ TO do´s:
     <header>
       <div class="header_content">
         <span>
-          <a href="https://github.com/DennisPoglitsch" hidden>Github</a>
-          <a>EN | DE</a>
+          <a href="https://github.com/DennisPoglitsch" style="display: none;">Github</a>
+          <a style="display: none;">EN | DE</a>
         </span>
       </div>
     </header>
@@ -64,9 +64,7 @@ TO do´s:
     </section>
     <!-- Über mich Section -->
     <section id="Über_mich" class="über_mich_wrapper">
-      <!-- Innerer Container: Grid-Layout -->
       <div class="über_mich_inner">
-        <!-- Header (spannt über beide Spalten) -->
         <div class="über_mich_header_wrapper">
           <h3 class="reveal">
             <span class="reveal_content">
@@ -75,17 +73,16 @@ TO do´s:
           </h3>
           <div class="über_mich_line"></div>
         </div>
-        <!-- Unten links: Dein Text (steht unter der Überschrift) -->
         <div class="über_mich_text">
           <p class="reveal">
             <span class="reveal_content">
               <span class="first_word">Technik</span> fasziniert mich nicht nur – sie treibt mich an.<br>
               Schon seit einiger Zeit tauche ich immer tiefer in die Welt des Programmierens ein und merke jedes Mal:
-              Genau das ist mein Ding. Probleme in Code zu verwandeln, Lösungen zu bauen und zu verstehen, wie Systeme
-              im Hintergrund funktionieren, motiviert mich enorm.<br>
+              Genau das ist mein Ding. Lösungen zu bauen und zu verstehen, wie Systeme im Hintergrund funktionieren,
+              motiviert mich enorm.<br>
               <br>
               Aktuell bin ich auf der Suche nach einer Ausbildung im IT-Bereich, in der ich mein Wissen weiter ausbauen
-              und vor allem praktisch anwenden kann. Ich lerne schnell, arbeite strukturiert und habe richtig Spaß
+              und vor allem praktisch anwenden kann. Ich lerne schnell, arbeite strukturiert und habe viel Freude
               daran, mich in neue Technologien hineinzudenken.<br>
               <br>
               Für mich ist Programmieren nicht nur etwas, das „funktionieren muss“ – ich will verstehen, optimieren und
@@ -94,7 +91,6 @@ TO do´s:
             </span>
           </p>
         </div>
-        <!-- Unten rechts: Skills (Überschrift + Liste) -->
         <div class="skills">
           <div class="skills_header">
             <h3>Meine Fähigkeiten<span class="punkt_rot">.</span></h3>
@@ -116,7 +112,10 @@ TO do´s:
               <span class="reveal_content">JavaScript</span>
             </li>
             <li class="reveal">
-              <span class="reveal_content">HTML/CSS</span>
+              <span class="reveal_content">HTML</span>
+            </li>
+            <li class="reveal">
+              <span class="reveal_content">CSS</span>
             </li>
           </ul>
         </div>
@@ -132,20 +131,25 @@ TO do´s:
         <div class="projekte_list_wrapper">
           <div class="projekte_list">
             <!-- Hier Projekte bearbeiten -->
-            <div class="projekt" data-desc="Klassisches Snake – umgesetzt in Python mit Pyodide direkt im Browser."
-              data-tech="Python, Pyodide, Canvas, HTML, CSS" data-link="" data-project="snake">
+            <div class="projekt" data-desc="Interaktives Entwickler-Portfolio mit HTML, CSS und modularem JavaScript. 
+              Enthält eigene Canvas-Animationen, Scroll-Observer, ein dynamisches Projekt-Modal und ein Live-Weather-Widget, 
+              das per API Daten mit Python im Browser (PyScript/Pyodide) lädt. 
+              Kontaktformular mit EmailJS und Spam-Schutz." data-tech="HTML, CSS, PyScript, API, JavaScript, Python"
+              data-link="stoerni.github.io" data-modal-img1="images/portfolio.png"
+              data-modal-img2="images/portfolio2.png">
               <div class="projekt_content">
                 <div class="reveal">
-                  <span class="reveal_content"><img src="images/igel.jpg" alt="TwoRobots Screenshot"></span>
+                  <span class="reveal_content"><img src="images/portfolio.png"
+                      alt="Entwickler-Portfolio Screenshot"></span>
                 </div>
                 <div class="projekt_text_wrapper">
                   <h4 class="projekt_titel reveal">
-                    <span class="reveal_content">TwoRobots</span>
+                    <span class="reveal_content">Entwickler-Portfolio</span>
                   </h4>
                   <div class="projekt_beschreibung">
                     <p class="reveal">
                       <span class="reveal_content">
-                        TwoRobots ist ein Projekt, das Godot mit Golang verbindet.
+                        Interaktives Entwickler-Portfolio mit Python im Browser über PyScript.
                       </span>
                     </p>
                   </div>
@@ -153,20 +157,22 @@ TO do´s:
               </div>
             </div>
             <div class="projekt"
-              data-desc="TwoRobots ist ein Projekt, das Godot mit Golang verbindet. Gameplay, Server-Integration und Blockchain-Experimente sind enthalten."
-              data-tech="Godot, Golang, MongoDB, WebGL" data-link="https://tworobots.example.com">
+              data-desc="Ein Live-Wetter-Widget mit Python im Browser über PyScript. Die Daten kommen von der OpenWeather API und werden dynamisch im Modal geladen. Hier der Link zu OpenWeather https://openweathermap.org/"
+              data-tech="Python, PyScript, API, HTML, CSS" data-link="" data-project="weather"
+              data-modal-img1="images/wetterWidget.png">
               <div class="projekt_content">
                 <div class="reveal">
-                  <span class="reveal_content"><img src="images/wisel.jpg" alt="TwoRobots Screenshot"></span>
+                  <span class="reveal_content"><img src="images/openweather.png"
+                      alt="Wetter Widget Projekt Screenshot"></span>
                 </div>
                 <div class="projekt_text_wrapper">
                   <h4 class="projekt_titel reveal">
-                    <span class="reveal_content">TwoRobots</span>
+                    <span class="reveal_content">Live Wetter Widget</span>
                   </h4>
                   <div class="projekt_beschreibung">
                     <p class="reveal">
                       <span class="reveal_content">
-                        TwoRobots ist ein Projekt, das Godot mit Golang verbindet.
+                        Wetterdaten live aus einer API mit Python im Browser geladen.
                       </span>
                     </p>
                   </div>
@@ -180,7 +186,6 @@ TO do´s:
     </section>
     <!-- Kontakt Section -->
     <section id="Kontakt">
-      <!-- Überschrift mit Linien -->
       <div class="kontakt_container">
         <div class="kontakt_header_wrapper">
           <div class="kontakt_line"></div>
@@ -191,13 +196,12 @@ TO do´s:
           </h3>
           <div class="kontakt_line"></div>
         </div>
-        <!-- Einführungstext -->
         <p class="kontakt_intro reveal">
           <span class="reveal_content">
             Shoot me an email if you want to connect!
           </span>
         </p>
-        <!-- Email mit Briefsymbol -->
+        <!-- Email mit Briefsymbol via svg -->
         <div class="reveal">
           <p class="kontakt_email">
             <span class="reveal_content">
@@ -254,15 +258,14 @@ TO do´s:
     <div class="modal_content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal_close" aria-label="Schließen" data-modal-close>×</button>
       <h3 id="modalTitle">Titel</h3>
-      <img id="modalImage" src="Projekt_Bild" alt="" class="modal_image">
+      <div id="modalGallery" class="modal_gallery"></div>
       <p id="modalDesc">Beschreibung</p>
-      <!-- Snake Game -->
-      <div id="snake_container" style="display:none; margin-top:20px;">
-        <canvas id="snake_canvas" width="400" height="400"></canvas>
-        <p style="text-align:center; opacity:0.7; margin-top:8px;">
-          Steuerung: Pfeiltasten
-        </p>
+      <!-- Suchfeld für Wetter -->
+      <div id="weather_search_wrapper" style="margin-bottom:10px; display:none;">
+        <input type="text" id="weather_input" placeholder="Stadt eingeben..." style="padding:5px; width:70%;">
+        <button id="weather_search_btn" style="padding:5px;">Suchen</button>
       </div>
+      <div id="weather_container" style="display:none;"></div>
       <!-- Tech-List (Badges) -->
       <div id="modalTech" class="modal_tech" aria-hidden="true"></div>
       <!-- Links / Aktionen -->
@@ -273,6 +276,8 @@ TO do´s:
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <!-- main.js einbinden -->
   <script src="js/main.js" type="module"></script>
+  <!-- weather.py einbinden  -->
+  <py-script src="python/weather.py"></py-script>
 </body>
 
 </html>

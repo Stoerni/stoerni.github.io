@@ -18,8 +18,8 @@ export function initTyping() {
     const items = [
         { text: "alt aber nicht veraltet", image: "images/T-800.png" },
         { text: "Lösungsorientiert", image: null },
-        { text: "Technikaffin", image: null },
-        { text: "Teamorientiert", image: null }
+        { text: "Analytisch", image: null },
+        { text: "Strukturiert", image: null }
     ];
 
     // ⏱️ Geschwindigkeit & Pausen (ms)

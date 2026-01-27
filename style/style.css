@@ -233,30 +233,35 @@ section {
 
 .t800_container img {
   position: absolute;
-  inset: 0;          /* beide exakt deckungsgleich */
+  inset: 0;
+  /* beide exakt deckungsgleich */
   width: 100%;
   height: auto;
 }
 
 #t800_eyes {
   opacity: 0;
-  filter: brightness(2) drop-shadow(0 0 6px rgba(255,0,0,0.6));
-  transform: translateY(14px) scale(0.95); /* 🔥 gleich wie Bild */
+  filter: brightness(2) drop-shadow(0 0 6px rgba(255, 0, 0, 0.6));
+  transform: translateY(14px) scale(0.95);
+  /* 🔥 gleich wie Bild */
 
   /* Glow */
-  filter: drop-shadow(0 0 6px #ff2a2a)
-          drop-shadow(0 0 14px #ff0000);
+  filter: drop-shadow(0 0 6px #ff2a2a) drop-shadow(0 0 14px #ff0000);
 }
 
 #typing_image_wrapper {
-  position: relative; /* verhindert das der Text nach oben rutscht */
+  position: relative;
+  /* verhindert das der Text nach oben rutscht */
   display: inline-flex;
-  align-items: center; /* vertikal zentriert */
-  gap: 12px;           /* Abstand zwischen Link und Bild */
+  align-items: center;
+  /* vertikal zentriert */
+  gap: 12px;
+  /* Abstand zwischen Link und Bild */
 }
 
 #typing_image_wrapper a {
-  display: inline-block; /* Link inline-block, sonst Flex funktioniert nicht richtig */
+  display: inline-block;
+  /* Link inline-block, sonst Flex funktioniert nicht richtig */
 }
 
 #typing_image {
@@ -265,8 +270,8 @@ section {
   opacity: 0;
   transform: translateY(14px) scale(0.95);
   transition:
-    opacity 0.9s cubic-bezier(.22,.61,.36,1),
-    transform 0.9s cubic-bezier(.22,.61,.36,1);
+    opacity 0.9s cubic-bezier(.22, .61, .36, 1),
+    transform 0.9s cubic-bezier(.22, .61, .36, 1);
 }
 
 #typing_image.show {
@@ -276,14 +281,26 @@ section {
 
 .t800_container.show #t800_eyes {
   animation:
-    eyeReveal 0.9s cubic-bezier(.22,.61,.36,1) forwards,
-    cyber_flicker 3.2s infinite 0.9s; /* Flackern startet NACH Reveal */
+    eyeReveal 0.9s cubic-bezier(.22, .61, .36, 1) forwards,
+    cyber_flicker 3.2s infinite 0.9s;
+  /* Flackern startet NACH Reveal */
 }
 
 @keyframes eyeGlow {
-  0%   { opacity: 0; filter: brightness(1); }
-  40%  { opacity: 1; filter: brightness(2.5) drop-shadow(0 0 14px red); }
-  100% { opacity: 0.8; filter: brightness(2) drop-shadow(0 0 10px red); }
+  0% {
+    opacity: 0;
+    filter: brightness(1);
+  }
+
+  40% {
+    opacity: 1;
+    filter: brightness(2.5) drop-shadow(0 0 14px red);
+  }
+
+  100% {
+    opacity: 0.8;
+    filter: brightness(2) drop-shadow(0 0 10px red);
+  }
 }
 
 @keyframes eyeReveal {
@@ -291,6 +308,7 @@ section {
     opacity: 0;
     transform: translateY(14px) scale(0.95);
   }
+
   to {
     opacity: 0.9;
     transform: translateY(0) scale(1);
@@ -299,33 +317,85 @@ section {
 
 @keyframes cyber_flicker {
 
-  0%   { opacity: 0.15; }
-  4%   { opacity: 0.9; }
-  7%   { opacity: 0.2; }
-  9%   { opacity: 1; }
-  11%  { opacity: 0.4; }
+  0% {
+    opacity: 0.15;
+  }
 
-  18%  { opacity: 0.95; }
-  22%  { opacity: 0.3; }
-  26%  { opacity: 1; }
+  4% {
+    opacity: 0.9;
+  }
 
-  33%  { opacity: 0.2; }
-  36%  { opacity: 0.8; }
-  40%  { opacity: 0.1; }
+  7% {
+    opacity: 0.2;
+  }
 
-  48%  { opacity: 1; }
-  52%  { opacity: 0.5; }
+  9% {
+    opacity: 1;
+  }
 
-  60%  { opacity: 0.2; }
-  64%  { opacity: 0.9; }
+  11% {
+    opacity: 0.4;
+  }
 
-  72%  { opacity: 0.15; }
-  78%  { opacity: 1; }
+  18% {
+    opacity: 0.95;
+  }
 
-  86%  { opacity: 0.25; }
-  92%  { opacity: 0.8; }
+  22% {
+    opacity: 0.3;
+  }
 
-  100% { opacity: 0.3; }
+  26% {
+    opacity: 1;
+  }
+
+  33% {
+    opacity: 0.2;
+  }
+
+  36% {
+    opacity: 0.8;
+  }
+
+  40% {
+    opacity: 0.1;
+  }
+
+  48% {
+    opacity: 1;
+  }
+
+  52% {
+    opacity: 0.5;
+  }
+
+  60% {
+    opacity: 0.2;
+  }
+
+  64% {
+    opacity: 0.9;
+  }
+
+  72% {
+    opacity: 0.15;
+  }
+
+  78% {
+    opacity: 1;
+  }
+
+  86% {
+    opacity: 0.25;
+  }
+
+  92% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0.3;
+  }
 }
 
 /* =========================================================
@@ -535,10 +605,18 @@ section {
   cursor: pointer;
 }
 
+.modal_gallery {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
 .modal_image {
-  width: 100%;
+  max-width: 48%;
   border-radius: 8px;
-  margin: 12px 0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
 .modal_tech {
@@ -574,6 +652,116 @@ section {
 
 .btn-primary {
   background: var(--color_accent);
+}
+
+/* ==========================
+   WETTER WIDGET
+========================== */
+#weather_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.weather_card {
+  background: var(--color_nav);
+  border-radius: 12px;
+  margin: 10px;
+  padding: 25px 30px;
+  width: 90%;
+  max-width: 350px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s;
+  font-family: var(--font_body);
+}
+
+.weather_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.weather_header strong {
+  color: var(--color_accent);
+}
+
+.weather_icon {
+  width: 50px;
+  height: 50px;
+}
+
+.weather_temp {
+  font-size: 42px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.weather_desc {
+  opacity: 0.85;
+  margin-bottom: 12px;
+}
+
+.weather_row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-top: 6px;
+  opacity: 0.9;
+}
+
+.weather_loading {
+  padding: 20px;
+  color: white;
+}
+
+#weather_search_wrapper {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 15px auto 15px auto;
+  width: 100%;
+  max-width: 350px;
+}
+
+#weather_search_wrapper input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--color_nav);
+  color: var(--color_text);
+  font-family: var(--font_body);
+  font-size: 1rem;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+#weather_search_wrapper input:focus {
+  outline: none;
+  border-color: var(--color_accent);
+  box-shadow: 0 0 0 2px rgba(238, 4, 10, 0.25);
+}
+
+#weather_search_wrapper button {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 2px solid var(--color_accent);
+  background: var(--color_bg);
+  color: var(--color_accent);
+  font-weight: 600;
+  font-family: var(--font_body);
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+
+#weather_search_wrapper button:hover {
+  background: var(--color_accent);
+  color: var(--color_text);
+  transform: translateY(-1px);
 }
 
 /* =========================================================
@@ -677,7 +865,7 @@ section {
 .formular_gruppe input,
 .formular_gruppe textarea {
   background: var(--color_nav);
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: var(--color_text);
   padding: 12px;
   border-radius: 8px;
@@ -755,7 +943,8 @@ section {
 @media (max-width: 900px) {
   .nav_leiste {
     position: fixed;
-    top: 64px; /* Höhe deines Headers */
+    top: 64px;
+    /* Höhe deines Headers */
     left: 0;
     width: 100%;
     height: 60px;
@@ -763,7 +952,8 @@ section {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    z-index: 150; /* unter Header */
+    z-index: 150;
+    /* unter Header */
   }
 
   nav {
@@ -785,14 +975,16 @@ section {
     left: 0;
     width: 100%;
     padding: 0 20px;
-    z-index: 200; /* Header über Nav */
+    z-index: 200;
+    /* Header über Nav */
   }
 
   main {
-    padding-left: 0;     
-    padding-top: 64px + 60px; /* Platz für Header + Nav-Leiste */
+    padding-left: 0;
+    padding-top: 64px + 60px;
+    /* Platz für Header + Nav-Leiste */
   }
-  
+
 
   .home_wrapper {
     flex-direction: column;
@@ -840,9 +1032,17 @@ section {
     margin: 0 auto 15px auto;
   }
 
-  h1 { font-size: 1.8rem; }
-  h2 { font-size: 1.1rem; }
-  h3 { font-size: 1.5rem; }
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
 
   #typing_text {
     font-size: 1.1rem;
@@ -888,9 +1088,12 @@ section {
 
 .reveal_content input,
 .reveal_content textarea {
-  width: 100%;              /* volle Breite wie vorher */
-  display: block;           /* block-level wie normale Formfelder */
-  margin: 0;                /* evtl. Padding/Margin vorher übernehmen */
+  width: 100%;
+  /* volle Breite wie vorher */
+  display: block;
+  /* block-level wie normale Formfelder */
+  margin: 0;
+  /* evtl. Padding/Margin vorher übernehmen */
 }
 
 /* roter Balken */
