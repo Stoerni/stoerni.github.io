@@ -16,7 +16,7 @@ export function initTyping() {
     // 📝 Liste aller Wörter + dazugehörigen Bilder
     // Reihenfolge ist wichtig, wird nacheinander abgespielt
     const items = [
-        { text: "alt aber nicht veraltet", image: "images/T-800.png" },
+        { text: "alt aber nicht veraltet", image: "images/olderbot.png" },
         { text: "Lösungsorientiert", image: null },
         { text: "Analytisch", image: null },
         { text: "Strukturiert", image: null }
