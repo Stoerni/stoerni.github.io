@@ -23,8 +23,8 @@ async def load_weather(city=None):
 
     # Fehlerabfrage
     if "main" not in data:
-    container.innerHTML = f"<p>⚠️ Fehler: {data.get('error', 'Stadt nicht gefunden')}</p>"
-    return
+        container.innerHTML = f"<p>⚠️ Fehler: {data.get('error', 'Stadt nicht gefunden')}</p>"
+        return
 
     temp = round(data["main"]["temp"])
     desc = data["weather"][0]["description"].capitalize()
@@ -48,4 +48,5 @@ async def load_weather(city=None):
     """
 
 if js is not None:
+
     js.window.loadWeatherFromPython = load_weather
