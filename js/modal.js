@@ -64,13 +64,41 @@ export function initModal() {
     // Weather nur für Weather-Projekt
     if (project === "weather") {
       weatherContainer.style.display = "flex";
-      weatherSearchWrapper.style.display = "block"; // Suchfeld anzeigen
-      if (window.loadWeatherFromPython) {
-        window.loadWeatherFromPython("Hannover");  // Default-Stadt
+      weatherSearchWrapper.style.display = "block";
+
+      async function waitForPy() {
+        while (!window.loadWeatherFromPython) {
+          await new Promise(r => setTimeout(r, 100));
+        }
       }
+
+      waitForPy().then(() => {
+        window.loadWeatherFromPython("Hannover");
+      });
+
+      // Alte Listener entfernen (wichtig!)
+      weatherSearchBtn.replaceWith(weatherSearchBtn.cloneNode(true));
+      weatherInput.replaceWith(weatherInput.cloneNode(true));
+
+      const newBtn = document.getElementById("weather_search_btn");
+      const newInput = document.getElementById("weather_input");
+
+      newBtn.addEventListener("click", () => {
+        const city = newInput.value.trim();
+        if (city && window.loadWeatherFromPython) {
+          window.loadWeatherFromPython(city);
+        }
+      });
+
+      newInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          newBtn.click();
+        }
+      });
+
     } else {
       weatherContainer.style.display = "none";
-      weatherSearchWrapper.style.display = "none"; // Suchfeld ausblenden
+      weatherSearchWrapper.style.display = "none";
       weatherContainer.innerHTML = "";
     }
     // Such-Button Event Listener

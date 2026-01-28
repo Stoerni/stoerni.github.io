@@ -48,6 +48,4 @@ async def load_weather(city=None):
     """
 
 if js is not None:
-
     js.window.loadWeatherFromPython = load_weather
-
