@@ -17,7 +17,7 @@ async def load_weather(city=None):
 
     # API Request
     response = await pyfetch(
-        f"https://weather-api.onrender.com/weather?city={city}"
+        f"https://weather-api-b6ta.onrender.com/weather?city={city}"
     )
     data = await response.json()
 
@@ -50,3 +50,4 @@ async def load_weather(city=None):
 if js is not None:
 
     js.window.loadWeatherFromPython = load_weather
+
