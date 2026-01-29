@@ -66,10 +66,13 @@ async def load_weather(city=None):
     btn_el.addEventListener("click", create_proxy(search_again))
 
     def handle_key(e):
-        if e.key == "Enter":
+        key = e.get("key", None)  # <-- sicher auf key zugreifen
+        if key == "Enter":
             asyncio.ensure_future(search_again())
+
 
     input_el.addEventListener("keydown", create_proxy(handle_key))
 
 if js is not None:
+
     js.window.loadWeatherFromPython = load_weather
