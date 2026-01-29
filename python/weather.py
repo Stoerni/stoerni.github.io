@@ -38,7 +38,7 @@ async def load_weather(city=None):
     <div class="weather_card">
         <div class="weather_search_inner">
             <input type="text" id="weather_input" placeholder="Stadt eingeben...">
-            <button id="weather_search_btn">Suchen</button>
+            <button id="weather_search_btn" type="button">Suchen</button>
         </div>
         <div class="weather_header">
             <strong>{city}</strong>
@@ -57,6 +57,8 @@ async def load_weather(city=None):
     btn_el = js.document.getElementById("weather_search_btn")
 
     async def search_again(event=None):
+        if event:
+            event.preventDefault()  # verhindert Scroll/Reload
         city_name = input_el.value
         if city_name:
             await load_weather(city_name)
