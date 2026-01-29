@@ -51,6 +51,8 @@ async def load_weather(city=None):
     </div>
     """
     
+    from pyodide.ffi import create_proxy    # type: ignore
+
     input_el = js.document.getElementById("weather_input")
     btn_el = js.document.getElementById("weather_search_btn")
 
@@ -59,13 +61,13 @@ async def load_weather(city=None):
         if city_name:
             await load_weather(city_name)
 
-    btn_el.addEventListener("click", js.Function.from_py(search_again))
-    
+    btn_el.addEventListener("click", create_proxy(search_again))
+
     def handle_key(e):
         if e.key == "Enter":
             asyncio.ensure_future(search_again())
 
-    input_el.addEventListener("keydown", js.Function.from_py(handle_key))
+    input_el.addEventListener("keydown", create_proxy(handle_key))
 
 if js is not None:
     js.window.loadWeatherFromPython = load_weather
