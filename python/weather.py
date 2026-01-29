@@ -36,6 +36,10 @@ async def load_weather(city=None):
     # Wetterkarte anzeigen
     container.innerHTML = f"""
     <div class="weather_card">
+        <div class="weather_search_inner">
+            <input type="text" id="weather_input" placeholder="Stadt eingeben...">
+            <button id="weather_search_btn">Suchen</button>
+        </div>
         <div class="weather_header">
             <strong>{city}</strong>
             <img src="{icon_url}" class="weather_icon">
@@ -46,6 +50,22 @@ async def load_weather(city=None):
         <div class="weather_row"><span>Wind</span><span>{wind} m/s</span></div>
     </div>
     """
+    
+    input_el = js.document.getElementById("weather_input")
+    btn_el = js.document.getElementById("weather_search_btn")
+
+    async def search_again(event=None):
+        city_name = input_el.value
+        if city_name:
+            await load_weather(city_name)
+
+    btn_el.addEventListener("click", js.Function.from_py(search_again))
+    
+    def handle_key(e):
+        if e.key == "Enter":
+            asyncio.ensure_future(search_again())
+
+    input_el.addEventListener("keydown", js.Function.from_py(handle_key))
 
 if js is not None:
     js.window.loadWeatherFromPython = load_weather

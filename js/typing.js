@@ -7,8 +7,8 @@ export function initTyping() {
     // Element, in dem das Bild angezeigt wird
     const imageElement = document.getElementById("typing_image");
 
-    // Container für T800 + Augen (Overlay)
-    const imageWrapper = document.querySelector(".t800_container");
+    // Container für olderbot + Augen (Overlay)
+    const imageWrapper = document.querySelector(".olderbot_container");
 
     // ❗ Sicherheitscheck: Wenn eines der Elemente fehlt, Script stoppen
     if (!typingElement || !imageElement) return;
