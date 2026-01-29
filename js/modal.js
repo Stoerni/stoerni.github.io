@@ -6,30 +6,27 @@ export function initModal() {
   if (!modal) return;
 
   const modalTitle = document.getElementById('modalTitle');
-  const modalImage = document.getElementById('modalImage');
   const modalDesc = document.getElementById('modalDesc');
   const techContainer = document.getElementById('modalTech');
   const linksContainer = document.getElementById('modalLinks');
   const weatherContainer = document.getElementById('weather_container');
-  const weatherSearchWrapper = document.getElementById('weather_search_wrapper');
-  const weatherInput = document.getElementById('weather_input');
-  const weatherSearchBtn = document.getElementById('weather_search_btn');
-
+  const gallery = document.getElementById('modalGallery');
 
   function openModal({ title, image1, image2, desc, tech, link, project }) {
+    // Titel
     modalTitle.textContent = title || '';
-    const gallery = document.getElementById('modalGallery');
+
+    // Bilder-Galerie
     gallery.innerHTML = '';
-
-    const images = [image1, image2].filter(Boolean);
-
-    images.forEach(src => {
+    [image1, image2].filter(Boolean).forEach(src => {
       const img = document.createElement('img');
       img.src = src;
       img.alt = title;
       img.className = 'modal_image';
       gallery.appendChild(img);
     });
+
+    // Beschreibung
     modalDesc.textContent = desc || '';
 
     // Tech Badges
@@ -51,7 +48,7 @@ export function initModal() {
     if (link) {
       linksContainer.setAttribute('aria-hidden', 'false');
       const a = document.createElement('a');
-      a.href = link;
+      a.href = link.startsWith("http") ? link : `https://${link}`;
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
       a.className = 'btn btn-primary';
@@ -61,10 +58,9 @@ export function initModal() {
       linksContainer.setAttribute('aria-hidden', 'true');
     }
 
-    // Weather nur für Weather-Projekt
+    /* ================= WEATHER ================= */
     if (project === "weather") {
       weatherContainer.style.display = "flex";
-      weatherSearchWrapper.style.display = "block";
 
       async function waitForPy() {
         while (!window.loadWeatherFromPython) {
@@ -76,44 +72,10 @@ export function initModal() {
         window.loadWeatherFromPython("Hannover");
       });
 
-      // Alte Listener entfernen (wichtig!)
-      weatherSearchBtn.replaceWith(weatherSearchBtn.cloneNode(true));
-      weatherInput.replaceWith(weatherInput.cloneNode(true));
-
-      const newBtn = document.getElementById("weather_search_btn");
-      const newInput = document.getElementById("weather_input");
-
-      newBtn.addEventListener("click", () => {
-        const city = newInput.value.trim();
-        if (city && window.loadWeatherFromPython) {
-          window.loadWeatherFromPython(city);
-        }
-      });
-
-      newInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-          newBtn.click();
-        }
-      });
-
     } else {
       weatherContainer.style.display = "none";
-      weatherSearchWrapper.style.display = "none";
       weatherContainer.innerHTML = "";
     }
-    // Such-Button Event Listener
-    weatherSearchBtn.addEventListener('click', () => {
-      const city = weatherInput.value.trim();
-      if (city && window.loadWeatherFromPython) {
-        window.loadWeatherFromPython(city);
-      }
-    });
-    // Enter-Taste im Input-Feld  
-    weatherInput.addEventListener('keypress', (e) => {
-      if (e.key === "Enter") {
-        weatherSearchBtn.click();
-      }
-    });
 
     // Modal anzeigen
     modal.classList.add('open');
@@ -127,7 +89,7 @@ export function initModal() {
     document.body.style.overflow = '';
   }
 
-  // Klick auf Projektkarten
+  // Projektkarten klickbar machen
   document.querySelectorAll('.projekt').forEach(card => {
     card.style.cursor = 'pointer';
     card.addEventListener('click', () => {
@@ -143,15 +105,15 @@ export function initModal() {
     });
   });
 
-  // Close-Buttons & Backdrop
+  // Close Buttons
   document.querySelectorAll('[data-modal-close]').forEach(el =>
     el.addEventListener('click', closeModal)
   );
+
   modal.addEventListener('click', e => {
     if (e.target === modal) closeModal();
   });
 
-  // ESC-Taste schließt Modal
   document.addEventListener('keydown', e => {
     if (e.key === "Escape" && modal.classList.contains('open')) closeModal();
   });
