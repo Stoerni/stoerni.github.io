@@ -59,23 +59,21 @@ export function initModal() {
     }
 
     /* ================= WEATHER ================= */
-    if (project === "weather") {
+    if (project === "weather" && weatherContainer) {
       weatherContainer.style.display = "flex";
-
       async function waitForPy() {
         while (!window.loadWeatherFromPython) {
           await new Promise(r => setTimeout(r, 100));
         }
       }
-
       waitForPy().then(() => {
         window.loadWeatherFromPython("Hannover");
       });
-
-    } else {
+    } else if (weatherContainer) {
       weatherContainer.style.display = "none";
       weatherContainer.innerHTML = "";
     }
+
 
     // Modal anzeigen
     modal.classList.add('open');
@@ -105,7 +103,7 @@ export function initModal() {
     });
   });
 
-  // Close Button
+  // Close Buttons
   document.querySelectorAll('[data-modal-close]').forEach(el =>
     el.addEventListener('click', closeModal)
   );
@@ -118,4 +116,3 @@ export function initModal() {
     if (e.key === "Escape" && modal.classList.contains('open')) closeModal();
   });
 }
-

@@ -15,3 +15,5 @@ window.addEventListener("DOMContentLoaded", () => {
   initContactForm();
   initReveal();
 });
+
+console.log("main.js geladen");
