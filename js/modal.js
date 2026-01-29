@@ -105,7 +105,7 @@ export function initModal() {
     });
   });
 
-  // Close Buttons
+  // Close Button
   document.querySelectorAll('[data-modal-close]').forEach(el =>
     el.addEventListener('click', closeModal)
   );
@@ -118,3 +118,4 @@ export function initModal() {
     if (e.key === "Escape" && modal.classList.contains('open')) closeModal();
   });
 }
+
