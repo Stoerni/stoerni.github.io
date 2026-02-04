@@ -115,7 +115,6 @@ export function initModal() {
   document.addEventListener('keydown', e => {
     if (e.key === "Escape" && modal.classList.contains('open')) closeModal();
   });
-}
 
 // Enter startet Wettersuche
 document.addEventListener('keydown', (e) => {
@@ -136,3 +135,4 @@ document.addEventListener('keydown', (e) => {
     }
   }
 });
+}
