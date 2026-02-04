@@ -58,21 +58,12 @@ async def load_weather(city=None):
 
     async def search_again(event=None):
         if event:
-            event.preventDefault()  # verhindert Scroll/Reload
-        city_name = input_el.value
+            event.preventDefault()
+        city_name = js.document.getElementById("weather_input").value
         if city_name:
             await load_weather(city_name)
 
     btn_el.addEventListener("click", create_proxy(search_again))
 
-    def handle_key(e):
-        key = e.get("key", None)  # <-- sicher auf key zugreifen
-        if key == "Enter":
-            asyncio.ensure_future(search_again())
-
-
-    input_el.addEventListener("keydown", create_proxy(handle_key))
-
 if js is not None:
-
     js.window.loadWeatherFromPython = load_weather
