@@ -29,7 +29,14 @@ export function initModal() {
     
     // filter(Boolean) = nur Bilder, die tatsächlich vorhanden sind (nicht null/undefined)
     // forEach = für JEDES Bild...
-    [image1, image2].filter(Boolean).forEach(src => {
+    // Doppelte/falsche Bilder defensiv vermeiden:
+    // - nur vorhandene URLs
+    // - nur einzigartige URLs
+    // - Wetter-Vorschaubild nur im echten Weather-Projekt zulassen
+    const uniqueImageSources = [...new Set([image1, image2].filter(Boolean))]
+      .filter(src => project === "weather" || !src.toLowerCase().includes("wetter"));
+
+    uniqueImageSources.forEach(src => {
       const img = document.createElement('img');  // Neues <img> Element erzeugen
       img.src = src;                              // Bildpfad setzen
       img.alt = title;                            // Alt-Text für Accessibility
