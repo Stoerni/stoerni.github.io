@@ -3,9 +3,13 @@
    Hier wird das Formular funktionsfähig gemacht und Emails versendet
    ========================== */
 
-// 🔑 EmailJS einbinden - das ist ein Service, der kostenlos Emails versendet
-// Der String ist die öffentliche API-ID von deinem EmailJS Account
-emailjs.init("A4yI-KYfwkjWYSvV7");
+// 🔑 EmailJS v4 initialisieren
+// Wichtig: Das ist der PUBLIC KEY (öffentlich erlaubt), kein geheimes Passwort.
+// Warum init am Anfang?
+// -> Damit EmailJS weiß, zu welchem Konto die sendForm-Anfrage gehört.
+emailjs.init({
+    publicKey: "A4yI-KYfwkjWYSvV7"
+});
 
 // 📤 EXPORT: Diese Funktion wird von main.js aufgerufen
 export function initContactForm() {
@@ -43,10 +47,13 @@ export function initContactForm() {
         kontakt_status.className = "kontakt_status";
 
         // 📨 EmailJS verwenden um Email zu versenden
-        // 3 wichtige IDs aus deinem EmailJS Account:
-        // - "service_e22dmlg" = dein Email-Service (wie Gmail, Outlook, etc.)
-        // - "template_keeldnp" = die Email-Template (wie die Email aussieht)
-        // - kontakt_formular = alle Formular-Daten werden automatisch in die Template eingebaut
+        // 3 wichtige Werte aus deinem EmailJS Account:
+        // - "service_e22dmlg" = dein Email-Service (z.B. Gmail/Outlook Verbindung)
+        // - "template_keeldnp" = deine E-Mail-Vorlage
+        // - kontakt_formular = Formular-Daten, die automatisch in die Vorlage gemappt werden
+        // Hinweis zu v4:
+        // - Wir könnten den Public Key auch als 4. Parameter übergeben,
+        //   brauchen das hier aber nicht, weil oben bereits emailjs.init(...) gesetzt ist.
         emailjs.sendForm(
             "service_e22dmlg",
             "template_keeldnp",

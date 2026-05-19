@@ -1,6 +1,35 @@
-Autor: Dennis Poglitsch
+# Projekt_Portfolio_CRM
 
-Technologien: HTML, CSS, JavaScript, Python (PyScript), Flask, Render.com, EmailJS, OpenWeather API
+## Überblick
+Dieses Projekt ist ein persönliches Entwickler-Portfolio mit Fokus auf:
+- klare Struktur
+- saubere UI/UX
+- modularem JavaScript
+- einem Wetter-Widget mit Python im Browser (PyScript)
 
-Dieses Portfolio ist eine persönliche Entwicklerpräsenz, die moderne Webtechnologien kombiniert, um interaktive Inhalte, API-basierte Daten 
-und ein voll funktionsfähiges Kontaktformular zu bieten. Die Seite dient als Showcase für meine Fähigkeiten und Projekte, sowohl visuell als auch technisch.
+## Features
+- Interaktive Projekt-Modal-Ansicht
+- Kontaktformular mit EmailJS (v4 Browser SDK)
+- Wetter-Widget über PyScript + Open-Meteo APIs (ohne eigenes Wetter-Backend)
+- Scroll-Reveal Animationen
+- Canvas-Dotgrid im Hero-Bereich
+
+## Projektstruktur
+- `index.html` -> Seitenstruktur
+- `style/style.css` -> Styling
+- `js/` -> modulare Frontend-Logik
+- `python/weather.py` -> Wetter-Logik in Python (PyScript)
+- `images/` -> Assets
+- `weather-api/` -> optionales/altes Backend (für aktuellen Wetter-Flow nicht nötig)
+
+## Lokal testen
+Einfach `index.html` im Browser öffnen.
+Hinweis: Für manche Browser-Setups ist ein lokaler Webserver robuster als `file://`.
+
+## Deploy
+Das Projekt kann als statische Seite deployed werden (z. B. GitHub Pages oder Hostinger Static Hosting).
+
+## Hinweise zu Secrets
+- Keine Secrets im Repo speichern.
+- `.env`, Tokens, Recovery-Codes und Passwörter bleiben lokal im Passwortmanager.
+- Siehe `.gitignore` im Root.

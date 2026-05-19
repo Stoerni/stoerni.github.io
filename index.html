@@ -224,7 +224,7 @@
                 </div>
               </div>
             </div>
-            <div class="projekt" data-desc="Live-Wetter-Widget mit Python im Browser über PyScript. Wetterdaten werden über die OpenWeather API geladen und direkt im Modal aktualisiert. Zusätzlich kann der Standort dynamisch gesucht werden, ohne die Seite neu zu laden." data-tech="Python, PyScript, API, HTML, CSS" data-link="https://openweathermap.org/" data-project="weather" data-modal-img1="images/wetter.webp">
+            <div class="projekt" data-desc="Live-Wetter-Widget mit Python im Browser über PyScript. Wetterdaten werden live über die Open-Meteo APIs (Geocoding + Forecast) geladen und direkt im Modal aktualisiert. Zusätzlich kann der Standort dynamisch gesucht werden, ohne die Seite neu zu laden." data-tech="Python, PyScript, Open-Meteo API, HTML, CSS" data-link="https://open-meteo.com/" data-project="weather" data-modal-img1="images/wetter.webp">
               <div class="projekt_content">
                 <div class="reveal">
                   <span class="reveal_content"><img src="images/wetter.webp"
@@ -355,7 +355,8 @@
   <!-- 📧 EMAILJS LIBRARY: Für das Kontaktformular ohne eigenen Email-Server -->
   <!-- EmailJS ermöglicht es, dass Emails direkt vom Browser versendet werden -->
   <!-- Ohne EmailJS müsste man einen eigenen Server bauen -->
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <!-- EmailJS v4 (Browser SDK): aktuelle, sichere Version -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   
   <!-- 🚀 MAIN.JS EINBINDEN: Das ist das Koordinations-Zentrum! -->
   <!-- type="module" = ES6 Modules (modernes JavaScript mit import/export) -->
