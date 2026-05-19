@@ -1,63 +1,113 @@
 <!DOCTYPE html>
+<!-- 🌍 DOCTYPE: Sagt dem Browser "das ist HTML5" -->
+
 <html lang="de">
+<!-- lang="de" = Diese Seite ist auf Deutsch (wichtig für Screenreader und SEO) -->
 
 <head>
+  <!-- HEAD = Meta-Infos für den Browser (werden nicht angezeigt) -->
+  
   <meta charset="UTF-8">
+  <!-- charset="UTF-8" = Universal character encoding (supporte alle Sprachen) -->
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- viewport = responsive Design - Seite passt sich an Bildschirmgröße an -->
+  
+  <!-- 🎨 CSS STYLESHEET -->
   <link rel="stylesheet" href="style/style.css">
+  <!-- Das ist die Haupt-Stylesheet mit Farben, Layout, Animationen -->
+
+  <!-- 🔤 GOOGLE FONTS PRELOAD (Schneller laden) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Inter Font -->
+  
+  <!-- Performance-Quick-Win: Hero-Bild früh laden (sichtbar above the fold) -->
+  <link rel="preload" as="image" href="images/olderbot.webp" type="image/webp">
+  
+  <!-- Inter Font = lesbare Schrift für Haupt-Text -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <!-- JetBrains Mono Font -->
+  
+  <!-- JetBrains Mono = Monospace-Font für Code-Look (Überschriften) -->
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap"rel="stylesheet">
-  <!-- PyScript/Pyodide einbinden -->
+
+  <!-- 🐍 PYSCRIPT / PYODIDE: Lädt Python im Browser = weather.py kann hier laufen! -->
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+  <!-- CSS für PyScript UI-Komponenten -->
+  
   <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
-  <!-- Goatcounter -->
+  <!-- Das JavaScript-Framework das Python im Browser kompatibel macht -->
+  
+  <!-- 📊 GOATCOUNTER: Einfache Analytics-Tracker (ohne Google, datenschutzfreundlich) -->
   <script data-goatcounter="https://stoerni.goatcounter.com/count"async src="//gc.zgo.at/count.js"></script>
+
+  <!-- 🌐 PAGE TITLE: Text im Browser-Tab -->
   <title>Dennis Poglitsch | Portfolio</title>
 </head>
 
 <body>
-  <!-- Navigationsleiste -->
+  <!-- BODY = der sichtbare Inhalt der Seite -->
+
+  <!-- 📱 NAVIGATIONSLEISTE: Vertikale Navigation mit Links zu Sections -->
+  <!-- Jeder Link zeigt auf eine Section mit ID (z.B. #Home → <section id="Home">) -->
+  <!-- navObserver.js beobachtet, welche Section gerade sichtbar ist, und färbt den Link rot -->
   <nav class="nav_leiste">
     <a href="#Home">Home</a>
     <a href="#Über_mich">Über mich</a>
     <a href="#Projekte">Projekte</a>
     <a href="#Kontakt">Kontakt</a>
   </nav>
+
+  <!-- 🎯 MAIN: Der Haupt-Inhalt der Seite -->
   <main>
-    <!-- Headerleiste -->
+    <!-- 📋 HEADER: Oben fest (position: fixed) mit optionalen Buttons -->
     <header>
       <div class="header_content">
         <span>
+          <!-- Diese Links sind aktuell versteckt (display: none) -->
+          <!-- Können später aktiviert werden für GitHub-Link oder Sprachen-Wechsel -->
           <a href="https://github.com/DennisPoglitsch" style="display: none;">Github</a>
           <a style="display: none;">EN | DE</a>
         </span>
       </div>
     </header>
-    <!-- Home Section -->
+
+    <!-- 🏠 HOME / HERO SECTION: Start-Seite mit Punkt-Animation, Text und Bild -->
     <section id="Home" class="home_wrapper">
-      <!-- Dotgrid Canvas-->
+      <!-- Canvas: HTML5-Element für grafische Inhalte -->
+      <!-- Hier zeichnet dotgrid.js die interaktiven Punkte und Wellen -->
       <canvas id="dotCanvas" width="600" height="600"></canvas>
+
       <div class="home_text">
+        <!-- Große Überschrift mit reveal-Animation (scroll-Effekt) -->
         <h1 class="reveal">
           <span class="reveal_content">
             Hi, mein Name ist Dennis Poglitsch<span class="punkt_rot">.</span>
+            <!-- .punkt_rot = dieser Punkt wird rot eingefärbt mit CSS -->
           </span>
         </h1>
+
+        <!-- Zweite Überschrift mit dynamischem Text (Schreibmaschinen-Effekt) -->
         <h2 class="reveal">
           <span class="reveal_content">
             Ich bin <span id="typing_text"></span>
+            <!-- typing.js schreibt hier verschiedene Wörter rein
+                 (alt aber nicht veraltet, Lösungsorientiert, Analytisch, Strukturiert) -->
           </span>
         </h2>
+
+        <!-- Container für Kontakt-Link und Bild -->
         <div id="typing_image_wrapper">
+          <!-- Button zum Kontakt-Section springen -->
           <a href="#Kontakt" class="reveal">
             <span class="reveal_content">Kontakt zu mir</span>
           </a>
+
+          <!-- Bild: Der Olderbot-Charakter mit Augen-Overlay -->
           <span class="olderbot_container">
-            <img id="typing_image" src="images/olderbot.png" alt="Bild von Olderbot">
+            <!-- Haupt-Bild des Olderbot-Characters -->
+            <!-- Performance-Quick-Win: WebP statt PNG spart stark Dateigröße bei ähnlicher Qualität -->
+            <img id="typing_image" src="images/olderbot.webp" alt="Bild von Olderbot" decoding="async">
+            <!-- Overlay für Augen-Animation (wird überlagert) -->
             <img id="olderbot_eyes" src="images/olderbot_augen.png" alt="Bild von Olderbot Augen">
           </span>
         </div>
@@ -133,16 +183,12 @@
         <div class="projekte_list_wrapper">
           <div class="projekte_list">
             <!-- Hier Projekte bearbeiten -->
-            <div class="projekt" data-desc="Interaktives Entwickler-Portfolio mit HTML, CSS und modularem JavaScript. 
-              Enthält eigene Canvas-Animationen, Scroll-Observer, ein dynamisches Projekt-Modal und ein Live-Weather-Widget, 
-              das per API Daten mit Python im Browser (PyScript/Pyodide) lädt. 
-              Kontaktformular mit EmailJS und Spam-Schutz." data-tech="HTML, CSS, PyScript, API, JavaScript, Python"
-              data-link="stoerni.github.io" data-modal-img1="images/portfolio.png"
-              data-modal-img2="images/portfolio2.png">
+            <!-- Performance-Quick-Win: Modal-Bilder auf WebP umgestellt (kleiner, schneller) -->
+            <div class="projekt" data-desc="Interaktives Entwickler-Portfolio mit klarem Fokus auf Performance, Lesbarkeit und Benutzerführung. Umgesetzt mit modularer Frontend-Architektur, Canvas-Animationen, Scroll-Observer und dynamischem Projekt-Modal. Das Kontaktformular läuft über EmailJS inklusive Spam-Schutz." data-tech="HTML, CSS, JavaScript, EmailJS, UX" data-link="stoerni.github.io" data-modal-img1="images/portfolio.webp" data-modal-img2="images/portfolio2.webp">
               <div class="projekt_content">
                 <div class="reveal">
-                  <span class="reveal_content"><img src="images/portfolio.png"
-                      alt="Entwickler-Portfolio Screenshot"></span>
+                  <span class="reveal_content"><img src="images/portfolio.webp"
+                      alt="Entwickler-Portfolio Screenshot" loading="lazy" decoding="async"></span>
                 </div>
                 <div class="projekt_text_wrapper">
                   <h4 class="projekt_titel reveal">
@@ -151,20 +197,38 @@
                   <div class="projekt_beschreibung">
                     <p class="reveal">
                       <span class="reveal_content">
-                        Interaktives Entwickler-Portfolio mit Python im Browser über PyScript.
+                        Modernes Portfolio mit Fokus auf Struktur, Performance und professioneller Präsentation.
                       </span>
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="projekt"
-              data-desc="Ein Live-Wetter-Widget mit Python im Browser über PyScript. Die Daten kommen von der OpenWeather API und werden dynamisch im Modal geladen. Hier der Link zu OpenWeather https://openweathermap.org/ Anmerkung: Das Wetter-Widget benötigt bei der ersten Anwendung serverseitig etwas Zeit zum Laden."
-              data-tech="Python, PyScript, API, HTML, CSS" data-link="" data-project="weather">
+            <div class="projekt" data-desc="Werkstatt-CRM als reales Praxisprojekt: digitale Auftragserfassung per PDF/Excel, strukturierte Verwaltung von Kunden- und Auftragsdaten, mobil nutzbares Interface und vorbereitete Monitoring-Bausteine für den Betrieb. Geplant mit Java-Backend und auf skalierbarem Hosting-Setup ausgelegt." data-tech="Java, Spring Boot, REST API, SQL, Monitoring, Responsive UI" data-link="" data-modal-img1="images/crm-projekt-placeholder.svg" data-modal-img2="images/portfolio2.webp">
               <div class="projekt_content">
                 <div class="reveal">
-                  <span class="reveal_content"><img src="images/wetter.png"
-                      alt="Wetter Widget Projekt Screenshot"></span>
+                  <span class="reveal_content"><img src="images/crm-projekt-placeholder.svg"
+                      alt="Werkstatt-CRM Projektvorschau"></span>
+                </div>
+                <div class="projekt_text_wrapper">
+                  <h4 class="projekt_titel reveal">
+                    <span class="reveal_content">Werkstatt-CRM (in Entwicklung)</span>
+                  </h4>
+                  <div class="projekt_beschreibung">
+                    <p class="reveal">
+                      <span class="reveal_content">
+                        CRM-Lösung für Werkstätten mit Fokus auf digitale Aufträge, mobile Nutzung und saubere Prozesse.
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="projekt" data-desc="Live-Wetter-Widget mit Python im Browser über PyScript. Wetterdaten werden über die OpenWeather API geladen und direkt im Modal aktualisiert. Zusätzlich kann der Standort dynamisch gesucht werden, ohne die Seite neu zu laden." data-tech="Python, PyScript, API, HTML, CSS" data-link="https://openweathermap.org/" data-project="weather" data-modal-img1="images/wetter.webp">
+              <div class="projekt_content">
+                <div class="reveal">
+                  <span class="reveal_content"><img src="images/wetter.webp"
+                      alt="Wetter Widget Projekt Screenshot" loading="lazy" decoding="async"></span>
                 </div>
                 <div class="projekt_text_wrapper">
                   <h4 class="projekt_titel reveal">
@@ -173,7 +237,7 @@
                   <div class="projekt_beschreibung">
                     <p class="reveal">
                       <span class="reveal_content">
-                        Wetterdaten live aus einer API mit Python im Browser geladen.
+                        API-basiertes Wetter-Widget mit Python im Browser und dynamischer Ortssuche.
                       </span>
                     </p>
                   </div>
@@ -199,7 +263,7 @@
         </div>
         <p class="kontakt_intro reveal">
           <span class="reveal_content">
-            Schick mir einfach eine Mail, wenn du dich austauschen willst!
+            Schreib mir gerne eine Nachricht – ich freue mich auf den Austausch.
           </span>
         </p>
         <!-- Email mit Briefsymbol via svg -->
@@ -253,30 +317,55 @@
       </div>
     </section>
   </main>
-  <!-- Modal für Projektdetails -->
+  <!-- 🎬 MODAL: Popup-Fenster für Projekt-Details -->
+  <!-- Wird von modal.js geöffnet/geschlossen wenn Projekte geklickt werden -->
   <div id="projectModal" class="modal" aria-hidden="true">
+    <!-- Schwarzer Hintergrund (Backdrop) - kann geklickt werden zum Schließen -->
     <div class="modal_backdrop" data-modal-close></div>
+
+    <!-- Der eigentliche Modal-Inhalt (Popup-Box) -->
     <div class="modal_content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <!-- Close-Button mit × Symbol -->
       <button class="modal_close" aria-label="Schließen" data-modal-close>×</button>
+
+      <!-- Projekt-Titel (wird von modal.js dynamisch gesetzt) -->
       <h3 id="modalTitle">Titel</h3>
+
+      <!-- Bild-Galerie (mehrere Projekt-Bilder) -->
       <div id="modalGallery" class="modal_gallery"></div>
+      <!-- modal.js füllt das mit Bildern basierend auf data-Attributen der Projekt-Cards -->
+
+      <!-- Projekt-Beschreibung -->
       <p id="modalDesc">Beschreibung</p>
-      <!-- Wetter Container -->
+
+      <!-- 🌤️ Wetter-Widget (nur sichtbar für Weather-Projekt!) -->
       <div id="weather_container" style="display:none;"></div>
-      <!-- Tech-List (Badges) -->
+      <!-- modal.js zeigt diesen Container nur wenn project="weather" ist -->
+      <!-- weather.py füllt das mit einem Live-Wetter-Widget mit Suche -->
+
+      <!-- Tech-Badges (z.B. "HTML", "CSS", "JavaScript") -->
       <div id="modalTech" class="modal_tech" aria-hidden="true"></div>
-      <!-- Links / Aktionen -->
+      <!-- modal.js erzeugt die einzelnen Tech-Badges basierend auf data-tech Attribut -->
+
+      <!-- Links / Aktionen (z.B. "Live ansehen" Button) -->
       <div id="modalLinks" class="modal_links" aria-hidden="true"></div>
+      <!-- modal.js erstellt hier den externen Link-Button basierend auf data-link Attribut -->
     </div>
   </div>
-  <!-- EmailJS einbinden -->
+  <!-- 📧 EMAILJS LIBRARY: Für das Kontaktformular ohne eigenen Email-Server -->
+  <!-- EmailJS ermöglicht es, dass Emails direkt vom Browser versendet werden -->
+  <!-- Ohne EmailJS müsste man einen eigenen Server bauen -->
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-  <!-- main.js einbinden -->
+  
+  <!-- 🚀 MAIN.JS EINBINDEN: Das ist das Koordinations-Zentrum! -->
+  <!-- type="module" = ES6 Modules (modernes JavaScript mit import/export) -->
+  <!-- Alle anderen JS-Dateien werden von main.js importiert und koordiniert -->
   <script src="js/main.js" type="module"></script>
-  <!-- weather.py einbinden  -->
+  
+  <!-- 🐍 WEATHER.PY EINBINDEN: Python-Code der im Browser lädt und läuft -->
+  <!-- <py-script> = PyScript-Tag zum Laden von Python-Dateien -->
+  <!-- Dadurch kann weather.py die Funktion loadWeatherFromPython bereitstellen -->
   <py-script src="python/weather.py"></py-script>
 </body>
 
-
 </html>
-

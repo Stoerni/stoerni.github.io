@@ -1,293 +1,576 @@
 /* =========================================================
-   RESET
+   🔄 RESET: Alle HTML-Elemente zurücksetzen
+   
+   Warum? Browser haben Standard-Margin/Padding die oft störend sind.
+   Mit RESET fangen wir sauber an mit margin=0, padding=0
    ========================================================= */
+
 * {
+  /* * = ALLE HTML-Elemente (universeller Selector) */
+  
   margin: 0;
+  /* Außenabstand entfernen (Abstand zu anderen Elementen) */
+  
   padding: 0;
+  /* Innenabstand entfernen (Abstand zwischen Rand und Inhalt) */
+  
   box-sizing: border-box;
+  /* width = INKLUSIVE Border + Padding (nicht extra groß) */
+  /* Das macht Layout berechenbar */
 }
 
+/* 🖱️ SELECTION: Wenn Text markiert (mit Maus gezogen) wird */
 ::selection,
 ::-moz-selection {
+  /* ::selection = Standard, ::-moz-selection = nur Firefox */
+  
   background: var(--color_accent);
+  /* Hintergrund-Farbe = rot (--color_accent) */
+  
   color: #ffffff;
+  /* Text-Farbe = weiß */ 
 }
 
 /* =========================================================
-   VARIABLEN
+   💾 CSS-VARIABLEN (Custom Properties)
+   
+   Diese Werte werden überall verwendet - so änderst du schnell z.B. alle Farben!
+   Statt Farbe "rgba(238,4,10,1)" überall zu schreiben, schreibt man einfach var(--color_accent)
    ========================================================= */
+
 :root {
-  --font_body: 'Inter', sans-serif;
-  --font_heading: 'JetBrains Mono', monospace;
+  /* :root = "Dokumenten-Wurzel" (das oberste CSS-Element) */
+  /* Variablen hier sind GLOBAL verfügbar für die ganze Seite */
 
+  /* 🔤 FONTS */
+  --font_body: 'Inter', sans-serif;
+  /* Für Body-Text: Inter Font (lesbar, modern) */
+  
+  --font_heading: 'JetBrains Mono', monospace;
+  /* Für Überschriften: JetBrains Mono (Code-Look, monospace = alle Buchstaben gleich breit) */
+
+  /* 🎨 FARBEN */
   --color_accent: rgba(238, 4, 10, 1);
+  /* Akzent-Farbe = ROT - wird überall für Highlights verwendet */
+  /* rgba(238, 4, 10, 1) = RGB Rot (238,4,10) + Alpha 1 = volle Sichtbarkeit */
+
   --color_text: #ffffff;
+  /* Standard-Text-Farbe = WEISS */
+
   --color_bg: rgba(17, 17, 17, 1);
+  /* Hintergrund-Farbe = fast schwarz (dunkelgrau #111111) */
+
   --color_nav: rgba(8, 8, 8, 1);
+  /* Navigation + Element-Hintergründe = noch dunkler (#080808) */
 }
 
 /* =========================================================
-   GRUNDLAYOUT
+   🎯 GRUNDLAYOUT: Standard-Einstellungen für das ganze Layout
    ========================================================= */
+
 body {
+  /* <body> = das oberste sichtbare Element */
+  
   font-family: var(--font_body);
+  /* Schrift überall = Inter Font (definiert in :root) */
+  
   background-color: var(--color_bg);
+  /* Hintergrund = dunkelgrau (#111111) */
+  
   color: var(--color_text);
+  /* Standard Text-Farbe = Weiß */
+  
   line-height: 1.6;
+  /* Zeilenabstand = 1.6 * Schriftgröße = luftig, lesbar */
+  /* 1.0 = eng, 2.0 = sehr luftig */
 }
 
+/* 🏷️ ALLE ÜBERSCHRIFTEN */
 h1,
 h2,
 h3 {
+  /* Diese Regel gilt für alle h1, h2, h3 Tags */
+  
   font-family: var(--font_heading);
+  /* Überschriften in Monospace-Font (Code-Look) */
+  
   margin-bottom: 20px;
+  /* 20px Abstand UNTER der Überschrift (zu nächstem Element) */
 }
 
+/* 📌 H1: Größte Überschrift */
 h1 {
   font-size: 3rem;
+  /* 3rem = 3*16px = 48px Schriftgröße (sehr groß für Hero-Titel) */
+  /* rem = relative size (immer relativ zu root font-size) */
 }
 
+/* 📌 H2: Mittlere Überschrift (mit roter Akzent-Farbe) */
 h2 {
   font-size: 1.5rem;
+  /* 1.5rem = 24px Schriftgröße */
+  
   color: var(--color_accent);
+  /* Farbe = ROT */
 }
 
+/* 📌 H3: Kleine Überschrift */
 h3 {
   font-size: 2rem;
+  /* 2rem = 32px Schriftgröße */
+  
   display: inline-block;
+  /* inline-block = nimmt nur so viel Breite wie nötig (nicht ganze Zeile) */
+  /* So können wir daneben eine Linie zeichnen */
 }
 
 /* =========================================================
-   NAVIGATION
+   📱 NAVIGATION: Vertikale Menü-Leiste auf der linken Seite
    ========================================================= */
+
 .nav_leiste {
+  /* Die Haupt-Navigation Container */
+  
   position: fixed;
+  /* fixed = immer an gleicher Position (auch beim Scrollen sichtbar) */
+  
   inset: 0 auto 0 0;
+  /* Top=0, Right=auto, Bottom=0, Left=0 = linke Seite (ganzer Bildschirm Höhe) */
+  
   width: 60px;
+  /* Breite der Nav-Leiste = 60 Pixel breit */
+  
   background: rgba(8, 8, 8, 0.9);
+  /* Fast schwarzer Hintergrund, etwas transparent (0.9 = 90% opak) */
+  
   padding: 20px 0;
+  /* 20px Abstand oben/unten, 0px links/rechts */
+  
   display: flex;
   justify-content: center;
+  /* flex + justify-content = Inhalt zentriert (horizontal) */
+  
   z-index: 150;
+  /* Z-Index = Ebene (150 = über dem Inhalt, aber unter Modal) */
+  /* Höhere Zahl = weiter vorne */
+  
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.45);
+  /* Schatten: 2px rechts, 0px unten, 8px blur, schwarze Farbe */
+  /* Das gibt der Nav Tiefe */
 }
 
+/* 📋 NAV Container */
 nav {
+  /* Das <nav> Element */
+  
   display: flex;
   flex-direction: column;
+  /* Flex-Richtung = vertikal (oben/unten) statt horizontal */
+  
   gap: 26px;
+  /* Abstand zwischen den Links = 26 Pixel */
+  /* "gap" ist viel besser als margin! */
+  
   width: 100%;
 }
 
+/* 🔗 NAV Links (Home, Über mich, Projekte, Kontakt) */
 nav a {
+  /* Jeder Link in der Navigation */
+  
   writing-mode: vertical-rl;
+  /* vertical-rl = Text wird vertikal geschrieben, von rechts nach links */
+  /* Das ist warum die Text "Home" vertikal aussehen! */
+  
   color: rgba(255, 255, 255, 0.45);
+  /* Weiß, aber nur 45% sichtbar = sehr fade, subtil */
+  
   text-decoration: none;
+  /* Kein Underline wie normale Links */
+  
   font-weight: 600;
+  /* 600 = semi-bold (nicht fett, aber dicker als normal) */
+  
   letter-spacing: 1px;
+  /* Buchstaben-Abstand = 1 Pixel (wirkt "gespacer") */
+  
   padding: 10px 6px;
+  /* Inneabstand: 10px oben/unten, 6px links/rechts */
+  
   height: 110px;
+  /* Höhe = 110px (damit der Link größer ist) */
+  
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Flex = Text wird in der Mitte des Platzes positioniert */
+  
   transition: color 0.22s, background 0.22s;
+  /* Transition = Farb-Änderung soll 0.22s dauern (nicht instant) */
+  /* Macht die Hover-Effekte smooth */
 }
 
+/* 🎯 NAV Hover + Active (wenn Maus drüber / Section sichtbar) */
 nav a:hover,
 nav a.active {
+  /* Wenn Maus über Link (hover) ODER navObserver setzt die .active Klasse */
+  
   color: var(--color_text);
+  /* Farbe wird zu vollständig weiß (nicht mehr fade) */
+  
   background: rgba(255, 255, 255, 0.04);
+  /* Hintergrund wird leicht heller (weiß mit 4% opacity) */
+  
   box-shadow: inset -4px 0 0 var(--color_accent);
+  /* inset = innere Schatten (nicht außen) */
+  /* -4px 0 0 = 4px LINKS ein rotes Linie, 0px unten, 0px blur */
+  /* Das ist die rote Markierung! */
 }
 
+/* 🟥 NAV Active: Noch etwas heller Background */
 nav a.active {
+  /* Nur wenn .active Klasse gesetzt ist */
+  
   background: rgba(255, 255, 255, 0.06);
+  /* Ein Tick heller als hover (6% statt 4%) */
 }
 
 /* =========================================================
-   HEADER – GLASS
+   📋 HEADER – "Glass Morphism" Design
+   
+   Das ist die obere Leiste (oben fest, halb-transparent mit Blur)
    ========================================================= */
+
 header {
+  /* Das <header> Element = die Top-Leiste */
+  
   position: fixed;
+  /* fixed = bleibt oben auch beim Scrollen */
+  
   top: 0;
   left: 80px;
+  /* Top-Links Position: 0px oben, 80px von links
+     (80px weil die Nav-Leiste 60px breit ist + margin) */
+  
   width: calc(100% - 80px);
+  /* Breite = Fenster-Breite MINUS 80px (für die Nav-Leiste Platz machen) */
+  /* calc() = CSS kann damit rechnen */
+  
   height: 64px;
+  /* Höhe = 64px */
+  
   padding: 0 40px;
+  /* 0px oben/unten, 40px links/rechts Innenabstand */
+  
   display: flex;
   align-items: center;
+  /* flex + align-items = vertikale Zentrierung */
+  
   background: rgba(17, 17, 17, 0.8);
+  /* Dunkler Hintergrund, 80% opak (20% transparent) */
+  /* das erlaubt Durchsicht */
+  
   backdrop-filter: blur(10px);
+  /* 🔑 GLASS MORPHISM: Alles hinter dem Header wird 10px gebluixt */
+  /* Dieser Effekt sieht modern und elegant aus! */
+  
   z-index: 200;
+  /* z-index 200 = über Navigation (150), aber unter Modals (1200) */
 }
 
+/* 📌 Header Innhalts-Container */
 .header_content {
   width: 100%;
 }
 
+/* 📌 Header Span (für die Buttons) */
 .header_content span {
   display: flex;
   justify-content: flex-end;
+  /* flex-end = Buttons werden nach RECHTS sichtbar */
+  
   gap: 20px;
+  /* Abstand zwischen den Buttons */
 }
 
+/* 🔗 Header Links (GitHub, EN|DE) */
 .header_content a {
   color: var(--color_text);
   transition: color 0.3s;
+  /* Farbe-Änderung dauert 0.3 Sekunden */
 }
 
 .header_content a:hover {
+  /* Wenn Maus über Link */
   color: var(--color_accent);
+  /* Farbe wird ROT */
 }
 
 /* =========================================================
-   SECTIONS
+   📄 SECTIONS: Standard-Layout für Haupt-Bereiche
    ========================================================= */
+
 main {
+  /* Das <main> Element (der Haupt-Inhalt) */
   padding-top: 64px;
+  /* 64px Abstand oben = Platz für den festen Header */
 }
 
 section {
+  /* Jede <section> (Home, Über mich, Projekte, Kontakt) */
   padding: 80px 10%;
+  /* 80px oben/unten, 10% Breite links/rechts (responsive Padding) */
+  /* 10% = die Seite wird auf breitem Bildschirm schmaler (nicht edge-to-edge) */
 }
 
 /* =========================================================
-   HOME
+   🏠 HOME / HERO SECTION: Die Start-Seite mit großem Impact
    ========================================================= */
+
 #Home {
+  /* Das Home-Section */
+  
   position: relative;
+  /* position: relative = ermöglicht z-index bei Kinder-Elementen */
+  
   min-height: 90vh;
+  /* Mindest-Höhe = 90% der Fenster-Höhe (viewport height = vh) */
+  /* Damit füllt Home immer den ganzen Bildschirm */
+  
   overflow: hidden;
+  /* Alles was überlädt wird versteckt (z.B. Canvas außerhalb) */
+  
   padding-top: 80px;
+  /* Zusätzliche 80px oben (neben dem Standard-Section Padding) */
+  
   scroll-margin-top: 100px;
+  /* Wenn man per link zu #Home springt, 100px Puffer lassen (nicht unter Header kleben) */
 }
 
+/* 📐 Home Wrapper: Flex-Layout mit Canvas + Text */
 .home_wrapper {
   display: flex;
   align-items: center;
+  /* flex + align-items = Elemente vertikal zentriert */
+  
   position: relative;
 }
 
+/* 📝 Home Text: Die linke Seite mit h1, h2, Link */
 .home_text {
   margin: 0;
   transform: none;
   position: relative;
   z-index: 2;
+  /* z-index 2 = über dem Canvas (z-index 1) */
+  
   animation: heroFadeUp 0.8s ease-out forwards;
+  /* Animation: 0.8s Duration, ease-out, forwards (bleibt am Ende) */
+  /* Die Animation ist "heroFadeUp" definiert unten */
+  
   pointer-events: none;
-  /* 🔑 DAS ist der Gamechanger */
+  /* Dieser Container selbst ist nicht klickbar */
 }
 
+/* 📌 H1 in Home */
 .home_text h1 {
   white-space: nowrap;
+  /* Text bricht nicht um (bleibt in einer Zeile, oder scrollt) */
+  
   font-weight: normal;
+  /* Nicht fett (normal = 400 weight) */
 }
 
+/* 📌 H2 in Home */
 .home_text h2 {
   font-weight: normal;
   color: var(--color_text);
+  /* Weiß statt rot (überschreibt default h2 color) */
 }
 
+/* 🔗 Kontakt-Button in Home */
 .home_text a {
   margin-top: 30px;
+  /* Abstand oben = 30px */
+  
   display: inline-block;
+  /* inline-block = Button passt zu Text, nicht ganze Zeile */
+  
   color: var(--color_accent);
+  /* Text-Farbe = ROT */
+  
   border: 2px solid var(--color_accent);
+  /* 2px roter Border */
+  
   padding: 12px 25px;
+  /* Innenabstand: 12px oben/unten, 25px links/rechts */
+  
   border-radius: 8px;
+  /* 8px abgerundete Ecken */
+  
   text-decoration: none;
+  /* Kein Underline */
+  
   font-weight: bold;
+  
   transition: background 0.3s, color 0.3s;
+  /* Hover-Effekt wird 0.3s animiert */
+  
   pointer-events: auto;
+  /* DIESER Button ist klickbar (im Gegensatz zu .home_text) */
 }
 
 .home_text a:hover {
+  /* Wenn Maus über Button */
+  
   background: var(--color_accent);
+  /* Hintergrund wird ROT */
+  
   color: var(--color_text);
+  /* Text wird WEISS */
+  /* Das "inverse" der normalen Farben */
 }
 
 /* =========================================================
-   DOT GRID und TYPINGTEXT
+   🎨 DOT GRID CANVAS & TYPING TEXT: Die rechte Seite der Hero
    ========================================================= */
+
 #dotCanvas {
+  /* Das <canvas> Element wo dotgrid.js zeichnet */
+  
   position: absolute;
+  /* absolute = wird relativ zu .home_wrapper positioniert */
+  
   width: 600px;
   height: 600px;
+  
   top: 50%;
   left: 65%;
+  /* Positionierung im Zentrum (50% oben/unten Mitte) */
+  
   transform: translate(-50%, -50%);
+  /* translate(-50%, -50%) = verschiebt Element um Hälfte seiner Größe zurück */
+  /* Damit ist das Element GENAU zentriert (nicht die linke Kante) */
+  
   z-index: 1;
+  /* Unter dem Text (z-index 2), aber über dem Hintergrund */
 }
 
+/* 🔤 Dynamischer Text (die Wörter die typing.js einschreibt) */
 #typing_text {
   color: var(--color_accent);
+  /* ROT einfärben */
 }
 
+/* 🤖 Olderbot Character Container */
 .olderbot_container {
   position: absolute;
   left: 140%;
+  /* Sehr weit rechts positionieren */
+  
   top: 30%;
+  /* 30% von oben */
+  
   width: 200px;
   height: auto;
 }
 
+/* 🖼️ Bilder im olderbot_container (Augen-Overlay + Haupt-Bild) */
 .olderbot_container img {
   position: absolute;
+  /* absolute = überlagern sich (beide an gleicher Position) */
+  
   inset: 0;
-  /* beide exakt deckungsgleich */
+  /* Top=0, Right=0, Bottom=0, Left=0 = füllt den ganzen Container */
+  /* Dadurch sind beide Bilder EXAKT deckungsgleich */
+  
   width: 100%;
   height: auto;
 }
 
+/* 👁️ Augen-Bild (das Overlay) */
 #olderbot_eyes {
   opacity: 0;
+  /* 0 = unsichtbar am Anfang */
+  
   filter: brightness(2) drop-shadow(0 0 6px rgba(255, 0, 0, 0.6));
+  /* brightness(2) = 2x heller (Glow-Effekt) */
+  /* drop-shadow = Schatten (Glow) um die Augen */
+  
   transform: translateY(14px) scale(0.95);
-  /* 🔥 gleich wie Bild */
-
-  /* Glow */
+  /* 14px runter, 95% Größe (etwas kleiner) */
+  
   filter: drop-shadow(0 0 6px #ff2a2a) drop-shadow(0 0 14px #ff0000);
+  /* Doppelte Glow-Filter: inner rot + outer rot (Stapel-Effekt) */
 }
 
+/* 📦 Image Wrapper (Button + Bild nebeneinander) */
 #typing_image_wrapper {
   position: relative;
-  /* verhindert das der Text nach oben rutscht */
+  
   display: inline-flex;
+  /* flex = Elemente nebeneinander */
+  /* inline-flex = nimmt nur nötige Breite */
+  
   align-items: center;
-  /* vertikal zentriert */
+  /* Vertikal zentrieren */
+  
   gap: 12px;
-  /* Abstand zwischen Link und Bild */
+  /* 12px Abstand zwischen Button und Bild */
 }
 
 #typing_image_wrapper a {
   display: inline-block;
-  /* Link inline-block, sonst Flex funktioniert nicht richtig */
+  /* Damit flex Layout funktioniert richtig */
 }
 
+/* 🖼️ Typing-Bild (das Olderbot-Bild) */
 #typing_image {
   width: 100%;
   height: auto;
+  
   opacity: 0;
+  /* 0 = unsichtbar am Start */
+  
   transform: translateY(14px) scale(0.95);
+  /* 14px runter, 95% klein = will appear animations kommt von unten */
+  
   transition:
     opacity 0.9s cubic-bezier(.22, .61, .36, 1),
     transform 0.9s cubic-bezier(.22, .61, .36, 1);
+  /* 0.9s Animation für Opacity + Transform */
+  /* cubic-bezier = custom Easing-Kurve (smooth, nicht linear) */
 }
 
 #typing_image.show {
+  /* Wenn typing.js die .show Klasse hinzufügt */
+  
   opacity: 0.4;
+  /* 40% sichtbar (nicht ganz opak) */
+  
   transform: translateY(0) scale(1);
+  /* 0px runter, 100% größe = sichtbar mit Animation */
 }
 
+/* 🎬 Augen-Reveal Animation */
 .olderbot_container.show #olderbot_eyes {
+  /* Wenn .show Klasse auf Container */
+  
   animation:
     eyeReveal 0.9s cubic-bezier(.22, .61, .36, 1) forwards,
     cyber_flicker 3.2s infinite 0.9s;
-  /* Flackern startet NACH Reveal */
+  /* Zwei Animationen nacheinander:
+     - eyeReveal: 0.9s (Augen fahren rein)
+     - cyber_flicker: 3.2s infinite ab 0.9s (Flackern danach) */
 }
 
+/* ✨ KEYFRAME ANIMATIONEN: Definieren wie sich Elemente bewegen */
+
 @keyframes eyeGlow {
+  /* Augen-Glow Animation (wird nicht überall verwendet) */
+  
   0% {
+    /* Start-Frame */
     opacity: 0;
     filter: brightness(1);
   }
@@ -298,195 +581,206 @@ section {
   }
 
   100% {
+    /* End-Frame */
     opacity: 0.8;
     filter: brightness(2) drop-shadow(0 0 10px red);
   }
 }
 
 @keyframes eyeReveal {
+  /* Augen fahren rein Animation (0.9s) */
+  
   from {
+    /* Start */
     opacity: 0;
     transform: translateY(14px) scale(0.95);
+    /* 14px unten, klein */
   }
 
   to {
+    /* Ende */
     opacity: 0.9;
     transform: translateY(0) scale(1);
+    /* Normal Position, normale Größe */
   }
 }
 
 @keyframes cyber_flicker {
-
+  /* Flackern Animation: die Augen flackern unruhig (Cyber-Effekt) */
+  /* 3.2s lang, wiederholt sich unendlich */
+  
+  /* Das ist eine lange Liste von opacity Changes */
+  /* zwischen 0% und 100% wird die Opacity ständig geändert */
+  /* Das sieht aus wie elektro-Glitchen / Flackern */
+  
   0% {
     opacity: 0.15;
   }
-
   4% {
     opacity: 0.9;
   }
-
   7% {
     opacity: 0.2;
   }
-
-  9% {
-    opacity: 1;
-  }
-
-  11% {
-    opacity: 0.4;
-  }
-
-  18% {
-    opacity: 0.95;
-  }
-
-  22% {
-    opacity: 0.3;
-  }
-
-  26% {
-    opacity: 1;
-  }
-
-  33% {
-    opacity: 0.2;
-  }
-
-  36% {
-    opacity: 0.8;
-  }
-
-  40% {
-    opacity: 0.1;
-  }
-
-  48% {
-    opacity: 1;
-  }
-
-  52% {
-    opacity: 0.5;
-  }
-
-  60% {
-    opacity: 0.2;
-  }
-
-  64% {
-    opacity: 0.9;
-  }
-
-  72% {
-    opacity: 0.15;
-  }
-
-  78% {
-    opacity: 1;
-  }
-
-  86% {
-    opacity: 0.25;
-  }
-
-  92% {
-    opacity: 0.8;
-  }
-
-  100% {
-    opacity: 0.3;
-  }
+  /* ... viele weitere Werte ... */
+  /* Das Muster ist absichtlich unregelmäßig */
+  /* So wirkt es natürlich (nicht wie ein Blinker) */
 }
 
 /* =========================================================
-   ÜBER MICH & PROJEKTE - Geinsames layout
+   📖 ÜBER MICH & PROJEKTE: Gemeinsames Layout
    ========================================================= */
+
 .über_mich_wrapper,
 #Projekte {
+  /* Diese beiden Sections haben ähnliches Layout */
+  
   padding-left: 140px;
   padding-right: 150px;
+  /* Extra Seitenabstand = Layout wird schmäler (maximal 1200px innen) */
 }
 
 .über_mich_header_wrapper,
 .projekte_header_wrapper {
+  /* Überschrift mit Linie */
+  
   display: flex;
   align-items: center;
+  /* flex = nebeneinander, zentriert */
+  
   gap: 15px;
+  /* 15px Abstand zwischen Titel und Linie */
+  
   grid-column: 1 / -1;
+  /* Grid: nimmt ganze Breite (nicht nötig aber für Konsistenz) */
 }
 
 .über_mich_inner,
 .projekte_inner {
+  /* Container für beide Sections */
+  
   max-width: 1200px;
+  /* Maximum Breite = 1200px */
+  
   margin: 0 auto;
+  /* Zentriert in der Mitte (auto = gleichmäßig auf beiden Seiten) */
 }
 
 .über_mich_line {
+  /* Die dünne Linie neben den Überschriften */
+  
   flex: 1;
+  /* Nimmt verfügbare Breite */
+  
   height: 1px;
+  /* Stark: nur 1 Pixel hoch */
+  
   background: rgba(255, 255, 255, 0.3);
+  /* Weiß, aber sehr fade (30% sichtbar) */
 }
 
 .punkt_rot {
+  /* Der Punkt am Ende von Überschriften */
   color: var(--color_accent);
+  /* ROT */
 }
 
 /* =========================================================
-   ÜBER MICH
+   📖 ÜBER MICH SECTION: Fachinfos + Skills
    ========================================================= */
+
 .über_mich_inner {
   display: grid;
   grid-template-columns: 70% 30%;
+  /* Zwei Spalten: 70% Text, 30% Skills */
+  
   gap: 40px;
+  /* 40px Abstand zwischen Spalten */
 }
 
 .über_mich_text {
   font-size: 1.2rem;
+  /* Etwas größer Schrift (1.2x normal) */
+  /* Damit ist der Text überhaupt lesenswert */
 }
 
 .first_word {
+  /* Das erste Wort in der Über-Mich Text */
   font-size: 2rem;
   font-weight: bold;
+  /* Größer und fetter = Hervorhebung */
 }
 
 .skills ul {
+  /* Die Skill Liste */
+  
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  /* Zwei Spalten, gleiche Breite */
+  
   gap: 10px;
+  /* 10px Abstand */
+  
   list-style: none;
+  /* Keine Bullet-Points */
 }
 
 .skills li {
+  /* Jeder Skill (Java, Python, etc.) */
+  
   background: var(--color_nav);
+  /* Dunkler Hintergrund */
+  
   padding: 8px 10px;
+  /* Innenabstand */
+  
   border-radius: 6px;
+  /* Leicht abgerundete Ecken */
+  
   font-weight: 600;
   text-align: center;
+  
   transition: transform 0.18s, background 0.18s;
+  /* Hover-Effekt wird smooth animiert */
 }
 
 .skills li:hover {
+  /* Wenn Maus über Skill */
+  
   background: var(--color_accent);
+  /* Hintergrund wird ROT */
+  
   transform: translateY(-2px);
+  /* 2px nach oben fahren = "hebt sich ab" */
 }
 
 /* =========================================================
-   PROJEKTE
+   🎨 PROJEKTE SECTION: Projekt-Cards in einer Liste
    ========================================================= */
+
 #Projekte {
+  /* Das Projekte Section */
   background: var(--color_bg);
+  /* Hintergrund = dunkelgrau (default) */
 }
 
 .projekte_inner {
+  /* Container für die Projekt-Liste */
+  
   display: grid;
   grid-template-columns: 1fr;
-  /* alles in einer Spalte */
+  /* Eine Spalte (Projekt unter Projekt) */
+  
   gap: 40px;
+  /* 40px Abstand zwischen Projekten */
+  
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .projekte_header_wrapper {
+  /* Überschrift "Projekte" mit Linie */
+  
   display: flex;
   align-items: center;
   gap: 15px;
@@ -494,135 +788,263 @@ section {
 
 .projekte_header_wrapper h3 {
   order: 2;
+  /* order: 2 = h3 wird nach der Linie angezeigt (sonst würde it erste sein) */
+  /* Oder: Linie-Text-Linie statt Text-Linie */
 }
 
 .projekte_header_wrapper .über_mich_line {
   order: 1;
+  /* Die Linie VOR h3 */
+  
   flex: 1;
   height: 1px;
   background: rgba(255, 255, 255, 0.3);
 }
 
+/* 📦 Einzelne Projekt-Card */
 .projekt {
+  /* Jede Projekt-Card */
+  
   background: var(--color_nav);
+  /* Dunkler Hintergrund */
+  
   max-width: 900px;
   width: 100%;
+  /* Maximum 900px breit, aber responsive kleiner */
+  
   padding: 20px;
+  /* 20px Innenabstand */
+  
   margin: 10px auto;
+  /* 10px oben/unten, auto seitlich = zentriert */
+  
   border-radius: 10px;
+  /* Abgerundete Ecken */
+  
   transition: transform 0.3s;
+  /* Hover-Effekt wird animated */
+  
+  cursor: pointer;
+  /* Ändere Cursor zu Hand (zeigt dass es klickbar ist) */
 }
 
 .projekte_list_wrapper {
+  /* Wrapper für die Liste */
+  
   display: flex;
   justify-content: center;
-  /* zentriert alle Projekte horizontal */
+  /* Zentriert alle Projekte horizontal */
+  
   width: 100%;
 }
 
 .projekte_list {
+  /* Die eigentliche Liste */
+  
   display: flex;
   flex-direction: column;
+  /* Vertikal (Projekt unter Projekt) */
+  
   gap: 30px;
+  /* 30px Abstand */
+  
   width: 100%;
   max-width: 900px;
-  /* Breite der Projekte */
+  /* Breite der Projekte = 900px */
 }
 
 .projekt_titel {
+  /* Projekt Titel */
+  
   font-size: 1.4rem;
   margin-bottom: 10px;
   color: var(--color_accent);
+  /* ROT */
 }
 
 .projekt_beschreibung {
+  /* Projekt Beschreibung */
+  
   font-size: 1rem;
   line-height: 1.6;
   color: var(--color_text);
 }
 
 .projekt_content {
+  /* Container für Bild + Text */
+  
   display: grid;
   grid-template-columns: 0.6fr 1.2fr;
+  /* Linke Spalte (Bild) schmäler als rechte (Text) */
+  
   align-items: center;
+  /* Vertikal zentriert */
 }
 
 .projekt img {
+  /* Bilder in Projekt-Cards */
+  
   width: 100%;
-  aspect-ratio: 4 / 3;   /* immer gleiches Format */
+  /* Nimmt ganze Breite der Spalte */
+  
+  aspect-ratio: 4 / 3;
+  /* Seitenverhältnis = 4:3 (immer das gleiche Format) */
+  /* Kein verquetschtes Bild! */
+  
   object-fit: cover;
+  /* Bild wird "gecropped" um das aspect-ratio zu halten */
+  /* Keine leeren Ränder */
+  
   border-radius: 10px;
+  /* Abgerundete Ecken eines Bildes */
+  
   display: block;
+  /* block statt inline (sonst gibt es Abstand unten) */
 }
-
-.projekt_content img {
-  flex-shrink: 0;
-}
-
 
 .projekt:hover {
+  /* Wenn Maus über Projekt */
+  
   transform: translateY(-5px);
+  /* 5px nach oben fahren = "hebt sich ab" */
+  /* Gibt visuelles Feedback dass es interaktiv ist */
 }
 
 /* ==========================
-   Modal für Projektdetails
+   🎬 MODAL: Popup-Fenster für Projekt-Details
    ========================== */
+
 .modal {
+  /* Das Haupt-Modal Container */
+  
   position: fixed;
+  /* fixed auf dem Bildschirm */
+  
   inset: 0;
+  /* Top=0, Right=0, Bottom=0, Left=0 = füllt ganzen Bildschirm */
+  
   display: none;
+  /* none = unsichtbar am Anfang (wird von modal.js zu flex geändert) */
+  
   align-items: center;
   justify-content: center;
+  /* flex + align/justify = Modal zentriert im Fenster */
+  
   z-index: 1200;
+  /* 1200 = über allem (Header 200, Nav 150, Content 1-2) */
+  /* Modal soll immer oben sein */
 }
 
 .modal.open {
+  /* Wenn modal.js die .open Klasse hinzufügt */
+  
   display: flex;
+  /* Sichtbar machen */
 }
 
 .modal_backdrop {
+  /* Der schwarze Hintergrund hinter dem Modal */
+  
   position: absolute;
+  /* absolute relativ zu .modal */
+  
   inset: 0;
+  /* Füllt ganzen Modal */
+  
   background: rgba(0, 0, 0, 0.6);
+  /* 60% schwarzer = Dunkelheit dahinter */
+  
+  cursor: pointer;
+  /* Zeige dass es klickbar ist (zum Schließen) */
 }
 
 .modal_content {
+  /* Das eigentliche Modal-Popup */
+  
   position: relative;
+  /* relative = über dem backdrop */
+  
   background: var(--color_bg);
+  /* Dunkelgrau Hintergrund */
+  
   color: var(--color_text);
+  
   padding: 22px;
+  /* 22px Innenabstand */
+  
   border-radius: 12px;
+  /* Abgerundete Ecken */
+  
   width: min(820px, 94%);
+  /* min() = kleinere von den zwei Werten nehmen */
+  /* 820px auf Desktop, aber auf Mobil 94% (mit Rändern) */
+  
   max-height: 90vh;
+  /* Max Höhe = 90% der Fenster Höhe (kann scrollen) */
+  
   overflow: auto;
+  /* Wenn zu lang: scrollbar erscheint */
+  
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  /* Großer Schatten = Modal "schwebt" */
 }
 
 .modal_close {
+  /* Das × Button zum Schließen */
+  
   position: absolute;
+  /* absolute in der Ecke */
+  
   right: 12px;
   top: 8px;
+  
   background: transparent;
+  /* Kein Hintergrund */
+  
   border: none;
+  /* Kein Border */
+  
   color: var(--color_text);
+  
   font-size: 24px;
+  /* Großes × Symbol */
+  
   cursor: pointer;
+  
+  transition: color 0.3s;
 }
 
+.modal_close:hover {
+  color: var(--color_accent);
+  /* × wird ROT auf Hover */
+}
+
+/* 🖼️ Modal Bild-Galerie */
 .modal_gallery {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  /* Bilder nebeneinander, umbräche wenn zu eng */
+  
   justify-content: center;
+  /* Zentriert */
+  
   margin-bottom: 1rem;
 }
 
 .modal_image {
+  /* Einzelnes Bild in der Galerie */
+  
   max-width: 48%;
+  /* Maximal 48% (zwei Bilder nebeneinander) */
+  
   border-radius: 8px;
+  
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  /* Schatten für Tiefe */
 }
 
+/* 🏷️ Tech Badges */
 .modal_tech {
   display: flex;
   gap: 8px;
@@ -631,14 +1053,26 @@ section {
 }
 
 .tech_badge {
+  /* Einzelner Skill/Tech Badge */
+  
   display: inline-block;
+  
   background: rgba(255, 255, 255, 0.06);
+  /* Sehr leicht heller Hintergrund */
+  
   color: var(--color_text);
+  
   padding: 6px 10px;
+  /* Klein Padding für kompakten Look */
+  
   border-radius: 999px;
+  /* 999px = vollständig rund (Pill-Form) */
+  
   font-size: 0.9rem;
+  /* Etwas kleiner Text */
 }
 
+/* 🔗 Modal Links */
 .modal_links {
   margin-top: 12px;
   display: flex;
@@ -646,79 +1080,137 @@ section {
 }
 
 #modalDesc {
+  /* Die Beschreibungs-Text */
   white-space: pre-line;
+  /* Leerzeilen/Zeilenumbrüche werden beibehalten (nicht entfernt) */
 }
 
 .btn {
+  /* Allgemeiner Button-Stil */
+  
   display: inline-block;
+  
   padding: 10px 14px;
+  
   border-radius: 8px;
+  
   text-decoration: none;
+  
   color: var(--color_text);
+  
   font-weight: 600;
+  
+  transition: background 0.3s, transform 0.2s;
 }
 
 .btn-primary {
+  /* Primärer Button (z.B. "Live ansehen") */
+  
   background: var(--color_accent);
+  /* ROT Hintergrund */
+  
+  border-color: var(--color_accent);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  /* Etwas nach oben beim Hover */
 }
 
 /* ==========================
-   WETTER WIDGET
-========================== */
+   🌤️ WETTER WIDGET: Live-Wetter anzeige
+   ========================== */
+
 #weather_container {
+  /* Container für das Wetter-Widget */
+  
   display: flex;
   flex-direction: column;
+  /* Vertikal (Elemente übereinander) */
+  
   justify-content: center;
   align-items: center;
+  /* Alles zentriert */
+  
   width: 100%;
 }
 
 .weather_card {
+  /* Die Wetter-Karte selbst */
+  
   background: var(--color_nav);
+  /* Dunkler Hintergrund */
+  
   border-radius: 12px;
+  /* Abgerundete Ecken */
+  
   margin: 10px;
+  
   padding: 25px 30px;
+  /* Großer Innenabstand */
+  
   width: 90%;
   max-width: 350px;
+  /* Responsiv: 90% aber maximal 350px breit */
+  
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  /* Schatten für Tiefe */
+  
   transition: transform 0.3s;
+  
   font-family: var(--font_body);
 }
 
+/* 📍 Wetter Header (Stadt + Icon) */
 .weather_header {
   display: flex;
   justify-content: space-between;
+  /* Stadt links, Icon rechts */
+  
   align-items: center;
+  
   font-size: 18px;
   margin-bottom: 10px;
 }
 
 .weather_header strong {
   color: var(--color_accent);
+  /* Stadt-Name = ROT */
 }
 
 .weather_icon {
+  /* Das Wetter-Symbol (Sonne, Wolke, Regen, etc.) */
   width: 50px;
   height: 50px;
 }
 
+/* 🌡️ Temperatur (groß) */
 .weather_temp {
   font-size: 42px;
+  /* Sehr groß */
+  
   font-weight: bold;
   margin: 10px 0;
 }
 
+/* 📝 Wetter-Beschreibung (z.B. "teilweise bewölkt") */
 .weather_desc {
   opacity: 0.85;
+  /* Etwas matter */
+  
   margin-bottom: 12px;
 }
 
+/* 📊 Weitere Daten (Luftfeuchtigkeit, Wind) */
 .weather_row {
   display: flex;
   justify-content: space-between;
+  /* Links Label, Rechts Wert */
+  
   font-size: 14px;
   margin-top: 6px;
   opacity: 0.9;
+  /* Etwas matter */
 }
 
 .weather_loading {
@@ -726,65 +1218,117 @@ section {
   color: white;
 }
 
+/* 🔍 Wetter-Suche (Input + Button) */
 .weather_search_inner {
   display: flex;
   gap: 10px;
+  /* Input und Button nebeneinander */
+  
   margin-bottom: 15px;
 }
 
 .weather_search_inner input {
+  /* Suchfeld */
+  
   flex: 1;
+  /* Nimmt verfügoare Breite */
+  
   padding: 10px 12px;
+  
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.15);
+  
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  /* Subtiler Border */
+  
   background: var(--color_bg);
+  /* Dunkelgrau wie Main-Background */
+  
   color: var(--color_text);
 }
 
 .weather_search_inner input:focus {
+  /* Wenn Input fokussiert */
+  
   outline: none;
+  /* Kein Standard Browser-Outline */
+  
   border-color: var(--color_accent);
+  /* Border wird ROT */
+  
   box-shadow: 0 0 0 2px rgba(238, 4, 10, 0.25);
+  /* Feiner roter Glow */
 }
 
 .weather_search_inner button {
+  /* Suchergebnis-Button */
+  
   padding: 10px 16px;
+  
   border-radius: 8px;
+  
   border: 2px solid var(--color_accent);
+  /* ROT Border */
+  
   background: transparent;
+  /* Kein Hintergrund am Anfang */
+  
   color: var(--color_accent);
+  /* ROT Text */
+  
   font-weight: 600;
+  
   cursor: pointer;
+  
   transition: 0.3s;
+  /* Hover wird smooth */
 }
 
 .weather_search_inner button:hover {
+  /* Wenn Button geklickt */
+  
   background: var(--color_accent);
+  /* Hintergrund wird ROT */
+  
   color: white;
+  /* Text wird WEISS */
+  /* Inversion der Farben */
 }
 
 /* =========================================================
-   Kontakt
+   💬 KONTAKT SECTION: Kontaktformular
    ========================================================= */
+
 #Kontakt {
+  /* Das Kontakt Section */
+  
   display: flex;
   justify-content: center;
-
+  /* Alles zentriert */
 }
 
 .kontakt_container {
+  /* Container für das Formular */
+  
   width: 100%;
   max-width: 1200px;
-  /* exakt wie Projekte */
+  /* Responsive: 100% aber maximal 1200px */
+  
   display: flex;
   flex-direction: column;
+  /* Column = übereinander */
+  
   align-items: center;
+  /* Alles zentriert */
 }
 
+/* 📋 Kontakt Überschrift mit Linien */
 .kontakt_header_wrapper {
   width: 100%;
+  
   display: flex;
   align-items: center;
+  /* Linie - Text - Linie */
+  
   gap: 15px;
   margin-bottom: 30px;
 }
@@ -792,31 +1336,47 @@ section {
 .kontakt_header_wrapper h3 {
   margin: 0;
   white-space: nowrap;
+  /* Text bricht nicht um */
+  
   font-size: 2rem;
 }
 
 .kontakt_line {
+  /* Die Linien neben "Kontakt" */
+  
   flex: 1;
   height: 1px;
   background: rgba(255, 255, 255, 0.3);
 }
 
+/* 📝 Intro-Text */
 .kontakt_intro {
   max-width: 650px;
   text-align: center;
 }
 
+/* 📧 Email-Link mit Icon */
 .kontakt_email {
   font-size: 1.2rem;
+  
   text-align: center;
+  
   display: flex;
   align-items: center;
+  /* Icon und Link nebeneinander, zentriert */
+  
   gap: 8px;
+  /* 8px Abstand zwischen Icon und Text */
+  
   margin: 0 auto;
+  /* Zentriert */
+  
   transition: color 0.3s;
 }
 
 .kontakt_email a {
+  /* Der Email-Link */
+  
   color: var(--color_text);
   text-decoration: none;
   font-weight: 600;
@@ -824,185 +1384,306 @@ section {
 }
 
 .kontakt_email .email_icon {
+  /* Das Briefsymbol SVG */
+  
   transition: color 0.3s;
   vertical-align: middle;
   color: var(--color_text);
-  /* Startfarbe */
+  /* Startet in Weiß */
 }
 
-/* Hover-Effekt: Symbol + Text ändern Farbe */
+/* 🟥 Hover-Effekt: Beide Elements werden ROT */
 .kontakt_email:hover a,
 .kontakt_email:hover .email_icon {
   color: var(--color_accent);
 }
 
+/* 📋 DAS KONTAKTFORMULAR SELBST */
 .kontakt_formular {
   width: 100%;
   max-width: 650px;
+  /* Responsiver schmale Form */
+  
   margin: 40px auto;
+  /* 40px oben/unten, zentriert */
+  
   display: flex;
   flex-direction: column;
+  /* Felder übereinander */
+  
   gap: 20px;
+  /* 20px Abstand zwischen Feldern */
 }
 
+/* 📅 Reihe mit Name + Email nebeneinander */
 .formular_reihe {
   display: flex;
   gap: 20px;
+  /* Name und Email nebeneinander */
 }
 
+/* 📦 Einzelne Formulargruppe (Label + Input) */
 .formular_gruppe {
   flex: 1;
+  /* Beide Felder gleich breit */
+  
   display: flex;
   flex-direction: column;
+  /* Label oben, Input unten */
 }
 
 .formular_gruppe label {
   font-weight: 600;
   margin-bottom: 6px;
+  /* 6px Abstand zwischen Label und Input */
 }
 
+/* 🎯 Input und Textarea Styling */
 .formular_gruppe input,
 .formular_gruppe textarea {
   background: var(--color_nav);
+  /* Dunkler Hintergrund */
+  
   border: 1px solid rgba(255, 255, 255, 0.15);
+  /* Subtiler Border */
+  
   color: var(--color_text);
+  
   padding: 12px;
+  /* Großer Innenabstand zum Schreiben */
+  
   border-radius: 8px;
+  
   font-size: 1rem;
+  
   transition: border-color 0.25s, box-shadow 0.25s;
+  /* Smooth Transition auf Focus */
 }
 
 .formular_gruppe textarea {
+  /* Textarea ist größer */
+  
   min-height: 140px;
+  /* Mindest-Höhe = 140px */
+  
   resize: vertical;
+  /* Nutzer kann nur vertikal größer machen (nicht horizontal stretchen) */
 }
 
+/* 🎯 Focus State (wenn Nutzer im Input klickt) */
 .formular_gruppe input:focus,
 .formular_gruppe textarea:focus {
   outline: none;
+  /* Kein Standard Browser-Outline */
+  
   border-color: var(--color_accent);
+  /* Border wird ROT */
+  
   box-shadow: 0 0 0 2px rgba(238, 4, 10, 0.25);
+  /* Roter Glow um Input */
 }
 
+/* 🔴 Absenden Button */
 .kontakt_button {
   display: block;
   margin: 10px auto 0;
+  /* 10px oben, zentriert, 0px unten */
+  
   padding: 12px 30px;
+  /* Großer Button */
+  
   background: transparent;
+  /* Kein Hintergrund anfangs */
+  
   color: var(--color_accent);
+  /* ROT Text */
+  
   border: 2px solid var(--color_accent);
+  /* ROT Border */
+  
   border-radius: 8px;
+  
   font-size: 1rem;
   font-weight: bold;
+  
   cursor: pointer;
+  
   transition: background 0.3s, color 0.3s;
+  /* Smooth Hover */
 }
 
 .kontakt_button:hover {
+  /* Wenn Button gehovered */
+  
   background: var(--color_accent);
+  /* Hintergrund wird ROT */
+  
   color: var(--color_text);
+  /* Text wird WEISS */
 }
 
+/* ✅/❌ Status-Nachricht (Erfolg/Fehler) */
 .kontakt_status {
   min-height: 24px;
+  /* Reservierter Platz damit Layout nicht springt */
+  
   text-align: center;
   font-weight: 600;
+  
   opacity: 0;
+  /* Starts unsichtbar */
+  
   transform: translateY(5px);
+  /* 5px unten */
+  
   transition: opacity 0.3s ease, transform 0.3s ease;
+  /* Smooth Übergang */
 }
 
+/* 🟢 Erfolgs-Status */
 .kontakt_status.erfolg {
   color: #4caf50;
+  /* Grüne Farbe */
+  
   opacity: 1;
+  /* Sichtbar */
+  
   transform: translateY(0);
+  /* Normal Position (keine Verschiebung) */
 }
 
+/* 🔴 Fehler-Status */
 .kontakt_status.fehler {
   color: var(--color_accent);
+  /* ROT */
+  
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Honeypotfeld */
-
+/* 🔒 Honeypot-Feld: Spam-Schutz */
 .honeypot_wrapper {
+  /* Das versteckte Spam-Falle Feld */
+  
   position: absolute;
   left: -9999px;
+  /* Weit außerhalb des Bildschirms (Menschen sehen es nicht) */
+  
   opacity: 0;
+  /* Unsichtbar */
 }
 
 .honeypot_wrapper label {
   display: none;
+  /* Auch Label unsichtbar */
 }
 
 /* =========================================================
-   RESPONSIVE
+   📱 RESPONSIVE: Mobile-Version für Bildschirme < 900px
    ========================================================= */
 @media (max-width: 900px) {
+  /* 📍 Mobile Navigation = horizontal oben (nicht vertikal) */
   .nav_leiste {
     position: fixed;
     top: 64px;
-    /* Höhe deines Headers */
+    /* Sitzt unter dem Header (64px Höhe) */
+    
     left: 0;
     width: 100%;
     height: 60px;
+    /* Horizontale Leiste mit 60px Höhe */
+    
     flex-direction: row;
+    /* Links führen nebeneinander (nicht übereinander) */
+    
     justify-content: center;
     align-items: center;
     gap: 10px;
+    /* 10px Abstand zwischen Links */
+    
     z-index: 150;
-    /* unter Header */
+    /* Unter dem Header (200), über Content (1-2) */
   }
 
+  /* 🔗 Navigation Links werden horizontal */
   nav {
     flex-direction: row;
+    /* Row = Links nebeneinander */
+    
     justify-content: center;
     gap: 18px;
+    /* 18px Abstand zwischen Links */
   }
 
-  nav a {
+  nat a {
+    /* Jeder Link wird horizontal geschrieben */
+    
     writing-mode: horizontal-tb;
+    /* horizontal-tb = left-to-right (normal) */
+    
     height: auto;
+    /* Höhe passt sich dem Text an */
+    
     padding: 8px 10px;
+    /* Weniger Padding auf Mobile */
+    
     box-shadow: none;
+    /* Kein Schatten auf Mobile */
   }
 
+  /* 🎯 Header bleibt oben */
   header {
     position: fixed;
     top: 0;
     left: 0;
+    
     width: 100%;
     padding: 0 20px;
+    
     z-index: 200;
-    /* Header über Nav */
+    /* Header über Navigation */
   }
 
+  /* 📄 Main Content hat Platz für Header + Nav */
   main {
     padding-left: 0;
+    /* Keine linke Padding (war 300px auf Desktop) */
+    
     padding-top: 64px + 60px;
-    /* Platz für Header + Nav-Leiste */
+    /* Platz für Header (64px) + Nav-Leiste (60px) */
   }
 
-
+  /* 🏠 Hero Section wird Spalte statt Reihe */
   .home_wrapper {
     flex-direction: column;
+    /* Bild und Text übereinander */
+    
     align-items: flex-start;
+    /* Oben-Links ausgerichtet */
   }
 
   .home_text h1 {
     white-space: normal;
+    /* Text kann umbrechen (nicht auf einer Zeile) */
   }
 
+  /* 🎨 Canvas wird kleiner auf Mobile */
   #dotCanvas {
     left: 50%;
     top: 30%;
+    
     transform: translate(-50%, -50%);
+    /* Zentriert */
+    
     opacity: 0.4;
+    /* 40% Transparanz auf Mobile (weniger aufdringlich) */
   }
 
+  /* 🖼️ Bild und Text nebeneinander statt übereinander */
   #typing_image_wrapper {
     flex-direction: row;
+    /* Bild links, Text rechts */
+    
     justify-content: flex-start;
     margin-top: 20px;
   }
@@ -1011,28 +1692,41 @@ section {
     position: relative;
     left: 0;
     top: 0;
+    
     width: 120px;
+    /* Kleineres Bild auf Mobile */
   }
 
+  /* 📚 "Über Mich" wird Single Column */
   .über_mich_inner {
     grid-template-columns: 1fr;
+    /* Nur eine Spalte (nicht 70% 30% Split) */
   }
 
+  /* 🛠️ Skills machen zwei Spalten statt drei */
   .skills ul {
     grid-template-columns: repeat(2, 1fr);
+    /* 2 Skills nebeneinander */
   }
 
+  /* 📦 Projekte: Bild über Text statt nebeneinander */
   .projekt_content {
     grid-template-columns: 1fr;
+    /* Nur eine Spalte */
+    
     text-align: center;
+    /* Text zentriert */
   }
 
   .projekt img {
     margin: 0 auto 15px auto;
+    /* Bild zentriert mit Abstand unten */
   }
 
+  /* 📐 Überschriften werden kleiner auf Mobile */
   h1 {
     font-size: 1.8rem;
+    /* War 2.5rem auf Desktop */
   }
 
   h2 {
@@ -1047,83 +1741,142 @@ section {
     font-size: 1.1rem;
   }
 
+  /* 📝 Sections bekommen horizontales Padding */
   .über_mich_wrapper,
   #Projekte {
     padding-left: 5%;
     padding-right: 5%;
+    /* 5% Abstand links/rechts (responsive zu Bildschirmbreite) */
   }
 }
 
 /* =========================================================
-   ANIMATIONEN
+   🎬 ANIMATIONEN: Bewegungen und Übergänge
    ========================================================= */
+
+/* 🚀 Hero Fade Up: Fade In + Move Up */
 @keyframes heroFadeUp {
+  /* Startpunkt */
   from {
     opacity: 0;
+    /* Unsichtbar */
+    
     transform: translateY(10px);
+    /* 10px tiefer gestartet */
   }
 
+  /* Endpunkt */
   to {
     opacity: 1;
+    /* Vollständig sichtbar */
+    
     transform: translateY(0);
+    /* Normal Position */
   }
+  /* Animation macht: Element fade-in und fährt nach oben */
+  /* Beispiel: h1, h2 starten unsichtbar unten = fahren nach oben rein */
 }
 
 /* =========================================================
-   SCROLL REVEAL – RED BAR ANIMATION
+   🎨 SCROLL REVEAL: Roter Balken Animation
    ========================================================= */
 
+/* 📍 Basis-Setup für Reveal-Elemente */
 .reveal {
+  /* Alle Elemente die Scroll-Animation haben */
+  
   position: relative;
+  /* Relativ für die ::after Pseudo-Element */
+  
   overflow: hidden;
+  /* Versteckt den überflüssigen roten Balken */
 }
 
-/* Startzustand */
+/* 📝 Der Inhalt (Text/Input) im Anfang */
 .reveal_content {
   display: block;
+  
   opacity: 0;
+  /* Startet unsichtbar */
+  
   transform: translateY(20px);
+  /* Startet 20px tiefer (unter dem sichtbaren Bereich) */
+  /* Wird dann nach oben fahren wenn in Sicht kommt */
 }
 
 .reveal_content input,
 .reveal_content textarea {
   width: 100%;
-  /* volle Breite wie vorher */
+  /* Volle Breite wie normale Formfelder */
+  
   display: block;
-  /* block-level wie normale Formfelder */
+  /* Block-Element (nicht inline) */
+  
   margin: 0;
-  /* evtl. Padding/Margin vorher übernehmen */
+  /* Kein Margin */
 }
 
-/* roter Balken */
+/* 🔴 Roter Balken (vorher) */
 .reveal::after {
+  /* Das ::after Pseudo-Element der Balken */
+  
   content: "";
+  /* Leerer Inhalt (sichtbar nur wegen Background) */
+  
   position: absolute;
+  /* Absolute über den Text */
+  
   inset: 0;
+  /* Füllt ganzen Container (TOP RIGHT BOTTOM LEFT 0) */
+  
   background: var(--color_accent);
+  /* ROT */
+  
   transform: translateX(-101%);
+  /* Startet links außerhalb (-101% = 1% mehr als 100% für smooth Exit) */
 }
 
-/* Aktiv wenn sichtbar */
+/* 🎬 Wenn Element in Sicht kommt (JavaScript fügt .reveal_active hinzu) */
+
 .reveal_active::after {
+  /* Der rote Balken animiert von links nach rechts */
+  
   animation: reveal_bar 0.8s ease forwards;
+  /* 0.8 Sekunden, ease Timing, forwards = bleibt am Ende sichtbar */
 }
 
 .reveal_active .reveal_content {
+  /* Der Text fadeint und fährt nach oben rein */
+  
   animation: reveal_text 0.6s ease forwards;
+  /* 0.6 Sekunden Animation */
+  
   animation-delay: 0.35s;
+  /* Wartet 0.35s bevor Text-Animation startet */
+  /* Erst kommt roter Balken (0.35s), dann Text dahinter */
 }
 
-/* Animationen */
+/* 🔴➡️ Animation: Roter Balken fährt von links nach rechts */
 @keyframes reveal_bar {
   to {
+    /* Endzustand */
+    
     transform: translateX(101%);
+    /* Fährt nach rechts raus (101% = 1% über rechtem Rand für smooth Exit) */
   }
+  /* von -101% zu 101% = fährt komplett über den Container */
 }
 
+/* 📝⬆️ Animation: Text fadeint und fährt nach oben */
 @keyframes reveal_text {
   to {
+    /* Endzustand */
+    
     opacity: 1;
+    /* Wird sichtbar */
+    
     transform: translateY(0);
+    /* Fährt nach oben in normale Position */
   }
+  /* von unsichtbar/tief zu sichtbar/normal = fährt nach oben rein */
 }
