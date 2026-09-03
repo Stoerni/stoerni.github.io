@@ -3,6 +3,9 @@
    Hier wird das Formular funktionsfähig gemacht und Emails versendet
    ========================== */
 
+// 🌐 Übersetzungs-Helper importieren
+import { t } from './translations.js';
+
 // 🔑 EmailJS v4 initialisieren
 // Wichtig: Das ist der PUBLIC KEY (öffentlich erlaubt), kein geheimes Passwort.
 // Warum init am Anfang?
@@ -38,7 +41,7 @@ export function initContactForm() {
         }
 
         // 🔄 Button-Text ändern (visuelles Feedback dass etwas passiert)
-        kontakt_button.textContent = "Sende...";
+        kontakt_button.textContent = t('contact-sending');
         // 🔒 Button disabled, damit Nutzer nicht zweimal klicken kann
         kontakt_button.disabled = true;
 
@@ -62,7 +65,7 @@ export function initContactForm() {
             // ✅ .then() = wenn Email erfolgreich versendet wurde
             .then(function () {
                 // Erfolgs-Nachricht anzeigen
-                kontakt_status.textContent = "Danke! Deine Nachricht wurde erfolgreich gesendet.";
+                kontakt_status.textContent = t('contact-success');
                 // CSS-Klasse "erfolg" hinzufügen (grüne Farbe in CSS)
                 kontakt_status.classList.add("erfolg");
 
@@ -72,7 +75,7 @@ export function initContactForm() {
             // ❌ .catch() = wenn etwas schiefgeht (z.B. Internet weg, API-Fehler)
             .catch(function (error) {
                 // Fehler-Nachricht anzeigen
-                kontakt_status.textContent = "Ups! Etwas ist schiefgelaufen. Bitte versuche es später erneut.";
+                kontakt_status.textContent = t('contact-error');
                 // CSS-Klasse "fehler" hinzufügen (rote Farbe in CSS)
                 kontakt_status.classList.add("fehler");
 
@@ -82,7 +85,7 @@ export function initContactForm() {
             // 🔄 .finally() = egal ob Erfolg oder Fehler, das hier wird IMMER ausgeführt
             .finally(function () {
                 // Button-Text zurücksetzen
-                kontakt_button.textContent = "Absenden";
+                kontakt_button.textContent = t('contact-submit');
                 // Button wieder aktivieren
                 kontakt_button.disabled = false;
             });

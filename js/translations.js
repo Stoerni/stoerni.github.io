@@ -1,4 +1,9 @@
 // 🌐 translations.js — Sprachumschaltung DE/EN per data-i18n Attribut + localStorage
+// 📤 Export: t(key) für andere Module (z.B. kontakt.js)
+export function t(key) {
+  return translations[currentLang]?.[key] ?? key;
+}
+
 const translations = {
   de: {
     'nav-home': 'Home',
@@ -24,6 +29,35 @@ const translations = {
 
     'lang-en': 'EN',
     'lang-de': 'DE',
+
+    // 🏗️ Projekte
+    'projects-header': 'Projekte',
+    'project-mailpilot': 'MailPilot (in Entwicklung)',
+    'project-crm': 'Werkstatt-CRM (in Entwicklung)',
+    'project-weather': 'Live Wetter Widget',
+    'project-portfolio': 'Entwickler-Portfolio',
+    'project-desc-mailpilot':
+      'Multi-Tenant AI-gestütztes E-Mail-Triage- und Reply-Drafting-SaaS.',
+    'project-desc-crm':
+      'CRM-Lösung für Werkstätten mit Fokus auf digitale Aufträge, mobile Nutzung und saubere Prozesse.',
+    'project-desc-weather':
+      'API-basiertes Wetter-Widget mit Python im Browser und dynamischer Ortssuche.',
+    'project-desc-portfolio':
+      'Modernes Portfolio mit Fokus auf Struktur, Performance und professioneller Präsentation.',
+
+    // 💬 Kontakt
+    'contact-header': 'Kontakt',
+    'contact-intro': 'Schreib mir gerne eine Nachricht – ich freue mich auf den Austausch.',
+    'contact-label-name': 'Name',
+    'contact-label-email': 'E-Mail',
+    'contact-label-message': 'Nachricht',
+    'contact-placeholder-name': 'Dein Name',
+    'contact-placeholder-email': 'Deine E-Mail',
+    'contact-placeholder-message': 'Deine Nachricht...',
+    'contact-submit': 'Absenden',
+    'contact-sending': 'Sende...',
+    'contact-success': 'Danke! Deine Nachricht wurde erfolgreich gesendet.',
+    'contact-error': 'Ups! Etwas ist schiefgelaufen. Bitte versuche es später erneut.',
   },
 
   en: {
@@ -50,7 +84,36 @@ const translations = {
 
     'lang-en': 'EN',
     'lang-de': 'DE',
-  },
+
+    // 🏗️ Projects
+    'projects-header': 'Projects',
+    'project-mailpilot': 'MailPilot (in Development)',
+    'project-crm': 'Workshop CRM (in Development)',
+    'project-weather': 'Live Weather Widget',
+    'project-portfolio': 'Developer Portfolio',
+    'project-desc-mailpilot':
+      'Multi-Tenant AI-powered Email Triage and Reply Drafting SaaS.',
+    'project-desc-crm':
+      'Workshop CRM with focus on digital orders, mobile use, and clean processes.',
+    'project-desc-weather':
+      'API-based weather widget with Python in the browser and dynamic location search.',
+    'project-desc-portfolio':
+      'Modern portfolio focused on structure, performance, and professional presentation.',
+
+    // 💬 Contact
+    'contact-header': 'Contact',
+    'contact-intro': 'Feel free to send me a message — I look forward to connecting.',
+    'contact-label-name': 'Name',
+    'contact-label-email': 'Email',
+    'contact-label-message': 'Message',
+    'contact-placeholder-name': 'Your Name',
+    'contact-placeholder-email': 'Your Email',
+    'contact-placeholder-message': 'Your Message...',
+    'contact-submit': 'Send',
+    'contact-sending': 'Sending...',
+    'contact-success': 'Thank you! Your message was sent successfully.',
+    'contact-error': 'Oops! Something went wrong. Please try again later.',
+   },
 };
 
 let currentLang = localStorage.getItem('portfolio-lang') || 'de';
@@ -63,6 +126,14 @@ function applyLanguage(lang) {
     const key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) {
       el.innerHTML = t[key];
+    }
+  });
+
+  // data-i18n-placeholder für input/textarea placeholder-Texte
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key] !== undefined) {
+      el.placeholder = t[key];
     }
   });
 

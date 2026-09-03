@@ -177,7 +177,7 @@
     <section id="Projekte">
       <div class="projekte_inner">
         <div class="projekte_header_wrapper">
-          <h3 class="reveal"><span class="reveal_content">Projekte<span class="punkt_rot">.</span></span></h3>
+          <h3 class="reveal"><span class="reveal_content"><span data-i18n="projects-header">Projekte</span><span class="punkt_rot">.</span></span></h3>
           <div class="über_mich_line" aria-hidden="true"></div>
         </div>
         <div class="projekte_list_wrapper">
@@ -191,11 +191,11 @@
                 </div>
                 <div class="projekt_text_wrapper">
                   <h4 class="projekt_titel reveal">
-                    <span class="reveal_content">MailPilot (in Entwicklung)</span>
+                    <span class="reveal_content" data-i18n="project-mailpilot">MailPilot (in Entwicklung)</span>
                   </h4>
                   <div class="projekt_beschreibung">
                     <p class="reveal">
-                      <span class="reveal_content">
+                      <span class="reveal_content" data-i18n="project-desc-mailpilot">
                         Multi-Tenant AI-gestütztes E-Mail-Triage- und Reply-Drafting-SaaS.
                       </span>
                     </p>
@@ -213,11 +213,11 @@
                 </div>
                 <div class="projekt_text_wrapper">
                   <h4 class="projekt_titel reveal">
-                    <span class="reveal_content">Werkstatt-CRM (in Entwicklung)</span>
+                    <span class="reveal_content" data-i18n="project-crm">Werkstatt-CRM (in Entwicklung)</span>
                   </h4>
                   <div class="projekt_beschreibung">
                     <p class="reveal">
-                      <span class="reveal_content">
+                      <span class="reveal_content" data-i18n="project-desc-crm">
                         CRM-Lösung für Werkstätten mit Fokus auf digitale Aufträge, mobile Nutzung und saubere Prozesse.
                       </span>
                     </p>
@@ -235,11 +235,11 @@
                 </div>
                 <div class="projekt_text_wrapper">
                   <h4 class="projekt_titel reveal">
-                    <span class="reveal_content">Live Wetter Widget</span>
+                    <span class="reveal_content" data-i18n="project-weather">Live Wetter Widget</span>
                   </h4>
                   <div class="projekt_beschreibung">
                     <p class="reveal">
-                      <span class="reveal_content">
+                      <span class="reveal_content" data-i18n="project-desc-weather">
                         API-basiertes Wetter-Widget mit Python im Browser und dynamischer Ortssuche.
                       </span>
                     </p>
@@ -257,11 +257,11 @@
                 </div>
                 <div class="projekt_text_wrapper">
                   <h4 class="projekt_titel reveal">
-                    <span class="reveal_content">Entwickler-Portfolio</span>
+                    <span class="reveal_content" data-i18n="project-portfolio">Entwickler-Portfolio</span>
                   </h4>
                   <div class="projekt_beschreibung">
                     <p class="reveal">
-                      <span class="reveal_content">
+                      <span class="reveal_content" data-i18n="project-desc-portfolio">
                         Modernes Portfolio mit Fokus auf Struktur, Performance und professioneller Präsentation.
                       </span>
                     </p>
@@ -281,13 +281,13 @@
           <div class="kontakt_line"></div>
           <h3 class="reveal">
             <span class="reveal_content">
-              Kontakt<span class="punkt_rot">.</span>
+              <span data-i18n="contact-header">Kontakt</span><span class="punkt_rot">.</span>
             </span>
           </h3>
           <div class="kontakt_line"></div>
         </div>
         <p class="kontakt_intro reveal">
-          <span class="reveal_content">
+          <span class="reveal_content" data-i18n="contact-intro">
             Schreib mir gerne eine Nachricht – ich freue mich auf den Austausch.
           </span>
         </p>
@@ -312,31 +312,31 @@
           </div>
           <div class="formular_reihe">
             <div class="formular_gruppe">
-              <label class="reveal" for="kontakt_name"><span class="reveal_content">Name</span></label>
+              <label class="reveal" for="kontakt_name"><span class="reveal_content" data-i18n="contact-label-name">Name</span></label>
               <div class="reveal">
-                <span class="reveal_content"><input type="text" id="kontakt_name" name="name" placeholder="Dein Name"
+                <span class="reveal_content"><input type="text" id="kontakt_name" name="name" placeholder="Dein Name" data-i18n-placeholder="contact-placeholder-name"
                     required></span>
               </div>
             </div>
             <div class="formular_gruppe">
-              <label class="reveal" for="kontakt_email"><span class="reveal_content">E-Mail</span></label>
+              <label class="reveal" for="kontakt_email"><span class="reveal_content" data-i18n="contact-label-email">E-Mail</span></label>
               <div class="reveal">
                 <span class="reveal_content"><input type="email" id="kontakt_email" name="email"
-                    placeholder="Deine E-Mail" required></span>
+                    placeholder="Deine E-Mail" data-i18n-placeholder="contact-placeholder-email" required></span>
               </div>
             </div>
           </div>
           <div class="formular_gruppe">
-            <label class="reveal" for="kontakt_nachricht"><span class="reveal_content">Nachricht</span></label>
+            <label class="reveal" for="kontakt_nachricht"><span class="reveal_content" data-i18n="contact-label-message">Nachricht</span></label>
             <div class="reveal">
               <span class="reveal_content"><textarea id="kontakt_nachricht" name="message"
-                  placeholder="Deine Nachricht..." required></textarea></span>
+                  placeholder="Deine Nachricht..." data-i18n-placeholder="contact-placeholder-message" required></textarea></span>
             </div>
             <!-- Erfolgsmeldung dynamisch per JavaScript gesetzt bei änderung der Fehlermeldung liest dies der Screenreader vor -->
             <p class="kontakt_status" aria-live="polite"></p>
           </div>
           <div class="reveal">
-            <span class="reveal_content"><button type="submit" class="kontakt_button">Absenden</button></span>
+            <span class="reveal_content"><button type="submit" class="kontakt_button" data-i18n="contact-submit">Absenden</button></span>
           </div>
         </form>
       </div>
