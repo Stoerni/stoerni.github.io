@@ -58,6 +58,12 @@ const translations = {
     'contact-sending': 'Sende...',
     'contact-success': 'Danke! Deine Nachricht wurde erfolgreich gesendet.',
     'contact-error': 'Ups! Etwas ist schiefgelaufen. Bitte versuche es später erneut.',
+
+    // 🎭 typing.js Wörter
+    'typing-word-0': 'alt aber nicht veraltet',
+    'typing-word-1': 'Lösungsorientiert',
+    'typing-word-2': 'Analytisch',
+    'typing-word-3': 'Strukturiert',
   },
 
   en: {
@@ -113,6 +119,12 @@ const translations = {
     'contact-sending': 'Sending...',
     'contact-success': 'Thank you! Your message was sent successfully.',
     'contact-error': 'Oops! Something went wrong. Please try again later.',
+
+    // 🎭 typing.js Words
+    'typing-word-0': 'classic but not outdated',
+    'typing-word-1': 'Solution-Oriented',
+    'typing-word-2': 'Analytical',
+    'typing-word-3': 'Structured',
    },
 };
 

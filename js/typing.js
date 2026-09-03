@@ -1,4 +1,6 @@
 // 📤 EXPORT: Diese Funktion wird von main.js aufgerufen
+import { t } from './translations.js';
+
 export function initTyping() {
 
     // 🔎 HTML-Elemente abrufen - diese müssen im HTML existieren
@@ -18,11 +20,12 @@ export function initTyping() {
 
     // 📝 Liste aller Wörter + dazugehörigen Bilder
     // Reihenfolge ist wichtig, wird nacheinander abgespielt
+    // text wird dynamisch über t(KEY) übersetzt → reagiert live auf Sprachwechsel
     const items = [
-        { text: "alt aber nicht veraltet", image: "images/olderbot.webp" },  // Erstes Wort mit Bild (WebP = deutlich kleiner/schneller)
-        { text: "Lösungsorientiert", image: null },                         // Zweites Wort (kein Bild)
-        { text: "Analytisch", image: null },                               // Drittes Wort
-        { text: "Strukturiert", image: null }                              // Viertes Wort
+        { key: "typing-word-0", image: "images/olderbot.webp" },  // Erstes Wort mit Bild (WebP = deutlich kleiner/schneller)
+        { key: "typing-word-1", image: null },                    // Zweites Wort (kein Bild)
+        { key: "typing-word-2", image: null },                    // Drittes Wort
+        { key: "typing-word-3", image: null }                     // Viertes Wort
     ];
 
     // ⏱️ Geschwindigkeit & Pausen (alle Werte in Millisekunden)
@@ -54,11 +57,10 @@ export function initTyping() {
     // setTimeout ruft diese Funktion immer wieder auf
     function typeLoop() {
 
-        // 🎯 Aktuelles Wort + Bild aus der Liste holen
-        // items[wordIndex] = das aktuelle Wort-Objekt
+        // 🎯 Aktuelles Wort aus der Liste holen
         const currentItem = items[wordIndex];
-        // currentWord = der Text des Wortes (z.B. "alt aber nicht veraltet")
-        const currentWord = currentItem.text;
+        // Aktuellen übersetzten Text via t() abrufen (reagiert auf Sprachwechsel)
+        const currentWord = t(currentItem.key);
 
         // ✍️ SCHREIBEN - wenn wir nicht gerade am Löschen sind
         if (!isDeleting) {
