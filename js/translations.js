@@ -64,6 +64,12 @@ const translations = {
     'typing-word-1': 'Lösungsorientiert',
     'typing-word-2': 'Analytisch',
     'typing-word-3': 'Strukturiert',
+
+    // 💻 Modal
+    'modal-live': 'Live ansehen',
+    'modal-close': 'Schließen',
+    'modal-title-fallback': 'Titel',
+    'modal-desc-fallback': 'Beschreibung',
   },
 
   en: {
@@ -125,6 +131,12 @@ const translations = {
     'typing-word-1': 'Solution-Oriented',
     'typing-word-2': 'Analytical',
     'typing-word-3': 'Structured',
+
+    // 💻 Modal
+    'modal-live': 'View Live',
+    'modal-close': 'Close',
+    'modal-title-fallback': 'Title',
+    'modal-desc-fallback': 'Description',
    },
 };
 
@@ -149,6 +161,22 @@ function applyLanguage(lang) {
     }
   });
 
+  // data-i18n-aria-label für aria-label Attribute (z.B. Modal-Schließen-Button)
+  document.querySelectorAll('[data-i18n-aria-label]').forEach((el) => {
+    const key = el.getAttribute('data-i18n-aria-label');
+    if (t[key] !== undefined) {
+      el.setAttribute('aria-label', t[key]);
+    }
+  });
+
+  // data-i18n-desc für Projekt-Beschreibungen (data-desc wird aktualisiert)
+  document.querySelectorAll('[data-i18n-desc]').forEach((el) => {
+    const key = el.getAttribute('data-i18n-desc');
+    if (t[key] !== undefined) {
+      el.dataset.desc = t[key];
+    }
+  });
+
   // Update <html lang> Attribute für SEO / Screenreader
   document.documentElement.lang = lang;
 
@@ -161,6 +189,22 @@ function applyLanguage(lang) {
     const target = lang === 'de' ? 'lang-en' : 'lang-de';
     // Button zeigt die SPRACHE an, in die gewechselt wird
     toggle.textContent = translations[lang][target];
+  }
+
+  // Modal-Inhalt aktualisieren, falls gerade geöffnet
+  const modal = document.getElementById('projectModal');
+  if (modal && modal.classList.contains('open') && modal.dataset.activeCardIndex !== undefined) {
+    const cards = document.querySelectorAll('.projekt');
+    const card = cards[parseInt(modal.dataset.activeCardIndex)];
+    if (card) {
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDesc = document.getElementById('modalDesc');
+      if (modalTitle) modalTitle.textContent = card.querySelector('h4')?.textContent || '';
+      if (modalDesc) {
+        const descKey = card.dataset.i18nDesc;
+        modalDesc.textContent = descKey ? (translations[lang][descKey] || card.dataset.desc || '') : (card.dataset.desc || '');
+      }
+    }
   }
 }
 

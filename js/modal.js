@@ -4,6 +4,8 @@
 ========================== */
 
 // 📤 EXPORT: Diese Funktion wird von main.js aufgerufen
+import { t } from './translations.js';
+
 export function initModal() {
   // 🎯 HTML-Elemente für das Modal abrufen
   const modal = document.getElementById('projectModal');  // Das komplette Modal-Container-Element
@@ -81,7 +83,7 @@ export function initModal() {
       a.target = '_blank';                    // Im neuen Tab öffnen
       a.rel = 'noopener noreferrer';         // Sicherheit für neue Tabs
       a.className = 'btn btn-primary';        // CSS-Button-Klasse
-      a.textContent = 'Live ansehen';
+      a.textContent = t('modal-live');
       linksContainer.appendChild(a);
     } else {
       // Wenn kein Link: verstecken
@@ -127,22 +129,25 @@ export function initModal() {
 
   // 🖱️ PROJEKT-KARTEN KLICKBAR MACHEN
   // querySelectorAll = alle ".projekt" Elemente finden
-  document.querySelectorAll('.projekt').forEach(card => {
+  document.querySelectorAll('.projekt').forEach((card, index) => {
     card.style.cursor = 'pointer';  // Maus-Cursor ändert sich zu Hand (Clicker)
     
     // Wenn Projekt geklickt wird:
     card.addEventListener('click', () => {
+      const descKey = card.dataset.i18nDesc;
       openModal({
         // Daten aus HTML-Attributen auslesen:
         // card.querySelector = im Projekt-Card nach Element suchen
         title: card.querySelector('h4')?.textContent || '',  // h4 Text lesen (oder leer)
         image1: card.dataset.modalImg1,    // data-modal-img1 Attribut
         image2: card.dataset.modalImg2,    // data-modal-img2 Attribut
-        desc: card.dataset.desc || '',     // data-desc Attribut
+        desc: descKey ? t(descKey) : (card.dataset.desc || ''),  // Übersetzte Beschreibung via i18n-Key
         tech: card.dataset.tech || '',     // data-tech Attribut
         link: card.dataset.link || '',     // data-link Attribut
         project: card.dataset.project || '' // data-project Attribut
       });
+      // Aktuelle Card für Sprachwechsel-Modal-Update speichern
+      modal.dataset.activeCardIndex = index;
     });
   });
 

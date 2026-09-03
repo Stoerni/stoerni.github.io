@@ -183,7 +183,7 @@
         <div class="projekte_list_wrapper">
           <div class="projekte_list">
             <!-- MailPilot – AI-gestützte E-Mail-Triage -->
-            <div class="projekt" data-desc="Multi-Tenant AI-gestütztes E-Mail-Triage- und Reply-Drafting-SaaS. Nutzt LLM-Klassifikation und RAG-basierte Antwortgenerierung für intelligentes E-Mail-Management." data-tech="React, Spring Boot, PostgreSQL, OAuth2/IMAP, LLM-Klassifikation, RAG-basierte Antwortgenerierung" data-link="" data-modal-img1="images/crm-projekt-placeholder.svg">
+            <div class="projekt" data-i18n-desc="project-desc-mailpilot" data-desc="Multi-Tenant AI-gestütztes E-Mail-Triage- und Reply-Drafting-SaaS. Nutzt LLM-Klassifikation und RAG-basierte Antwortgenerierung für intelligentes E-Mail-Management." data-tech="React, Spring Boot, PostgreSQL, OAuth2/IMAP, LLM-Klassifikation, RAG-basierte Antwortgenerierung" data-link="" data-modal-img1="images/crm-projekt-placeholder.svg">
               <div class="projekt_content">
                 <div class="reveal">
                   <span class="reveal_content"><img src="images/crm-projekt-placeholder.svg"
@@ -205,7 +205,7 @@
             </div>
             
             <!-- Werkstatt-CRM als zweites Projekt -->
-            <div class="projekt" data-desc="Werkstatt-CRM als reales Praxisprojekt: digitale Auftragserfassung per PDF/Excel, strukturierte Verwaltung von Kunden- und Auftragsdaten, mobil nutzbares Interface und vorbereitete Monitoring-Bausteine für den Betrieb. Geplant mit Java-Backend und auf skalierbarem Hosting-Setup ausgelegt." data-tech="Java, Spring Boot, REST API, SQL, Monitoring, Responsive UI" data-link="" data-modal-img1="images/crm-projekt-placeholder.svg">
+            <div class="projekt" data-i18n-desc="project-desc-crm" data-desc="Werkstatt-CRM als reales Praxisprojekt: digitale Auftragserfassung per PDF/Excel, strukturierte Verwaltung von Kunden- und Auftragsdaten, mobil nutzbares Interface und vorbereitete Monitoring-Bausteine für den Betrieb. Geplant mit Java-Backend und auf skalierbarem Hosting-Setup ausgelegt." data-tech="Java, Spring Boot, REST API, SQL, Monitoring, Responsive UI" data-link="" data-modal-img1="images/crm-projekt-placeholder.svg">
               <div class="projekt_content">
                 <div class="reveal">
                   <span class="reveal_content"><img src="images/crm-projekt-placeholder.svg"
@@ -227,7 +227,7 @@
             </div>
             
             <!-- Live Wetter Widget als drittes Projekt -->
-            <div class="projekt" data-desc="Live-Wetter-Widget mit Python im Browser über PyScript. Wetterdaten werden live über die Open-Meteo APIs (Geocoding + Forecast) geladen und direkt im Modal aktualisiert. Zusätzlich kann der Standort dynamisch gesucht werden, ohne die Seite neu zu laden." data-tech="Python, PyScript, Open-Meteo API, HTML, CSS" data-link="https://open-meteo.com/" data-project="weather" data-modal-img1="images/wetter.webp">
+            <div class="projekt" data-i18n-desc="project-desc-weather" data-desc="Live-Wetter-Widget mit Python im Browser über PyScript. Wetterdaten werden live über die Open-Meteo APIs (Geocoding + Forecast) geladen und direkt im Modal aktualisiert. Zusätzlich kann der Standort dynamisch gesucht werden, ohne die Seite neu zu laden." data-tech="Python, PyScript, Open-Meteo API, HTML, CSS" data-link="https://open-meteo.com/" data-project="weather" data-modal-img1="images/wetter.webp">
               <div class="projekt_content">
                 <div class="reveal">
                   <span class="reveal_content"><img src="images/wetter.webp"
@@ -249,7 +249,7 @@
             </div>
             
             <!-- Interaktives Portfolio als viertes Projekt -->
-            <div class="projekt" data-desc="Interaktives Entwickler-Portfolio mit klarem Fokus auf Performance, Lesbarkeit und Benutzerführung. Umgesetzt mit modularer Frontend-Architektur, Canvas-Animationen, Scroll-Observer und dynamischem Projekt-Modal. Das Kontaktformular läuft über EmailJS inklusive Spam-Schutz." data-tech="HTML, CSS, JavaScript, EmailJS, UX" data-link="stoerni.github.io" data-modal-img1="images/portfolio.webp">
+            <div class="projekt" data-i18n-desc="project-desc-portfolio" data-desc="Interaktives Entwickler-Portfolio mit klarem Fokus auf Performance, Lesbarkeit und Benutzerführung. Umgesetzt mit modularer Frontend-Architektur, Canvas-Animationen, Scroll-Observer und dynamischem Projekt-Modal. Das Kontaktformular läuft über EmailJS inklusive Spam-Schutz." data-tech="HTML, CSS, JavaScript, EmailJS, UX" data-link="stoerni.github.io" data-modal-img1="images/portfolio.webp">
               <div class="projekt_content">
                 <div class="reveal">
                   <span class="reveal_content"><img src="images/portfolio.webp"
@@ -351,17 +351,17 @@
     <!-- Der eigentliche Modal-Inhalt (Popup-Box) -->
     <div class="modal_content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <!-- Close-Button mit × Symbol -->
-      <button class="modal_close" aria-label="Schließen" data-modal-close>×</button>
+      <button class="modal_close" aria-label="Schließen" data-modal-close data-i18n-aria-label="modal-close">×</button>
 
       <!-- Projekt-Titel (wird von modal.js dynamisch gesetzt) -->
-      <h3 id="modalTitle">Titel</h3>
+      <h3 id="modalTitle" data-i18n="modal-title-fallback">Titel</h3>
 
       <!-- Bild-Galerie (mehrere Projekt-Bilder) -->
       <div id="modalGallery" class="modal_gallery"></div>
       <!-- modal.js füllt das mit Bildern basierend auf data-Attributen der Projekt-Cards -->
 
       <!-- Projekt-Beschreibung -->
-      <p id="modalDesc">Beschreibung</p>
+      <p id="modalDesc" data-i18n="modal-desc-fallback">Beschreibung</p>
 
       <!-- 🌤️ Wetter-Widget (nur sichtbar für Weather-Projekt!) -->
       <div id="weather_container" style="display:none;"></div>
