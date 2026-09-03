@@ -1,17 +1,21 @@
-# Projekt_Portfolio_CRM
+# Portfolio — Dennis Poglitsch
 
 ## Überblick
-Dieses Projekt ist ein persönliches Entwickler-Portfolio mit Fokus auf:
-- klare Struktur
-- saubere UI/UX
-- modularem JavaScript
-- einem Wetter-Widget mit Python im Browser (PyScript)
-- Werkstatt-CRM als Hauptprojekt
+Persönliches Entwickler-Portfolio — statische Website mit modularer Frontend-Architektur.
 
 ## Features
+- **DE/EN Sprachumschaltung** per data-i18n + localStorage-Persistenz
 - Interaktive Projekt-Modal-Ansicht
 - Kontaktformular mit EmailJS (v4 Browser SDK)
-- Wetter-Widget über PyScript + Open-Meteo APIs (ohne eigenes Wetter-Backend)
+- Wetter-Widget über PyScript + Open-Meteo APIs (Python im Browser)
+- Schreibmaschinen-Effekt im Hero-Bereich
 - Scroll-Reveal Animationen
 - Canvas-Dotgrid im Hero-Bereich
-- Werkstatt-CRM als erstes Projekt
+- Responsive Navigation mit Scroll-Observer
+
+## Technik
+- Reines HTML/CSS/JS (kein Framework)
+- Module: translations.js, modal.js, typing.js, kontakt.js, navObserver.js, reveal.js, dotgrid.js
+- Python (PyScript/Pyodide) für das Wetter-Widget
+- EmailJS für formularlosen E-Mail-Versand
+- Goatcounter für datenschutzfreundliche Analytics
