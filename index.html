@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<!-- 🌍 DOCTYPE: Sagt dem Browser "das ist HTML5" -->
+
+<html lang="de">
+<!-- lang="de" = Diese Seite ist auf Deutsch (wichtig für Screenreader und SEO) -->
+
+<head>
+  <!-- HEAD = Meta-Infos für den Browser (werden nicht angezeigt) -->
+  
+  <meta charset="UTF-8">
+  <!-- charset="UTF-8" = Universal character encoding (supporte alle Sprachen) -->
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- viewport = responsive Design - Seite passt sich an Bildschirmgröße an -->
+  
+  <!-- 🎨 CSS STYLESHEET -->
+  <link rel="stylesheet" href="style/style.css">
+  <!-- Das ist die Haupt-Stylesheet mit Farben, Layout, Animationen -->
+
+  <!-- 🔤 GOOGLE FONTS PRELOAD (Schneller laden) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Performance-Quick-Win: Hero-Bild früh laden (sichtbar above the fold) -->
+  <link rel="preload" as="image" href="images/olderbot.webp" type="image/webp">
+  
+  <!-- Inter Font = lesbare Schrift für Haupt-Text -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- JetBrains Mono = Monospace-Font für Code-Look (Überschriften) -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap"rel="stylesheet">
+
+  <!-- 🐍 PYSCRIPT / PYODIDE: Lädt Python im Browser = weather.py kann hier laufen! -->
+  <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+  <!-- CSS für PyScript UI-Komponenten -->
+  
+  <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+  <!-- Das JavaScript-Framework das Python im Browser kompatibel macht -->
+  
+  <!-- 📊 GOATCOUNTER: Einfache Analytics-Tracker (ohne Google, datenschutzfreundlich) -->
+  <script data-goatcounter="https://stoerni.goatcounter.com/count"async src="//gc.zgo.at/count.js"></script>
+
+  <!-- 🌐 PAGE TITLE: Text im Browser-Tab -->
+  <title>Dennis Poglitsch | Portfolio</title>
+</head>
+
+<body>
+  <!-- BODY = der sichtbare Inhalt der Seite -->
+
+  <!-- 📱 NAVIGATIONSLEISTE: Vertikale Navigation mit Links zu Sections -->
+  <!-- Jeder Link zeigt auf eine Section mit ID (z.B. #Home → <section id="Home">) -->
+  <!-- navObserver.js beobachtet, welche Section gerade sichtbar ist, und färbt den Link rot -->
+  <nav class="nav_leiste">
+    <a href="#Home" data-i18n="nav-home">Home</a>
+    <a href="#Über_mich" data-i18n="nav-about">Über mich</a>
+    <a href="#Projekte" data-i18n="nav-projects">Projekte</a>
+    <a href="#Kontakt" data-i18n="nav-contact">Kontakt</a>
+  </nav>
+
+  <!-- 🎯 MAIN: Der Haupt-Inhalt der Seite -->
+  <main>
+    <!-- 📋 HEADER: Oben fest (position: fixed) mit optionalen Buttons -->
+    <header>
+      <div class="header_content">
+        <span>
+          <!-- Diese Links sind aktuell versteckt (display: none) -->
+          <!-- Können später aktiviert werden für GitHub-Link oder Sprachen-Wechsel -->
+          <a href="https://github.com/DennisPoglitsch" style="display: none;">Github</a>
+          <a id="lang-toggle" href="#">EN</a>
+        </span>
+      </div>
+    </header>
+
+    <!-- 🏠 HOME / HERO SECTION: Start-Seite mit Punkt-Animation, Text und Bild -->
+    <section id="Home" class="home_wrapper">
+      <!-- Canvas: HTML5-Element für grafische Inhalte -->
+      <!-- Hier zeichnet dotgrid.js die interaktiven Punkte und Wellen -->
+      <canvas id="dotCanvas" width="600" height="600"></canvas>
+
+      <div class="home_text">
+        <!-- Große Überschrift mit reveal-Animation (scroll-Effekt) -->
+        <h1 class="reveal">
+          <span class="reveal_content">
+            <span data-i18n="home-hero">Hi, mein Name ist Dennis Poglitsch</span><span class="punkt_rot">.</span>
+            <!-- .punkt_rot = dieser Punkt wird rot eingefärbt mit CSS -->
+          </span>
+        </h1>
+
+        <!-- Zweite Überschrift mit dynamischem Text (Schreibmaschinen-Effekt) -->
+        <h2 class="reveal">
+          <span class="reveal_content">
+            <span data-i18n="home-prefix">Ich bin </span><span id="typing_text"></span>
+            <!-- typing.js schreibt hier verschiedene Wörter rein
+                 (alt aber nicht veraltet, Lösungsorientiert, Analytisch, Strukturiert) -->
+          </span>
+        </h2>
+
+        <!-- Container für Kontakt-Link und Bild -->
+        <div id="typing_image_wrapper">
+          <!-- Button zum Kontakt-Section springen -->
+          <a href="#Kontakt" class="reveal">
+            <span class="reveal_content" data-i18n="home-cta">Kontakt zu mir</span>
+          </a>
+
+          <!-- Bild: Der Olderbot-Charakter mit Augen-Overlay -->
+          <span class="olderbot_container">
+            <!-- Haupt-Bild des Olderbot-Characters -->
+            <!-- Performance-Quick-Win: WebP statt PNG spart stark Dateigröße bei ähnlicher Qualität -->
+            <img id="typing_image" src="images/olderbot.webp" alt="Bild von Olderbot" decoding="async">
+            <!-- Overlay für Augen-Animation (wird überlagert) -->
+            <img id="olderbot_eyes" src="images/olderbot_augen.png" alt="Bild von Olderbot Augen">
+          </span>
+        </div>
+      </div>
+    </section>
+    <!-- Über mich Section -->
+    <section id="Über_mich" class="über_mich_wrapper">
+      <div class="über_mich_inner">
+        <div class="über_mich_header_wrapper">
+          <h3 class="reveal">
+            <span class="reveal_content">
+              <span data-i18n="about-header">Über mich</span><span class="punkt_rot">.</span>
+            </span>
+          </h3>
+          <div class="über_mich_line"></div>
+        </div>
+        <div class="über_mich_text">
+          <p class="reveal">
+            <span class="reveal_content" data-i18n="about-text">
+              <span class="first_word">Technik</span> fasziniert mich nicht nur – sie treibt mich an.<br>
+              Ich bin eine offene, lernbereite und lösungsorientierte Person mit großer Motivation für die Softwareentwicklung. 
+              Ein respektvoller Umgang, ehrliche Kommunikation und gemeinsames Arbeiten an Lösungen sind für mich selbstverständlich.<br>
+              <br>
+              Durch meine bisherige Berufserfahrung arbeite ich auch in stressigen Situationen ruhig, strukturiert und zuverlässig. 
+              Ich übernehme Verantwortung, denke mit und eigne mir neue Themen schnell an.<br>
+              <br>
+              Mein Interesse an der Anwendungsentwicklung kommt aus echter Begeisterung für Logik, Struktur und kreative Problemlösung. 
+              Beim Programmieren analysiere ich Probleme Schritt für Schritt und entwickle praktische Lösungen, 
+              Fehler sehe ich dabei als Lernchance.<br>
+              <!--<br>
+              Die Ausbildung zum Fachinformatiker für Anwendungsentwicklung ist für mich eine bewusste berufliche Entscheidung. 
+              Ich möchte langfristig wachsen, mein Wissen vertiefen und mein Engagement in einem Ausbildungsbetrieb einbringen.-->
+            </span>
+          </p>
+        </div>
+        <div class="skills">
+          <div class="skills_header">
+            <h3><span data-i18n="skills-header">Meine Fähigkeiten</span><span class="punkt_rot">.</span></h3>
+          </div>
+          <ul>
+            <li class="reveal">
+              <span class="reveal_content">Java</span>
+            </li>
+            <li class="reveal">
+              <span class="reveal_content">Python</span>
+            </li>
+            <li class="reveal">
+              <span class="reveal_content">PHP</span>
+            </li>
+            <li class="reveal">
+              <span class="reveal_content">MySQL</span>
+            </li>
+            <li class="reveal">
+              <span class="reveal_content">JavaScript</span>
+            </li>
+            <li class="reveal">
+              <span class="reveal_content">HTML</span>
+            </li>
+            <li class="reveal">
+              <span class="reveal_content">CSS</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- Projekte Section -->
+    <section id="Projekte">
+      <div class="projekte_inner">
+        <div class="projekte_header_wrapper">
+          <h3 class="reveal"><span class="reveal_content">Projekte<span class="punkt_rot">.</span></span></h3>
+          <div class="über_mich_line" aria-hidden="true"></div>
+        </div>
+        <div class="projekte_list_wrapper">
+          <div class="projekte_list">
+            <!-- MailPilot – AI-gestützte E-Mail-Triage -->
+            <div class="projekt" data-desc="Multi-Tenant AI-gestütztes E-Mail-Triage- und Reply-Drafting-SaaS. Nutzt LLM-Klassifikation und RAG-basierte Antwortgenerierung für intelligentes E-Mail-Management." data-tech="React, Spring Boot, PostgreSQL, OAuth2/IMAP, LLM-Klassifikation, RAG-basierte Antwortgenerierung" data-link="" data-modal-img1="images/crm-projekt-placeholder.svg">
+              <div class="projekt_content">
+                <div class="reveal">
+                  <span class="reveal_content"><img src="images/crm-projekt-placeholder.svg"
+                      alt="MailPilot Projektvorschau" loading="lazy" decoding="async"></span>
+                </div>
+                <div class="projekt_text_wrapper">
+                  <h4 class="projekt_titel reveal">
+                    <span class="reveal_content">MailPilot (in Entwicklung)</span>
+                  </h4>
+                  <div class="projekt_beschreibung">
+                    <p class="reveal">
+                      <span class="reveal_content">
+                        Multi-Tenant AI-gestütztes E-Mail-Triage- und Reply-Drafting-SaaS.
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Werkstatt-CRM als zweites Projekt -->
+            <div class="projekt" data-desc="Werkstatt-CRM als reales Praxisprojekt: digitale Auftragserfassung per PDF/Excel, strukturierte Verwaltung von Kunden- und Auftragsdaten, mobil nutzbares Interface und vorbereitete Monitoring-Bausteine für den Betrieb. Geplant mit Java-Backend und auf skalierbarem Hosting-Setup ausgelegt." data-tech="Java, Spring Boot, REST API, SQL, Monitoring, Responsive UI" data-link="" data-modal-img1="images/crm-projekt-placeholder.svg">
+              <div class="projekt_content">
+                <div class="reveal">
+                  <span class="reveal_content"><img src="images/crm-projekt-placeholder.svg"
+                      alt="Werkstatt-CRM Projektvorschau"></span>
+                </div>
+                <div class="projekt_text_wrapper">
+                  <h4 class="projekt_titel reveal">
+                    <span class="reveal_content">Werkstatt-CRM (in Entwicklung)</span>
+                  </h4>
+                  <div class="projekt_beschreibung">
+                    <p class="reveal">
+                      <span class="reveal_content">
+                        CRM-Lösung für Werkstätten mit Fokus auf digitale Aufträge, mobile Nutzung und saubere Prozesse.
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Live Wetter Widget als drittes Projekt -->
+            <div class="projekt" data-desc="Live-Wetter-Widget mit Python im Browser über PyScript. Wetterdaten werden live über die Open-Meteo APIs (Geocoding + Forecast) geladen und direkt im Modal aktualisiert. Zusätzlich kann der Standort dynamisch gesucht werden, ohne die Seite neu zu laden." data-tech="Python, PyScript, Open-Meteo API, HTML, CSS" data-link="https://open-meteo.com/" data-project="weather" data-modal-img1="images/wetter.webp">
+              <div class="projekt_content">
+                <div class="reveal">
+                  <span class="reveal_content"><img src="images/wetter.webp"
+                      alt="Wetter Widget Projekt Screenshot" loading="lazy" decoding="async"></span>
+                </div>
+                <div class="projekt_text_wrapper">
+                  <h4 class="projekt_titel reveal">
+                    <span class="reveal_content">Live Wetter Widget</span>
+                  </h4>
+                  <div class="projekt_beschreibung">
+                    <p class="reveal">
+                      <span class="reveal_content">
+                        API-basiertes Wetter-Widget mit Python im Browser und dynamischer Ortssuche.
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Interaktives Portfolio als viertes Projekt -->
+            <div class="projekt" data-desc="Interaktives Entwickler-Portfolio mit klarem Fokus auf Performance, Lesbarkeit und Benutzerführung. Umgesetzt mit modularer Frontend-Architektur, Canvas-Animationen, Scroll-Observer und dynamischem Projekt-Modal. Das Kontaktformular läuft über EmailJS inklusive Spam-Schutz." data-tech="HTML, CSS, JavaScript, EmailJS, UX" data-link="stoerni.github.io" data-modal-img1="images/portfolio.webp">
+              <div class="projekt_content">
+                <div class="reveal">
+                  <span class="reveal_content"><img src="images/portfolio.webp"
+                      alt="Entwickler-Portfolio Screenshot" loading="lazy" decoding="async"></span>
+                </div>
+                <div class="projekt_text_wrapper">
+                  <h4 class="projekt_titel reveal">
+                    <span class="reveal_content">Entwickler-Portfolio</span>
+                  </h4>
+                  <div class="projekt_beschreibung">
+                    <p class="reveal">
+                      <span class="reveal_content">
+                        Modernes Portfolio mit Fokus auf Struktur, Performance und professioneller Präsentation.
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Weitere Projekte -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Kontakt Section -->
+    <section id="Kontakt">
+      <div class="kontakt_container">
+        <div class="kontakt_header_wrapper">
+          <div class="kontakt_line"></div>
+          <h3 class="reveal">
+            <span class="reveal_content">
+              Kontakt<span class="punkt_rot">.</span>
+            </span>
+          </h3>
+          <div class="kontakt_line"></div>
+        </div>
+        <p class="kontakt_intro reveal">
+          <span class="reveal_content">
+            Schreib mir gerne eine Nachricht – ich freue mich auf den Austausch.
+          </span>
+        </p>
+        <!-- Email mit Briefsymbol via svg -->
+        <div class="reveal">
+          <p class="kontakt_email">
+            <span class="reveal_content">
+              <svg class="email_icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                viewBox="0 0 16 16">
+                <path
+                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-5.857 3.514L15 12.383V5.383zM1 5.383v7l5.857-3.486L1 5.383zM14.667 13H1.333a.667.667 0 0 0 .667.667h11.334a.667.667 0 0 0 .667-.667z" />
+              </svg>
+              <a href="mailto:dennis.poglitsch91@gmail.com">dennis.poglitsch91@gmail.com</a>
+            </span>
+          </p>
+        </div>
+        <!-- Kontaktformular -->
+        <form class="kontakt_formular">
+          <div class="honeypot_wrapper">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="formular_reihe">
+            <div class="formular_gruppe">
+              <label class="reveal" for="kontakt_name"><span class="reveal_content">Name</span></label>
+              <div class="reveal">
+                <span class="reveal_content"><input type="text" id="kontakt_name" name="name" placeholder="Dein Name"
+                    required></span>
+              </div>
+            </div>
+            <div class="formular_gruppe">
+              <label class="reveal" for="kontakt_email"><span class="reveal_content">E-Mail</span></label>
+              <div class="reveal">
+                <span class="reveal_content"><input type="email" id="kontakt_email" name="email"
+                    placeholder="Deine E-Mail" required></span>
+              </div>
+            </div>
+          </div>
+          <div class="formular_gruppe">
+            <label class="reveal" for="kontakt_nachricht"><span class="reveal_content">Nachricht</span></label>
+            <div class="reveal">
+              <span class="reveal_content"><textarea id="kontakt_nachricht" name="message"
+                  placeholder="Deine Nachricht..." required></textarea></span>
+            </div>
+            <!-- Erfolgsmeldung dynamisch per JavaScript gesetzt bei änderung der Fehlermeldung liest dies der Screenreader vor -->
+            <p class="kontakt_status" aria-live="polite"></p>
+          </div>
+          <div class="reveal">
+            <span class="reveal_content"><button type="submit" class="kontakt_button">Absenden</button></span>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+  <!-- 🎬 MODAL: Popup-Fenster für Projekt-Details -->
+  <!-- Wird von modal.js geöffnet/geschlossen wenn Projekte geklickt werden -->
+  <div id="projectModal" class="modal" aria-hidden="true">
+    <!-- Schwarzer Hintergrund (Backdrop) - kann geklickt werden zum Schließen -->
+    <div class="modal_backdrop" data-modal-close></div>
+
+    <!-- Der eigentliche Modal-Inhalt (Popup-Box) -->
+    <div class="modal_content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <!-- Close-Button mit × Symbol -->
+      <button class="modal_close" aria-label="Schließen" data-modal-close>×</button>
+
+      <!-- Projekt-Titel (wird von modal.js dynamisch gesetzt) -->
+      <h3 id="modalTitle">Titel</h3>
+
+      <!-- Bild-Galerie (mehrere Projekt-Bilder) -->
+      <div id="modalGallery" class="modal_gallery"></div>
+      <!-- modal.js füllt das mit Bildern basierend auf data-Attributen der Projekt-Cards -->
+
+      <!-- Projekt-Beschreibung -->
+      <p id="modalDesc">Beschreibung</p>
+
+      <!-- 🌤️ Wetter-Widget (nur sichtbar für Weather-Projekt!) -->
+      <div id="weather_container" style="display:none;"></div>
+      <!-- modal.js zeigt diesen Container nur wenn project="weather" ist -->
+      <!-- weather.py füllt das mit einem Live-Wetter-Widget mit Suche -->
+
+      <!-- Tech-Badges (z.B. "HTML", "CSS", "JavaScript") -->
+      <div id="modalTech" class="modal_tech" aria-hidden="true"></div>
+      <!-- modal.js erzeugt die einzelnen Tech-Badges basierend auf data-tech Attribut -->
+
+      <!-- Links / Aktionen (z.B. "Live ansehen" Button) -->
+      <div id="modalLinks" class="modal_links" aria-hidden="true"></div>
+      <!-- modal.js erstellt hier den externen Link-Button basierend auf data-link Attribut -->
+    </div>
+  </div>
+  <!-- 📧 EMAILJS LIBRARY: Für das Kontaktformular ohne eigenen Email-Server -->
+  <!-- EmailJS ermöglicht es, dass Emails direkt vom Browser versendet werden -->
+  <!-- Ohne EmailJS müsste man einen eigenen Server bauen -->
+  <!-- EmailJS v4 (Browser SDK): aktuelle, sichere Version -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  
+  <!-- 🚀 MAIN.JS EINBINDEN: Das ist das Koordinations-Zentrum! -->
+  <!-- type="module" = ES6 Modules (modernes JavaScript mit import/export) -->
+  <!-- Alle anderen JS-Dateien werden von main.js importiert und koordiniert -->
+  <script src="js/main.js" type="module"></script>
+  
+  <!-- 🐍 WEATHER.PY EINBINDEN: Python-Code der im Browser lädt und läuft -->
+  <!-- <py-script> = PyScript-Tag zum Laden von Python-Dateien -->
+  <!-- Dadurch kann weather.py die Funktion loadWeatherFromPython bereitstellen -->
+  <py-script src="python/weather.py"></py-script>
+</body>
+
+</html>
