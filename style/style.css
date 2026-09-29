@@ -1880,3 +1880,102 @@ section {
   }
   /* von unsichtbar/tief zu sichtbar/normal = fährt nach oben rein */
 }
+/* =========================================================
+   ⚖️ RECHTSSEITEN: Impressum & Datenschutz
+   Gleiche Farben/Schriften wie die Startseite, nur einspaltig
+   ========================================================= */
+
+.legal_main {
+  /* Eigener Inhaltsbereich: rechtsseitig zentriert, Lesebreite begrenzt */
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 120px 40px 60px;
+  /* 120px oben = Platz für den festen Header */
+}
+
+/* Überschriften auf den Rechtsseiten kompakter als im Hero */
+.legal_inhalt h1 {
+  font-size: 2.5rem;
+}
+
+.legal_inhalt h2 {
+  /* Abschnitts-Überschriften (1., 2., 3. ...) */
+  font-size: 1.4rem;
+  margin: 44px 0 12px;
+}
+
+.legal_inhalt h3 {
+  font-size: 1.15rem;
+  color: var(--color_text);
+  /* Unter-Überschriften weiß (h2 bleibt rot) */
+  margin: 28px 0 10px;
+}
+
+.legal_inhalt h4 {
+  font-family: var(--font_heading);
+  font-size: 1rem;
+  margin: 22px 0 8px;
+}
+
+.legal_inhalt p {
+  margin-bottom: 14px;
+}
+
+.legal_inhalt ul {
+  margin: 0 0 16px 22px;
+}
+
+.legal_inhalt li {
+  margin-bottom: 10px;
+}
+
+.legal_inhalt a {
+  color: var(--color_accent);
+  text-decoration: underline;
+}
+
+.legal_inhalt a:hover {
+  color: var(--color_text);
+}
+
+/* Noch offene Angaben (müssen noch eingesetzt werden) */
+.legal_platzhalter {
+  color: var(--color_accent);
+  font-weight: 600;
+}
+
+/* Footer der Startseite mit den Links zu den Rechtsseiten */
+.site_footer {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 32px 40px 48px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.site_footer a {
+  color: var(--color_text);
+  font-size: 0.95rem;
+  transition: color 0.3s;
+}
+
+.site_footer a:hover {
+  color: var(--color_accent);
+}
+
+/* 📱 Mobile: weniger Rand, Header-Links dürfen umbrechen */
+@media (max-width: 900px) {
+  .legal_main {
+    padding: 140px 20px 40px;
+  }
+
+  .header_content span {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .site_footer {
+    gap: 16px;
+    padding: 28px 20px 40px;
+  }
+}

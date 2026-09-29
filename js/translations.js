@@ -70,6 +70,10 @@ const translations = {
     'modal-close': 'Schließen',
     'modal-title-fallback': 'Titel',
     'modal-desc-fallback': 'Beschreibung',
+
+    // ⚖️ Footer (Rechtsseiten)
+    'footer-imprint': 'Impressum',
+    'footer-privacy': 'Datenschutz',
   },
 
   en: {
@@ -127,7 +131,7 @@ const translations = {
     'contact-error': 'Oops! Something went wrong. Please try again later.',
 
     // 🎭 typing.js Words
-    'typing-word-0': 'classic but not outdated',
+    'typing-word-0': 'Im old, not obsolete',
     'typing-word-1': 'Solution-Oriented',
     'typing-word-2': 'Analytical',
     'typing-word-3': 'Structured',
@@ -137,6 +141,10 @@ const translations = {
     'modal-close': 'Close',
     'modal-title-fallback': 'Title',
     'modal-desc-fallback': 'Description',
+
+    // ⚖️ Footer (legal pages)
+    'footer-imprint': 'Imprint',
+    'footer-privacy': 'Privacy Policy',
    },
 };
 
