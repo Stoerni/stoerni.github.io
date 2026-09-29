@@ -18,4 +18,5 @@ Persönliches Entwickler-Portfolio — statische Website mit modularer Frontend-
 - Module: translations.js, modal.js, typing.js, kontakt.js, navObserver.js, reveal.js, dotgrid.js
 - Python (PyScript/Pyodide) für das Wetter-Widget
 - EmailJS für formularlosen E-Mail-Versand
-- Goatcounter für datenschutzfreundliche Analytics
+- **Schriften und EmailJS-Bibliothek lokal ausgeliefert**: Inter + JetBrains Mono als `.woff2` in `fonts/` (`@font-face` in `style/style.css`), EmailJS-Browser-SDK in `js/vendor/` — keine Google-Fonts- und keine jsDelivr-Abrufe mehr
+- Keine Analytics auf der Seite (GoatCounter entfernt)

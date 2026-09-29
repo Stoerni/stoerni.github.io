@@ -17,18 +17,11 @@
   <link rel="stylesheet" href="style/style.css">
   <!-- Das ist die Haupt-Stylesheet mit Farben, Layout, Animationen -->
 
-  <!-- 🔤 GOOGLE FONTS PRELOAD (Schneller laden) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  
   <!-- Performance-Quick-Win: Hero-Bild früh laden (sichtbar above the fold) -->
   <link rel="preload" as="image" href="images/olderbot.webp" type="image/webp">
   
-  <!-- Inter Font = lesbare Schrift für Haupt-Text -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  
-  <!-- JetBrains Mono = Monospace-Font für Code-Look (Überschriften) -->
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap"rel="stylesheet">
+  <!-- 🔤 SCHRIFTEN: Inter + JetBrains Mono werden lokal aus fonts/ geladen
+       (@font-face in style/style.css) - kein Abruf bei Google Fonts mehr -->
 
   <!-- 🐍 PYSCRIPT / PYODIDE: Lädt Python im Browser = weather.py kann hier laufen! -->
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
@@ -37,8 +30,7 @@
   <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
   <!-- Das JavaScript-Framework das Python im Browser kompatibel macht -->
   
-  <!-- 📊 GOATCOUNTER: Einfache Analytics-Tracker (ohne Google, datenschutzfreundlich) -->
-  <script data-goatcounter="https://stoerni.goatcounter.com/count"async src="//gc.zgo.at/count.js"></script>
+  <!-- 📊 GOATCOUNTER: entfernt (Slice D0b) - keine Analytics mehr auf der Seite -->
 
   <!-- 🌐 PAGE TITLE: Text im Browser-Tab -->
   <title>Dennis Poglitsch | Portfolio</title>
@@ -387,8 +379,11 @@
   <!-- 📧 EMAILJS LIBRARY: Für das Kontaktformular ohne eigenen Email-Server -->
   <!-- EmailJS ermöglicht es, dass Emails direkt vom Browser versendet werden -->
   <!-- Ohne EmailJS müsste man einen eigenen Server bauen -->
-  <!-- EmailJS v4 (Browser SDK): aktuelle, sichere Version -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- EmailJS v4 (Browser SDK) - LOKAL ausgeliefert statt über jsDelivr/CDN.
+       Version: @emailjs/browser 4.4.1 (dist/email.min.js)
+       Lizenz: BSD 3-Clause -> js/vendor/emailjs-LICENSE.txt
+       Update: npm pack @emailjs/browser@<version> und dist/email.min.js ersetzen -->
+  <script src="js/vendor/email.min.js"></script>
   
   <!-- 🚀 MAIN.JS EINBINDEN: Das ist das Koordinations-Zentrum! -->
   <!-- type="module" = ES6 Modules (modernes JavaScript mit import/export) -->
