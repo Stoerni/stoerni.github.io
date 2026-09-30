@@ -32,12 +32,12 @@ const translations = {
 
     // 🏗️ Projekte
     'projects-header': 'Projekte',
-    'project-mailpilot': 'MailPilot (in Entwicklung)',
+    'project-mailpilot': 'MailPilot – Live-Demo',
     'project-crm': 'Werkstatt-CRM (in Entwicklung)',
     'project-weather': 'Live Wetter Widget',
     'project-portfolio': 'Entwickler-Portfolio',
     'project-desc-mailpilot':
-      'Multi-Tenant AI-gestütztes E-Mail-Triage- und Reply-Drafting-SaaS.',
+      'Multi-Tenant AI-gestütztes E-Mail-Triage-SaaS – Live-Demo mit fiktiven Daten, läuft komplett im Browser.',
     'project-desc-crm':
       'CRM-Lösung für Werkstätten mit Fokus auf digitale Aufträge, mobile Nutzung und saubere Prozesse.',
     'project-desc-weather':
@@ -103,12 +103,12 @@ const translations = {
 
     // 🏗️ Projects
     'projects-header': 'Projects',
-    'project-mailpilot': 'MailPilot (in Development)',
+    'project-mailpilot': 'MailPilot – Live Demo',
     'project-crm': 'Workshop CRM (in Development)',
     'project-weather': 'Live Weather Widget',
     'project-portfolio': 'Developer Portfolio',
     'project-desc-mailpilot':
-      'Multi-Tenant AI-powered Email Triage and Reply Drafting SaaS.',
+      'Multi-Tenant AI-powered email triage SaaS – live demo with fictional data, running entirely in the browser.',
     'project-desc-crm':
       'Workshop CRM with focus on digital orders, mobile use, and clean processes.',
     'project-desc-weather':

@@ -78,8 +78,12 @@ export function initModal() {
       linksContainer.setAttribute('aria-hidden', 'false');  // Sichtbar machen
       
       const a = document.createElement('a');  // Neuer <a> Link
-      // Link ist entweder vollständig (http://...) oder ein Domain-Name
-      a.href = link.startsWith("http") ? link : `https://${link}`;
+      // Link ist eine vollständige URL (http://...), ein relativer Pfad im
+      // Portfolio (z. B. "mailpilot-demo/") oder ein Domain-Name ("example.com").
+      // Nur der Domain-Name bekommt ein https:// davor – relative Pfade bleiben
+      // unverändert, sonst würde "mailpilot-demo/" zu "https://mailpilot-demo/".
+      const istDomainName = !link.includes('/') || /^[^/]+\.[^/]+/.test(link);
+      a.href = (link.startsWith("http") || !istDomainName) ? link : `https://${link}`;
       a.target = '_blank';                    // Im neuen Tab öffnen
       a.rel = 'noopener noreferrer';         // Sicherheit für neue Tabs
       a.className = 'btn btn-primary';        // CSS-Button-Klasse

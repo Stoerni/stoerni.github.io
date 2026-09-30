@@ -20,3 +20,6 @@ Persönliches Entwickler-Portfolio — statische Website mit modularer Frontend-
 - EmailJS für formularlosen E-Mail-Versand
 - **Schriften und EmailJS-Bibliothek lokal ausgeliefert**: Inter + JetBrains Mono als `.woff2` in `fonts/` (`@font-face` in `style/style.css`), EmailJS-Browser-SDK in `js/vendor/` — keine Google-Fonts- und keine jsDelivr-Abrufe mehr
 - Keine Analytics auf der Seite (GoatCounter entfernt)
+
+## MailPilot-Demo
+Der Ordner `mailpilot-demo/` enthält den fertig gebauten Demo-Build des MailPilot-Frontends (`npm run build:demo`) und läuft als statische Seite komplett im Browser — ohne Backend, ohne Netzwerk-Anfragen; der Link „Live ansehen“ in der MailPilot-Projektkarte öffnet ihn. Der Quellcode liegt **nicht** in diesem Repo, sondern im MailPilot-Projekt.
