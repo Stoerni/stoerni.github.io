@@ -970,6 +970,10 @@ section {
   width: 100%;
   /* Nimmt ganze Breite der Spalte */
   
+  height: auto;
+  /* Explizite Höhe aus den width/height-Attributen der <img> aufheben,
+     damit das folgende aspect-ratio die Darstellung bestimmt */
+  
   aspect-ratio: 4 / 3;
   /* Seitenverhältnis = 4:3 (immer das gleiche Format) */
   /* Kein verquetschtes Bild! */
