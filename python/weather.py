@@ -1,4 +1,6 @@
 import asyncio  # 📦 Asynchrone Programmierung für API-Calls ohne UI-Blockade
+import html  # 🛡️ Maskiert Nutzereingaben/API-Werte für innerHTML
+from urllib.parse import quote  # 🛡️ Kodiert den Städtenamen für die URL
 
 # 🛡️ PyScript/Pyodide Imports (im Browser verfügbar)
 try:
@@ -7,6 +9,27 @@ try:
 except ImportError:
     js = None
     pyfetch = None
+
+
+# Maximale Länge des eingegebenen Ortsnamens
+MAX_CITY_LENGTH = 80
+
+
+def _esc(value) -> str:
+    """Wert in einen HTML-sicheren String umwandeln (immer str, nie None)."""
+    return html.escape(str(value), quote=True)
+
+
+def _log_error(details) -> None:
+    """Fehlerdetails in die Browser-Konsole schreiben (nie ins DOM)."""
+    message = f"Weather widget error: {details}"
+    if js is not None:
+        try:
+            js.console.error(message)
+            return
+        except Exception:
+            pass
+    print(message)
 
 
 async def _fetch_json(url: str):
@@ -19,7 +42,7 @@ async def _fetch_json(url: str):
 
 async def load_weather(city=None):
     """Lädt Wetterdaten für eine Stadt und rendert das Widget im Modal."""
-    city = (city or "Hannover").strip()
+    city = (city or "Hannover").strip()[:MAX_CITY_LENGTH]
 
     container = js.document.getElementById("weather_container")
     if not container:
@@ -31,13 +54,15 @@ async def load_weather(city=None):
         # 1) Geocoding: Stadt -> Koordinaten (Open-Meteo, kein API-Key nötig)
         geo_url = (
             "https://geocoding-api.open-meteo.com/v1/search"
-            f"?name={city}&count=1&language=de&format=json"
+            f"?name={quote(city)}&count=1&language=de&format=json"
         )
         geo_data = await _fetch_json(geo_url)
 
         results = geo_data.get("results") or []
         if not results:
-            container.innerHTML = f"<p>⚠️ Stadt nicht gefunden: {city}</p>"
+            container.innerHTML = (
+                f"<p>⚠️ Stadt nicht gefunden: {_esc(city)}</p>"
+            )
             return
 
         place = results[0]
@@ -91,12 +116,12 @@ async def load_weather(city=None):
                 <button id="weather_search_btn" type="button">Suchen</button>
             </div>
             <div class="weather_header">
-                <strong>{resolved_name}</strong>
+                <strong>{_esc(resolved_name)}</strong>
             </div>
-            <div class="weather_temp">{temp}°C</div>
-            <div class="weather_desc">{desc}</div>
-            <div class="weather_row"><span>Luftfeuchtigkeit</span><span>{humidity}%</span></div>
-            <div class="weather_row"><span>Wind</span><span>{wind} km/h</span></div>
+            <div class="weather_temp">{_esc(temp)}°C</div>
+            <div class="weather_desc">{_esc(desc)}</div>
+            <div class="weather_row"><span>Luftfeuchtigkeit</span><span>{_esc(humidity)}%</span></div>
+            <div class="weather_row"><span>Wind</span><span>{_esc(wind)} km/h</span></div>
         </div>
         """
 
@@ -114,7 +139,11 @@ async def load_weather(city=None):
         btn_el.addEventListener("click", create_proxy(search_again))
 
     except Exception as e:
-        container.innerHTML = f"<p>⚠️ Fehler beim Laden: {e}</p>"
+        # Allgemeine Meldung für den Nutzer, Details nur in die Konsole
+        container.innerHTML = (
+            "<p>⚠️ Fehler beim Laden. Bitte später erneut versuchen.</p>"
+        )
+        _log_error(e)
 
 
 # 🌐 Funktion für JavaScript verfügbar machen
