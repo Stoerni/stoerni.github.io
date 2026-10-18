@@ -5,6 +5,7 @@
 
 // 📤 EXPORT: Diese Funktion wird von main.js aufgerufen
 import { t } from './translations.js';
+import { loadPyScript } from './pyscript-loader.js';
 
 export function initModal() {
   // 🎯 HTML-Elemente für das Modal abrufen
@@ -102,23 +103,20 @@ export function initModal() {
     }
 
     /* ================= 🌤️ WEATHER WIDGET ================= */
-    // Wenn das Projekt "Weather" ist, laden wir Wetter-Daten
+    // Wenn das Projekt "Weather" ist, gibt es zwei Zustände:
+    //  - PyScript ist in dieser Sitzung schon geladen -> Wetter direkt laden
+    //  - sonst -> Hinweis + Button zeigen (Python erst nach Klick nachladen)
     if (project === "weather" && weatherContainer) {
       weatherContainer.style.display = "flex";  // Weather-Container anzeigen
-      
-      // Warte, bis die Python-Wetter-Funktion verfügbar ist
-      // (wird von weather.py geladen)
-      async function waitForPy() {
-        // Solange waitForPy nicht existiert, alle 100ms prüfen
-        while (!window.loadWeatherFromPython) {
-          await new Promise(r => setTimeout(r, 100));
-        }
+      weatherContainer.innerHTML = "";          // Alten Inhalt des Containers löschen
+
+      if (window.loadWeatherFromPython) {
+        // Funktion ist schon da (Modal war in dieser Sitzung bereits offen)
+        window.loadWeatherFromPython("Hannover");
+      } else {
+        // Nichts laden - der Besucher entscheidet per Klick (Datenschutz)
+        showWeatherNotice();
       }
-      
-      // Wenn Funktion ready ist, Wetter laden
-      waitForPy().then(() => {
-        window.loadWeatherFromPython("Hannover");  // Hannover-Wetter laden
-      });
     } else if (weatherContainer) {
       // Wenn NICHT weather-Projekt: Widget verstecken und leeren
       weatherContainer.style.display = "none";
@@ -137,6 +135,119 @@ export function initModal() {
     modal.setAttribute('aria-hidden', 'true'); // Screenreader: Modal ist versteckt
     document.body.style.overflow = '';       // Scroll wieder aktivieren
   }
+
+  /* ================= 🌤️ WETTER-WIDGET: HINWEIS UND NACHLADEN ================= */
+
+  // 🔤 Texte des Hinweis-/Fehler-Bereichs neu setzen (für den Sprachwechsel).
+  // Es werden nur die Textinhalte getauscht - Aufbau und Klick-Handler bleiben.
+  function refreshWeatherTexts() {
+    if (!weatherContainer) return;
+    weatherContainer.querySelectorAll('[data-weather-notice]').forEach(el => {
+      const role = el.dataset.weatherNotice;
+      if (role === 'note') el.textContent = t('weather-consent-note');
+      else if (role === 'button') el.textContent = t('weather-consent-button');
+      else if (role === 'privacy') el.textContent = t('weather-consent-privacy');
+      else if (role === 'loading') el.textContent = t('weather-loading');
+      else if (role === 'error') el.textContent = t('weather-error');
+      else if (role === 'retry') el.textContent = t('weather-retry');
+    });
+  }
+
+  // 🔘 Kleiner Button im Widget-Bereich (nutzt die vorhandenen Button-Stile)
+  function createNoticeButton(text, role, onClick) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'btn btn-primary';       // gleiche Optik wie "Live ansehen"
+    button.style.border = 'none';               // <button> bringt sonst einen Rahmen mit
+    button.style.cursor = 'pointer';
+    button.dataset.weatherNotice = role;
+    button.textContent = text;
+    button.addEventListener('click', onClick);
+    return button;
+  }
+
+  // 📄 Hinweis + Button: es wird NICHTS geladen, solange nicht geklickt wurde
+  function showWeatherNotice() {
+    weatherContainer.innerHTML = '';
+
+    const box = document.createElement('div');
+    box.className = 'weather_card';             // vorhandener Karten-Stil
+
+    const note = document.createElement('p');
+    note.dataset.weatherNotice = 'note';
+    note.textContent = t('weather-consent-note');
+
+    const button = createNoticeButton(t('weather-consent-button'), 'button', startWeatherWidget);
+
+    // Link auf die Datenschutzerklärung
+    const legal = document.createElement('p');
+    const legalLink = document.createElement('a');
+    legalLink.href = 'datenschutz.html';
+    legalLink.dataset.weatherNotice = 'privacy';
+    legalLink.textContent = t('weather-consent-privacy');
+    legal.appendChild(legalLink);
+
+    box.append(note, button, legal);
+    weatherContainer.appendChild(box);
+  }
+
+  // ⚠️ Fehleranzeige statt endloser Ladeanzeige (offline / blockierter Host)
+  function showWeatherError() {
+    weatherContainer.innerHTML = '';
+
+    const box = document.createElement('div');
+    box.className = 'weather_card';
+
+    const message = document.createElement('p');
+    message.dataset.weatherNotice = 'error';
+    message.textContent = t('weather-error');
+
+    const retry = createNoticeButton(t('weather-retry'), 'retry', startWeatherWidget);
+
+    box.append(message, retry);
+    weatherContainer.appendChild(box);
+  }
+
+  // ⏳ Warten, bis weather.py loadWeatherFromPython bereitstellt - höchstens
+  // timeoutMs lang, danach bricht der Aufruf mit einem Fehler ab.
+  async function waitForPy(timeoutMs = 15000) {
+    const deadline = Date.now() + timeoutMs;
+    while (!window.loadWeatherFromPython) {
+      if (Date.now() > deadline) {
+        throw new Error(`loadWeatherFromPython war nach ${timeoutMs} ms nicht verfügbar`);
+      }
+      await new Promise(r => setTimeout(r, 100));
+    }
+  }
+
+  // ▶️ Startet den Ablauf nach dem Klick: PyScript/Pyodide nachladen, dann Wetter
+  async function startWeatherWidget() {
+    // "Lade ..." anzeigen, solange die Dateien geholt werden
+    weatherContainer.innerHTML = '';
+    const loading = document.createElement('p');
+    loading.className = 'weather_loading';      // vorhandener Lade-Stil
+    loading.dataset.weatherNotice = 'loading';
+    loading.textContent = t('weather-loading');
+    weatherContainer.appendChild(loading);
+
+    try {
+      await loadPyScript();                     // core.css + core.js + <py-script>
+      await waitForPy(15000);                   // warten, bis weather.py die Funktion setzt
+      weatherContainer.innerHTML = '';          // Ladeanzeige weg (weather.py füllt neu)
+      window.loadWeatherFromPython("Hannover"); // Hannover-Wetter laden
+    } catch (e) {
+      showWeatherError();                       // verständliche Meldung statt Endlosschleife
+      addConsoleError('Wetter-Widget konnte nicht geladen werden:', e);
+    }
+  }
+
+  // 📝 Fehler nur melden, wenn die Konsole das mitmacht (defensiv)
+  function addConsoleError(...args) {
+    if (typeof console !== 'undefined' && console.error) console.error(...args);
+  }
+
+  // modal.js kennt die Hinweis-Texte -> translations.js ruft das bei Sprachwechsel auf
+  window.refreshWeatherNotice = refreshWeatherTexts;
 
   // 🖱️ PROJEKT-KARTEN KLICKBAR MACHEN
   // querySelectorAll = alle ".projekt" Elemente finden

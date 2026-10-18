@@ -23,13 +23,10 @@
   <!-- 🔤 SCHRIFTEN: Inter + JetBrains Mono werden lokal aus fonts/ geladen
        (@font-face in style/style.css) - kein Abruf bei Google Fonts mehr -->
 
-  <!-- 🐍 PYSCRIPT / PYODIDE: Lädt Python im Browser = weather.py kann hier laufen! -->
-  <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
-  <!-- CSS für PyScript UI-Komponenten -->
-  
-  <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
-  <!-- Das JavaScript-Framework das Python im Browser kompatibel macht -->
-  
+  <!-- 🐍 PYSCRIPT / PYODIDE: wird bei Bedarf nachgeladen (js/pyscript-loader.js)
+       core.css, core.js und Pyodide (mehrere MB von pyscript.net und
+       cdn.jsdelivr.net) kommen erst, wenn im Wetter-Modal auf "Wetter laden"
+       geklickt wird - sonst würde jeder Seitenaufruf diese Dateien laden. -->
   <!-- 📊 GOATCOUNTER: entfernt (Slice D0b) - keine Analytics mehr auf der Seite -->
 
   <!-- 🌐 PAGE TITLE: Text im Browser-Tab -->
@@ -362,7 +359,8 @@
       <!-- 🌤️ Wetter-Widget (nur sichtbar für Weather-Projekt!) -->
       <div id="weather_container" style="display:none;"></div>
       <!-- modal.js zeigt diesen Container nur wenn project="weather" ist -->
-      <!-- weather.py füllt das mit einem Live-Wetter-Widget mit Suche -->
+      <!-- Erste Anzeige: Hinweis + Button; erst nach Klick wird Python nachgeladen
+           und weather.py füllt das Container mit dem Live-Wetter-Widget mit Suche -->
 
       <!-- Projekt-Beschreibung -->
       <p id="modalDesc" data-i18n="modal-desc-fallback">Beschreibung</p>
@@ -390,10 +388,10 @@
   <!-- Alle anderen JS-Dateien werden von main.js importiert und koordiniert -->
   <script src="js/main.js" type="module"></script>
   
-  <!-- 🐍 WEATHER.PY EINBINDEN: Python-Code der im Browser lädt und läuft -->
-  <!-- <py-script> = PyScript-Tag zum Laden von Python-Dateien -->
-  <!-- Dadurch kann weather.py die Funktion loadWeatherFromPython bereitstellen -->
-  <py-script src="python/weather.py"></py-script>
+  <!-- 🐍 WEATHER.PY: wird bei Bedarf nachgeladen
+       Das <py-script src="python/weather.py"> wird erst angehängt, wenn im
+       Wetter-Modal auf "Wetter laden" geklickt wurde (siehe js/pyscript-loader.js)
+       Dadurch kann weather.py die Funktion loadWeatherFromPython bereitstellen -->
 </body>
 
 </html>

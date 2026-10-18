@@ -71,6 +71,16 @@ const translations = {
     'modal-title-fallback': 'Titel',
     'modal-desc-fallback': 'Beschreibung',
 
+    // 🌤️ Wetter-Widget: Python/PyScript wird erst nach Klick geladen
+    'weather-consent-note':
+      'Für das Live-Wetter wird Python im Browser geladen (Dateien von pyscript.net und cdn.jsdelivr.net). Dabei wird deine IP-Adresse an diese Anbieter übertragen.',
+    'weather-consent-button': 'Wetter laden',
+    'weather-consent-privacy': 'Datenschutz',
+    'weather-loading': 'Lade …',
+    'weather-error':
+      'Das Wetter-Widget konnte nicht geladen werden (Zeitüberschreitung oder blockierte Dateien von pyscript.net / cdn.jsdelivr.net). Bitte prüfe deine Verbindung und versuche es erneut.',
+    'weather-retry': 'Erneut versuchen',
+
     // ⚖️ Footer (Rechtsseiten)
     'footer-imprint': 'Impressum',
     'footer-privacy': 'Datenschutz',
@@ -141,6 +151,16 @@ const translations = {
     'modal-close': 'Close',
     'modal-title-fallback': 'Title',
     'modal-desc-fallback': 'Description',
+
+    // 🌤️ Weather widget: Python/PyScript is loaded only after a click
+    'weather-consent-note':
+      'The live weather runs Python in your browser (files from pyscript.net and cdn.jsdelivr.net). Your IP address is transmitted to these providers.',
+    'weather-consent-button': 'Load weather',
+    'weather-consent-privacy': 'Privacy Policy',
+    'weather-loading': 'Loading …',
+    'weather-error':
+      'The weather widget could not be loaded (timeout or blocked files from pyscript.net / cdn.jsdelivr.net). Please check your connection and try again.',
+    'weather-retry': 'Try again',
 
     // ⚖️ Footer (legal pages)
     'footer-imprint': 'Imprint',
@@ -213,6 +233,12 @@ function applyLanguage(lang) {
         modalDesc.textContent = descKey ? (translations[lang][descKey] || card.dataset.desc || '') : (card.dataset.desc || '');
       }
     }
+  }
+
+  // Wetter-Hinweis/"Lade …"/Fehlertext im Modal mitübersetzen
+  // (js/modal.js kennt den Aufbau des Hinweises und stellt diese Funktion bereit)
+  if (typeof window.refreshWeatherNotice === 'function') {
+    window.refreshWeatherNotice();
   }
 }
 
