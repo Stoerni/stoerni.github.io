@@ -26,28 +26,35 @@ export function initModal() {
     // 📌 1. TITEL EINTRAGEN
     modalTitle.textContent = title || '';  // textContent setzt den reinen Text
 
-    // 🖼️ 2. BILDER-GALERIE AUFBAUEN
-    gallery.innerHTML = '';  // Alte Bilder löschen / html leeren
-    
-    // filter(Boolean) = nur Bilder, die tatsächlich vorhanden sind (nicht null/undefined)
-    // forEach = für JEDES Bild...
-    // Doppelte/falsche Bilder defensiv vermeiden:
-    // - nur vorhandene URLs
-    // - nur einzigartige URLs
-    // - Wetter-Vorschaubild nur im echten Weather-Projekt zulassen
-    const uniqueImageSources = [...new Set([image1, image2].filter(Boolean))]
-      .filter(src => project === "weather" || !src.toLowerCase().includes("wetter"));
+    // 🖼️ 2. MEDIEN-BEREICH AUFBAUEN
+    gallery.innerHTML = '';     // Alte Bilder löschen / html leeren
+    gallery.hidden = false;     // Standard: Medien-Bereich ist sichtbar
 
-    uniqueImageSources.forEach(src => {
-      const img = document.createElement('img');  // Neues <img> Element erzeugen
-      img.src = src;                              // Bildpfad setzen
-      img.alt = title;                            // Alt-Text für Accessibility
-      // Performance-Quick-Win: auch im Modal asynchron decodieren + lazy laden
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      img.className = 'modal_image';              // CSS-Klasse hinzufügen
-      gallery.appendChild(img);                   // Bild ins Modal einfügen
-    });
+    if (project === "weather") {
+      // 🌤️ Beim Wetter-Projekt ist das Live-Widget der Medien-Bereich.
+      // Das Vorschaubild entfällt, sonst wäre das Modal doppelt so hoch.
+      gallery.hidden = true;
+    } else {
+      // filter(Boolean) = nur Bilder, die tatsächlich vorhanden sind (nicht null/undefined)
+      // forEach = für JEDES Bild...
+      // Doppelte/falsche Bilder defensiv vermeiden:
+      // - nur vorhandene URLs
+      // - nur einzigartige URLs
+      // - Wetter-Vorschaubild nur außerhalb des Weather-Modals zulassen
+      const uniqueImageSources = [...new Set([image1, image2].filter(Boolean))]
+        .filter(src => !src.toLowerCase().includes("wetter"));
+
+      uniqueImageSources.forEach(src => {
+        const img = document.createElement('img');  // Neues <img> Element erzeugen
+        img.src = src;                              // Bildpfad setzen
+        img.alt = title;                            // Alt-Text für Accessibility
+        // Kein loading="lazy" mehr: Der Medien-Bereich hat eine feste Form
+        // (aspect-ratio 16/9), deshalb springt die Modal-Höhe beim Laden nicht.
+        img.decoding = 'async';
+        img.className = 'modal_image';              // CSS-Klasse hinzufügen
+        gallery.appendChild(img);                   // Bild ins Modal einfügen
+      });
+    }
 
     // 📝 3. BESCHREIBUNG EINTRAGEN
     modalDesc.textContent = desc || '';  // Text in das Beschreibungs-Element
