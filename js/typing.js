@@ -41,7 +41,7 @@ export function initTyping() {
 
     // 🖼️ Funktion: Bild einblenden mit sanifter Animation
     function showImage(src) {
-        imageElement.src = src;              // Bildquelle setzen (z.B. "images/olderbot.png")
+        imageElement.src = src;              // Bildquelle setzen (z.B. "images/olderbot.webp")
         imageWrapper.classList.add("show");  // CSS-Klasse hinzufügen → Bild wird sichtbar
         imageElement.classList.add("show");  // Auch das Bild selbst mit der "show"-Klasse markieren
         // CSS definiert dabei eine schöne Fade-In Animation mit opacity und transform
