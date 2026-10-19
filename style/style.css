@@ -997,6 +997,25 @@ section {
   /* Gibt visuelles Feedback dass es interaktiv ist */
 }
 
+/* ⌨️ Tastaturfokus auf den Projektkarten (role="button" + tabindex="0").
+   :focus-visible greift nur bei Tastaturbedienung - ein Mausklick auf die
+   Karte erzeugt keinen Rahmen. Farbe = Akzentfarbe des Portfolios. */
+.projekt:focus-visible {
+  outline: 3px solid var(--color_accent);
+  /* Roter Fokusring, gut sichtbar auf dem dunklen Kartenhintergrund */
+  
+  outline-offset: 3px;
+  /* Kleiner Abstand zur Karte, damit der Ring nicht am Rand klebt */
+}
+
+/* ⌨️ Tastaturfokus im Modal (×-Button, Links, Wetter-Eingabe/-Button).
+   Die Wetter-Eingabe behält ihren eigenen Fokus-Stil (siehe
+   .weather_search_inner input:focus), der spezifischer ist. */
+.modal_content :focus-visible {
+  outline: 2px solid var(--color_accent);
+  outline-offset: 2px;
+}
+
 /* ==========================
 /* ==========================
    🎬 MODAL: Popup-Fenster für Projekt-Details

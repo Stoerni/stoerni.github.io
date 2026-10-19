@@ -19,6 +19,43 @@ export function initModal() {
   const linksContainer = document.getElementById('modalLinks');      // Container für Links
   const weatherContainer = document.getElementById('weather_container'); // Weather-Widget
   const gallery = document.getElementById('modalGallery');           // Bild-Galerie
+  const closeButton = modal.querySelector('.modal_close');           // ×-Button (Fokus-Ziel beim Öffnen)
+
+  /* ================= ⌨️ TASTATUR / FOKUS ================= */
+
+  // Alle fokussierbaren Elemente im Modal (wird bei jedem Tab neu ermittelt,
+  // weil das Wetter-Widget seinen Inhalt zur Laufzeit austauscht).
+  const FOCUSABLE_SELECTOR = [
+    'a[href]',
+    'button:not([disabled])',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    'textarea:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])'
+  ].join(', ');
+
+  // Die Bereiche hinter dem Modal: solange es offen ist, sind sie `inert`
+  // (nicht per Tab erreichbar, für Screenreader ausgeblendet).
+  // Das Modal selbst liegt außerhalb dieser Elemente.
+  const backgroundAreas = ['main', 'nav', 'footer']
+    .map(selector => document.querySelector(selector))
+    .filter(Boolean);
+
+  // Die Karte, die das Modal geöffnet hat - dorthin kommt der Fokus zurück
+  let openerCard = null;
+
+  function getFocusableElements() {
+    return [...modal.querySelectorAll(FOCUSABLE_SELECTOR)]
+      // Nur tatsächlich sichtbare Elemente (offsetWidth/Height bzw. Client-Rects)
+      .filter(el => el.getClientRects().length > 0);
+  }
+
+  function setBackgroundInert(isInert) {
+    backgroundAreas.forEach(area => {
+      if (isInert) area.setAttribute('inert', '');
+      else area.removeAttribute('inert');
+    });
+  }
 
   // 📖 Funktion: Modal mit Projektdaten öffnen und füllen
   // Diese Funktion erhält alle Infos über das zu öffnende Projekt
@@ -127,6 +164,15 @@ export function initModal() {
     modal.classList.add('open');              // CSS-Klasse 'open' hinzufügen
     modal.setAttribute('aria-hidden', 'false'); // Screenreader: Modal is sichtbar
     document.body.style.overflow = 'hidden';  // Body Scroll deaktivieren (Modal ist Fokus)
+
+    // ⌨️ Hintergrund inaktiv machen (main/nav/footer) - erst nach dem Öffnen,
+    // damit der Fokus beim Setzen von `inert` nicht verloren geht.
+    setBackgroundInert(true);
+
+    // ⌨️ Fokus ins Modal: auf den ×-Button (erstes sichtbares Element im Modal
+    // und der kürzeste Weg wieder heraus). Erst nach dem Öffnen möglich, ein
+    // display:none-Element lässt sich nicht fokussieren.
+    if (closeButton) closeButton.focus();
   }
 
   // 📖 Funktion: Modal wieder schließen
@@ -134,6 +180,14 @@ export function initModal() {
     modal.classList.remove('open');          // CSS Klasse 'open' entfernen
     modal.setAttribute('aria-hidden', 'true'); // Screenreader: Modal ist versteckt
     document.body.style.overflow = '';       // Scroll wieder aktivieren
+
+    // ⌨️ Hintergrund wieder aktiv machen (vor dem Fokus-Wechsel, sonst
+    // kann die Karte den Fokus nicht annehmen)
+    setBackgroundInert(false);
+
+    // ⌨️ Fokus zurück auf die Karte, die das Modal geöffnet hat
+    // (gilt für alle Wege: ESC, Backdrop-Klick, ×-Button)
+    if (openerCard && typeof openerCard.focus === 'function') openerCard.focus();
   }
 
   /* ================= 🌤️ WETTER-WIDGET: HINWEIS UND NACHLADEN ================= */
@@ -251,11 +305,12 @@ export function initModal() {
 
   // 🖱️ PROJEKT-KARTEN KLICKBAR MACHEN
   // querySelectorAll = alle ".projekt" Elemente finden
+  // Die Karten sind im HTML role="button" + tabindex="0" (per Tab erreichbar).
   document.querySelectorAll('.projekt').forEach((card, index) => {
     card.style.cursor = 'pointer';  // Maus-Cursor ändert sich zu Hand (Clicker)
-    
-    // Wenn Projekt geklickt wird:
-    card.addEventListener('click', () => {
+
+    // 📖 Gemeinsamer Weg: Karte öffnet das Modal (Maus-Klick und Tastatur)
+    function openFromCard() {
       const descKey = card.dataset.i18nDesc;
       openModal({
         // Daten aus HTML-Attributen auslesen:
@@ -270,6 +325,20 @@ export function initModal() {
       });
       // Aktuelle Card für Sprachwechsel-Modal-Update speichern
       modal.dataset.activeCardIndex = index;
+    }
+
+    // ⌨️ Fokus-Rückgabe: merken, welche Karte das Modal geöffnet hat
+    card.addEventListener('click', () => {
+      openerCard = card;
+      openFromCard();
+    });
+
+    // ⌨️ Tastaturbedienung: Enter und Leertaste öffnen das Modal
+    card.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+      e.preventDefault();  // Leertaste darf die Seite nicht scrollen
+      openerCard = card;
+      openFromCard();
     });
   });
 
@@ -283,6 +352,37 @@ export function initModal() {
   modal.addEventListener('click', e => {
     // e.target === modal = Klick auf schwarzen Hintergrund
     if (e.target === modal) closeModal();
+  });
+
+  // ⌨️ FOKUSFALLE: Solange das Modal offen ist, bleibt Tab/Shift+Tab im Modal
+  // (Schließen-Button, Links, im Wetter-Modal zusätzlich Eingabefeld,
+  //  Such-Button und der Hinweis-/Retry-Button).
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || !modal.classList.contains('open')) return;
+
+    const focusable = getFocusableElements();
+    if (focusable.length === 0) return;  // nichts fokussierbar: Standardverhalten
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    const active = document.activeElement;
+
+    // Fokus liegt nicht (mehr) im Modal - z. B. nachdem das Wetter-Widget
+    // seinen Inhalt ausgetauscht hat. Dann zurück ins Modal holen.
+    if (!modal.contains(active)) {
+      e.preventDefault();
+      (e.shiftKey ? last : first).focus();
+      return;
+    }
+
+    // Am Rand angekommen: umlaufen statt aus dem Modal heraus zu tabben
+    if (e.shiftKey && active === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && active === last) {
+      e.preventDefault();
+      first.focus();
+    }
   });
 
   // ⌨️ ESC-Taste schließt Modal
