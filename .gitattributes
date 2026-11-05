@@ -4,3 +4,6 @@
 *.jpg binary
 *.woff2 binary
 *.wasm binary
+
+# Erzeugter Stand mit Pruefsummen: Bytes nie umwandeln (sonst schlaegt --pruefen falsch an)
+ai-helper-demo/** -text
