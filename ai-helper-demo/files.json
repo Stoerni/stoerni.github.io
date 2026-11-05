@@ -45,7 +45,7 @@
     "ai_helper/ui/terminal.py",
     "ai_helper/ui/web.py"
   ],
-  "bytes_total": 211024,
+  "bytes_total": 210323,
   "lines_total": 5531,
   "lines": {
     "ai_helper/__init__.py": 9,
@@ -127,7 +127,7 @@
     "ai_helper/tools/system.py": "sha256:00fd8a58b45ff6102f9c7756e81465b024f119d615c0be34726d2f6c90a0c70e",
     "ai_helper/tools/toolbox.py": "sha256:8bb2730e6b046b5c549c4af977708cd30dc801bca49a84566ffb576787452374",
     "ai_helper/ui/__init__.py": "sha256:7eec869d83c8bd55f99fc7e0dafae14d1ac309b44116a7ebf4452049846e7d63",
-    "ai_helper/ui/shell.py": "sha256:174ad6c186c5dcc90a6920d36ad36835cfbeda5f9e843b1650ccb0e21920b1f0",
+    "ai_helper/ui/shell.py": "sha256:ec57be69291b1f62bb3e5abc6b7ec1875e52b93e2121ef1adb4a5770a783a06b",
     "ai_helper/ui/terminal.py": "sha256:5949c73dccd5ec074a1efe0e3821450a4ff793009f18ea04cc98b36c70c3e507",
     "ai_helper/ui/web.py": "sha256:96ba02f85ac36ae356105583113ab8f81c31e2a163d7317155a7f1b6677fca09"
   }
