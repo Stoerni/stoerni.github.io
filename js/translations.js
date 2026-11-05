@@ -84,6 +84,26 @@ const translations = {
       'Das Wetter-Widget konnte nicht geladen werden (Zeitüberschreitung oder blockierte Dateien von pyscript.net / cdn.jsdelivr.net). Bitte prüfe deine Verbindung und versuche es erneut.',
     'weather-retry': 'Erneut versuchen',
 
+    // 🤖 AI-Helper-Demoterminal: Python/PyScript wird erst nach Klick geladen
+    'ai-consent-note':
+      'Für das Demoterminal wird Python im Browser geladen (Dateien von pyscript.net und cdn.jsdelivr.net, ca. 4,9 MB). Dabei wird deine IP-Adresse an diese Anbieter übertragen. Die Demo selbst hat kein Netz und keinen Schlüssel.',
+    'ai-consent-button': 'Demo starten',
+    'ai-consent-privacy': 'Datenschutz',
+    'ai-loading': 'Demo wird geladen …',
+    'ai-error':
+      'Das Demoterminal konnte nicht geladen werden (Zeitüberschreitung oder blockierte Dateien von pyscript.net / cdn.jsdelivr.net). Bitte prüfe deine Verbindung und versuche es erneut.',
+    'ai-retry': 'Erneut versuchen',
+    'ai-badge': 'Demo',
+    'ai-title': 'AI-Helper – Demoterminal',
+    'ai-log-label': 'Ausgabe des Demoterminals',
+    'ai-input-label': 'Eingabezeile',
+    'ai-placeholder': 'Frage oder Befehl, z. B. /aktionen',
+    'ai-placeholder-ended': 'Sitzung beendet – mit „Neu starten“ beginnst du von vorn',
+    'ai-send': 'Senden',
+    'ai-abort': 'Abbrechen',
+    'ai-restart': 'Neu starten',
+    'ai-chips-label': 'Vorschläge:',
+
     // ⚖️ Footer (Rechtsseiten)
     'footer-imprint': 'Impressum',
     'footer-privacy': 'Datenschutz',
@@ -168,6 +188,26 @@ const translations = {
       'The weather widget could not be loaded (timeout or blocked files from pyscript.net / cdn.jsdelivr.net). Please check your connection and try again.',
     'weather-retry': 'Try again',
 
+    // 🤖 AI Helper demo terminal: Python/PyScript is loaded only after a click
+    'ai-consent-note':
+      'The demo terminal loads Python in your browser (files from pyscript.net and cdn.jsdelivr.net, about 4.9 MB). Your IP address is transmitted to these providers. The demo itself has no network access and no keys.',
+    'ai-consent-button': 'Start demo',
+    'ai-consent-privacy': 'Privacy Policy',
+    'ai-loading': 'Loading demo …',
+    'ai-error':
+      'The demo terminal could not be loaded (timeout or blocked files from pyscript.net / cdn.jsdelivr.net). Please check your connection and try again.',
+    'ai-retry': 'Try again',
+    'ai-badge': 'Demo',
+    'ai-title': 'AI Helper – Demo Terminal',
+    'ai-log-label': 'Demo terminal output',
+    'ai-input-label': 'Input line',
+    'ai-placeholder': 'Question or command, e.g. /aktionen',
+    'ai-placeholder-ended': 'Session finished – use “Restart” to begin again',
+    'ai-send': 'Send',
+    'ai-abort': 'Abort',
+    'ai-restart': 'Restart',
+    'ai-chips-label': 'Suggestions:',
+
     // ⚖️ Footer (legal pages)
     'footer-imprint': 'Imprint',
     'footer-privacy': 'Privacy Policy',
@@ -245,6 +285,12 @@ function applyLanguage(lang) {
   // (js/modal.js kennt den Aufbau des Hinweises und stellt diese Funktion bereit)
   if (typeof window.refreshWeatherNotice === 'function') {
     window.refreshWeatherNotice();
+  }
+
+  // AI-Helper-Terminal: Hinweis/Terminal-Texte mitübersetzen
+  // (ai-helper-demo/terminal.js stellt diese Funktion bereit)
+  if (typeof window.refreshAiHelperTexts === 'function') {
+    window.refreshAiHelperTexts();
   }
 }
 

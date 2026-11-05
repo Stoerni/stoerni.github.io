@@ -386,6 +386,13 @@
       <!-- Erste Anzeige: Hinweis + Button; erst nach Klick wird Python nachgeladen
            und weather.py füllt das Container mit dem Live-Wetter-Widget mit Suche -->
 
+      <!-- 🤖 AI-Helper-Demoterminal (nur sichtbar für project="ai-helper") -->
+      <div id="ai_helper_container" style="display:none;"></div>
+      <!-- modal.js zeigt diesen Container nur beim AI-Helper und blendet dafür
+           das Vorschaubild aus. Der Aufbau (Hinweis + Knopf "Demo starten",
+           Terminal, Chips, Figur) entsteht in ai-helper-demo/terminal.js; erst
+           nach dem Klick werden PyScript und ai-helper-demo/boot.py geladen. -->
+
       <!-- Projekt-Beschreibung -->
       <p id="modalDesc" data-i18n="modal-desc-fallback">Beschreibung</p>
 

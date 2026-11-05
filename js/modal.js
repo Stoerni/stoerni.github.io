@@ -7,6 +7,25 @@
 import { t } from './translations.js';
 import { loadPyScript } from './pyscript-loader.js';
 
+/* ================= 🤖 AI-HELPER-TERMINAL (erst nach Klick geladen) ================= */
+
+// Das Widget liegt im Demo-Ordner (ai-helper-demo/terminal.js) und wird erst
+// geholt, wenn die AI-Helper-Karte geöffnet wird - die Startseite lädt dadurch
+// nichts zusätzlich. Dasselbe Terminal benutzt auch die Demo-Seite selbst.
+let aiHelperModulePromise = null;
+let aiHelperTerminal = null;
+
+function loadAiHelperModule() {
+  if (!aiHelperModulePromise) {
+    aiHelperModulePromise = import('../ai-helper-demo/terminal.js').catch(error => {
+      // Nach einem Fehlschlag darf der nächste Klick es erneut versuchen.
+      aiHelperModulePromise = null;
+      throw error;
+    });
+  }
+  return aiHelperModulePromise;
+}
+
 export function initModal() {
   // 🎯 HTML-Elemente für das Modal abrufen
   const modal = document.getElementById('projectModal');  // Das komplette Modal-Container-Element
@@ -18,6 +37,7 @@ export function initModal() {
   const techContainer = document.getElementById('modalTech');        // Container für Tech-Badges
   const linksContainer = document.getElementById('modalLinks');      // Container für Links
   const weatherContainer = document.getElementById('weather_container'); // Weather-Widget
+  const aiHelperContainer = document.getElementById('ai_helper_container'); // AI-Helper-Demoterminal
   const gallery = document.getElementById('modalGallery');           // Bild-Galerie
   const closeButton = modal.querySelector('.modal_close');           // ×-Button (Fokus-Ziel beim Öffnen)
 
@@ -68,9 +88,10 @@ export function initModal() {
     gallery.innerHTML = '';     // Alte Bilder löschen / html leeren
     gallery.hidden = false;     // Standard: Medien-Bereich ist sichtbar
 
-    if (project === "weather") {
+    if (project === "weather" || project === "ai-helper") {
       // 🌤️ Beim Wetter-Projekt ist das Live-Widget der Medien-Bereich.
-      // Das Vorschaubild entfällt, sonst wäre das Modal doppelt so hoch.
+      // 🤖 Beim AI-Helper ist es das Demoterminal (ebenfalls ein Live-Widget).
+      // Das Vorschaubild entfällt jeweils, sonst wäre das Modal doppelt so hoch.
       gallery.hidden = true;
     } else {
       // filter(Boolean) = nur Bilder, die tatsächlich vorhanden sind (nicht null/undefined)
@@ -160,6 +181,31 @@ export function initModal() {
       weatherContainer.innerHTML = "";
     }
 
+    /* ================= 🤖 AI-HELPER-DEMOTERMINAL ================= */
+    // Wie beim Wetter: nur beim AI-Helper zeigen, sonst verstecken und leeren.
+    // Geladen wird hier nichts - das Widget zeigt zuerst Hinweis + Knopf
+    // "Demo starten"; PyScript und boot.py kommen erst nach dem Klick.
+    if (project === "ai-helper" && aiHelperContainer) {
+      aiHelperContainer.style.display = "flex";
+      aiHelperContainer.innerHTML = "";
+
+      loadAiHelperModule()
+        .then(({ getAiHelperTerminal }) => {
+          aiHelperTerminal = getAiHelperTerminal(aiHelperContainer);
+          aiHelperTerminal.attach();
+        })
+        .catch(error => {
+          const message = document.createElement('p');
+          message.className = 'ai_error';
+          message.textContent = t('ai-error');
+          aiHelperContainer.appendChild(message);
+          addConsoleError('AI-Helper-Demoterminal konnte nicht geladen werden:', error);
+        });
+    } else if (aiHelperContainer) {
+      aiHelperContainer.style.display = "none";
+      aiHelperContainer.innerHTML = "";
+    }
+
     // 🎨 6. MODAL ANZEIGEN
     modal.classList.add('open');              // CSS-Klasse 'open' hinzufügen
     modal.setAttribute('aria-hidden', 'false'); // Screenreader: Modal is sichtbar
@@ -180,6 +226,10 @@ export function initModal() {
     modal.classList.remove('open');          // CSS Klasse 'open' entfernen
     modal.setAttribute('aria-hidden', 'true'); // Screenreader: Modal ist versteckt
     document.body.style.overflow = '';       // Scroll wieder aktivieren
+
+    // 🤖 Ein laufendes AI-Helper-Terminal anhalten. Die bisherige Ausgabe bleibt
+    // gespeichert und steht beim nächsten Öffnen unverändert wieder da.
+    if (aiHelperTerminal) aiHelperTerminal.stop();
 
     // ⌨️ Hintergrund wieder aktiv machen (vor dem Fokus-Wechsel, sonst
     // kann die Karte den Fokus nicht annehmen)
