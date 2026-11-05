@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="AI-Helper Demoterminal - Platzhalterbild">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <rect x="70" y="70" width="1060" height="760" rx="18" fill="#111827" stroke="#334155" stroke-width="2"/>
+  <text x="130" y="185" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="700">AI-Helper</text>
+  <text x="130" y="240" fill="#94a3b8" font-family="Inter, Arial, sans-serif" font-size="30">Demoterminal &#8226; Python im Browser</text>
+  <rect x="130" y="295" width="290" height="48" rx="10" fill="#b91c1c"/>
+  <text x="150" y="328" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="24">Vorschau folgt</text>
+  <rect x="130" y="395" width="420" height="26" rx="8" fill="#1f2937"/>
+  <rect x="130" y="435" width="350" height="26" rx="8" fill="#1f2937"/>
+  <rect x="130" y="475" width="390" height="26" rx="8" fill="#1f2937"/>
+  <rect x="130" y="515" width="300" height="26" rx="8" fill="#1f2937"/>
+  <text x="130" y="700" fill="#94a3b8" font-family="Inter, Arial, sans-serif" font-size="24">Platzhalterbild.</text>
+  <text x="130" y="740" fill="#94a3b8" font-family="Inter, Arial, sans-serif" font-size="24">Das echte Terminal-Vorschaubild wird als Abzug der laufenden Demo erzeugt.</text>
+</svg>

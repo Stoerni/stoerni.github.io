@@ -44,6 +44,9 @@ const translations = {
       'API-basiertes Wetter-Widget mit Python im Browser und dynamischer Ortssuche.',
     'project-desc-portfolio':
       'Modernes Portfolio mit Fokus auf Struktur, Performance und professioneller Präsentation.',
+    'project-ai-helper': 'AI-Helper – Demoterminal',
+    'project-desc-ai-helper':
+      'Der AI-Helper läuft als echtes Terminal im Browser – die originale Python-Fassung mit freier Eingabe, /aktionen, Vorschau und Rückfrage. Demo ohne Netz und ohne Schlüssel: es wird nichts am Rechner ausgeführt.',
 
     // 💬 Kontakt
     'contact-header': 'Kontakt',
@@ -125,6 +128,9 @@ const translations = {
       'API-based weather widget with Python in the browser and dynamic location search.',
     'project-desc-portfolio':
       'Modern portfolio focused on structure, performance, and professional presentation.',
+    'project-ai-helper': 'AI Helper – Demo Terminal',
+    'project-desc-ai-helper':
+      'The AI helper runs as a real terminal in the browser – the original Python version with free input, /actions, preview and confirmation. Demo without network or keys: nothing is executed on your machine.',
 
     // 💬 Contact
     'contact-header': 'Contact',
