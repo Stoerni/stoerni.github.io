@@ -3,4 +3,5 @@ node_modules/
 .DS_Store
 Thumbs.db
 # Interne Entwicklungs-Chronik - gehoert nicht ins oeffentliche Repo (Slice 56)
-PROGRESS.md
+# Inklusive der Archivdateien (PROGRESS-archiv-*.md, PROGRESS-63.md), Skill progress-md-maintenance
+PROGRESS*.md
