@@ -2324,6 +2324,13 @@ section {
   color: var(--color_accent);
 }
 
+/* Hinweis der Oberfläche (z. B. Sprachwechsel) — abgesetzt, aber nicht bunt */
+.ai_entry_line.ai_entry_note {
+  color: var(--color_text);
+  opacity: 0.72;
+  font-style: italic;
+}
+
 .ai_entry_blank {
   height: 1em;
 }

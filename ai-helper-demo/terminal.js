@@ -14,7 +14,7 @@
    dasselbe Muster wie beim Wetter-Widget.
 ========================== */
 
-import { t } from '../js/translations.js';
+import { t, applyLanguage } from '../js/translations.js';
 import { loadPyScriptApp } from '../js/pyscript-loader.js';
 
 // Der eigene Ort — daraus entstehen die Pfade, egal ob das Widget im Modal der
@@ -29,6 +29,26 @@ const READY_TIMEOUT_MS = 40000;
 const MAX_LINES = 1500;
 
 /* ================= 🔧 KLEINE HELFER ================= */
+
+/**
+ * Die Sprache der Seite — die einzige Quelle für das Terminal.
+ *
+ * Reihenfolge: der gemerkte Wert im Browserspeicher (den `applyLanguage`
+ * schreibt), dann `<html lang>`, sonst Deutsch. Der Speicher steht bewusst
+ * zuerst: auf der Demo-Seite setzt `applyLanguage` die Sprache erst beim
+ * Aufbau, das statische `lang="de"` im Markup wäre sonst die falsche Antwort.
+ */
+function pageLang() {
+  try {
+    const gemerkt = localStorage.getItem('portfolio-lang');
+    if (gemerkt === 'de' || gemerkt === 'en') return gemerkt;
+  } catch (error) {
+    /* Speicher gesperrt: dann entscheidet das Dokument. */
+  }
+  const amDokument = document.documentElement.lang;
+  if (amDokument === 'de' || amDokument === 'en') return amDokument;
+  return 'de';
+}
 
 function make(tag, className, text) {
   const node = document.createElement(tag);
@@ -114,15 +134,20 @@ export class AiHelperTerminal {
       // Die Seite weiß, wo der Demo-Ordner liegt (files.json und die 40 Dateien
       // werden relativ dazu geholt).
       window.aiHelperBase = BASE_PATH;
+      // Die Sprache steht fest, **bevor** boot.py lädt: der Python-Teil liest
+      // sie beim Start und baut die Sitzung gleich richtigsprachig auf.
+      this.currentLang = pageLang();
+      window.portfolioLang = this.currentLang;
       await loadPyScriptApp(BOOT_SRC);
       await this.waitForBoot();
       this.ready = true;
     }
-    if (this.state === 'session' && this.finished) {
-      // Die alte Sitzung lief zu Ende: eine frische beginnen.
-      this.entries = [];
-      this.figure = null;
-    }
+    // Eine neue Sitzung beginnt mit leerem Verlauf. Sonst stünde der alte
+    // Verlauf über dem neuen — bei einem Sprachwechsel also der deutsche über
+    // dem englischen („Neu starten“ soll genau das verhindern).
+    this.entries = [];
+    this.chips = [];
+    this.figure = null;
     this.state = 'session';
     this.finished = false;
     this.running = false;
@@ -190,6 +215,17 @@ export class AiHelperTerminal {
       case 'fail':
         this.bootError = String(event.text || 'unbekannter Fehler');
         break;
+      case 'language':
+        // Die Python-Seite bestätigt: Sprache gemerkt, läuft die Sitzung noch?
+        this.currentLang = String(event.code || this.currentLang);
+        window.portfolioLang = this.currentLang;
+        if (event.running) {
+          // Halb englischer Verlauf wäre schlimmer als der Hinweis: die
+          // laufende Sitzung bleibt, „Neu starten" beginnt in der neuen Sprache.
+          this.addEntry({ kind: 'line', text: t('ai-lang-note'), note: true });
+        }
+        this.updateLanguageButton();
+        break;
       case 'ready':
         // Nur für die Prüfung/Diagnose: die Zahl der geholten Dateien.
         this.readyInfo = event;
@@ -214,6 +250,17 @@ export class AiHelperTerminal {
     if (typeof window.aiHelperFeed === 'function') window.aiHelperFeed(text);
   }
 
+  /** „Neu starten": eine frische Sitzung in der Sprache der Seite.
+   *
+   * Läuft noch eine Sitzung, wird sie zuerst ruhig beendet — erst danach baut
+   * boot.py eine neue auf. Ohne diesen Schritt bliebe die alte (womöglich
+   * anderssprachige) Sitzung stehen.
+   */
+  restart() {
+    if (this.running) this.abort();
+    this.start();
+  }
+
   /** Abbrechen-Knopf: das Gespräch ruhig beenden. */
   abort() {
     if (this.running && typeof window.aiHelperAbort === 'function') {
@@ -235,17 +282,13 @@ export class AiHelperTerminal {
     this.inputValue = value;
   }
 
-  /** Sprache umschalten (DE ↔ EN). */
-  async toggleLanguage() {
-    if (typeof window.aiHelperSetLanguage !== 'function') return;
-    const newLang = this.currentLang === 'de' ? 'en' : 'de';
-    this.currentLang = newLang;
-    // Python-Seite umschalten
-    window.aiHelperSetLanguage(newLang);
-    // UI-Texte sofort aktualisieren (ohne Neuaufbau)
-    this.updateLanguageButton();
-    // Die Terminal-Texte (Platzhalter, Buttons, etc.) neu rendern
-    this.refreshTexts();
+  /** Sprache umschalten (DE ↔ EN) — es gilt die Sprache der Seite. */
+  toggleLanguage() {
+    const target = this.currentLang === 'de' ? 'en' : 'de';
+    // Die Seite ist die einzige Quelle: `applyLanguage` setzt `<html lang>` und
+    // den Speicher und ruft danach `refreshAiHelperTexts()` — von dort geht die
+    // Meldung an die Python-Seite (sonst gäbe es zwei Wahrheiten).
+    applyLanguage(target);
   }
 
   /** Button-Text für Sprachumschalter aktualisieren. */
@@ -253,7 +296,34 @@ export class AiHelperTerminal {
     if (this.dom && this.dom.langToggle) {
       const langBtn = this.dom.langToggle;
       langBtn.textContent = this.currentLang === 'de' ? 'EN' : 'DE';
-      langBtn.title = this.currentLang === 'de' ? 'Switch to English' : 'Auf Deutsch umschalten';
+      langBtn.title = t('ai-lang-tooltip');
+    }
+  }
+
+  /**
+   * Die Sprache der Seite übernehmen (translations.js ruft das bei jedem
+   * Sprachwechsel auf). Nur wenn sie sich geändert hat, geht sie an Python.
+   */
+  refreshTexts() {
+    const lang = pageLang();
+    if (lang !== this.currentLang) {
+      this.currentLang = lang;
+      this.applyLanguageToSession(lang);
+    }
+    this.render();
+    this.updateLanguageButton();
+  }
+
+  /** Der Python-Seite die Sprache mitteilen — oder sie für den Start merken. */
+  applyLanguageToSession(lang) {
+    if (typeof window.aiHelperSetLanguage === 'function' && this.ready) {
+      // boot.py antwortet mit einem `language`-Ereignis: läuft die Sitzung
+      // noch, erscheint dort der Hinweis (kein halb englischer Verlauf).
+      window.aiHelperSetLanguage(lang);
+    } else {
+      // boot.py lädt noch bzw. wurde nie gestartet: boot.py liest die Sprache
+      // beim Start selbst — hier wird sie nur hinterlegt.
+      window.portfolioLang = lang;
     }
   }
 
@@ -354,7 +424,7 @@ export class AiHelperTerminal {
     const restart = make('button', 'ai_btn', t('ai-restart'));
     restart.type = 'button';
     restart.dataset.aiRole = 'restart';
-    restart.addEventListener('click', () => this.start());
+    restart.addEventListener('click', () => this.restart());
     controls.append(langToggle, abort, restart);
     bar.appendChild(controls);
     wrapper.appendChild(bar);
@@ -420,6 +490,7 @@ export class AiHelperTerminal {
     wrapper.appendChild(form);
 
     this.dom = { wrapper, bar, controls, abort, restart, langToggle, log, figure, chips, form, input, submit, prompt };
+    this.updateLanguageButton();
     this.renderChips();
     this.renderFigure();
     this.renderPrompt();
@@ -440,6 +511,7 @@ export class AiHelperTerminal {
     }
     const line = make('div', 'ai_entry ai_entry_line');
     if (entry.echo) line.classList.add('ai_entry_echo');
+    if (entry.note) line.classList.add('ai_entry_note');
     if (entry.text === '') {
       line.classList.add('ai_entry_blank');
       line.textContent = '\u00a0';
@@ -527,12 +599,6 @@ export class AiHelperTerminal {
     if (!this.dom || !this.dom.log) return;
     this.dom.log.scrollTop = this.dom.log.scrollHeight;
   }
-
-  /** Beim Sprachwechsel: die Texte neu setzen (Ereignisse bleiben stehen). */
-  refreshTexts() {
-    this.render();
-    this.updateLanguageButton();
-  }
 }
 
 /* ================= 🔌 VERBINDUNG ZUR SEITE ================= */
@@ -560,10 +626,25 @@ export function getAiHelperTerminal(container) {
     terminal = new AiHelperTerminal(container);
   }
 
+  // Die Sprache gilt, wie die Seite sie zeigt — nicht ein eigener Zustand.
+  terminal.currentLang = pageLang();
+  window.portfolioLang = terminal.currentLang;
+
   // Ereignis-Empfänger aus boot.py
   window.aiHelperEvent = raw => terminal.handleEvent(raw);
   // Für den Sprachwechsel (translations.js ruft das auf)
   window.refreshAiHelperTexts = () => terminal.refreshTexts();
 
   return terminal;
+}
+
+/**
+ * Die Demo-Seite (`ai-helper-demo/index.html`) aufbauen: Sprache anwenden und
+ * das Terminal einhängen. Der Umschalter der Seite (im Terminal) und die
+ * Seitentexte folgen beide derselben Quelle (`applyLanguage`).
+ */
+export function initAiHelperPage() {
+  applyLanguage(pageLang());
+  const container = document.getElementById('ai_helper_container');
+  if (container) getAiHelperTerminal(container).attach();
 }

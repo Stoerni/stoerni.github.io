@@ -2,6 +2,8 @@
 <!-- 🤖 AI-Helper – Demoterminal (eigene Seite im Demo-Ordner, wie mailpilot-demo/) -->
 <!-- Zeigt dieselbe Demo wie das Modal der Projektkarte auf der Startseite: -->
 <!-- die echte Python-Fassung des AI-Helpers, im Browser, ohne Netz und Schlüssel. -->
+<!-- Die Texte dieser Seite folgen dem Sprachumschalter (data-i18n); die -->
+<!-- Rechtsseiten, auf die verlinkt wird, bleiben deutsch. -->
 
 <html lang="de">
 
@@ -12,7 +14,7 @@
   <!-- 🎨 Gleiches Design wie die Startseite (Farben, Schriften, Terminal-Stile) -->
   <link rel="stylesheet" href="../style/style.css">
 
-  <title>AI-Helper – Demoterminal | Dennis Poglitsch</title>
+  <title data-i18n="ai-page-title">AI-Helper – Demoterminal | Dennis Poglitsch</title>
 
   <style>
     /* Nur diese Seite: Rahmen um das Terminal */
@@ -38,16 +40,16 @@
   <header>
     <div class="header_content">
       <span>
-        <a href="../index.html">← Zurück zum Portfolio</a>
-        <a href="../impressum.html">Impressum</a>
-        <a href="../datenschutz.html">Datenschutz</a>
+        <a href="../index.html" data-i18n="ai-page-back">← Zurück zum Portfolio</a>
+        <a href="../impressum.html" data-i18n="footer-imprint">Impressum</a>
+        <a href="../datenschutz.html" data-i18n="footer-privacy">Datenschutz</a>
       </span>
     </div>
   </header>
 
   <main class="ai_demo_main">
-    <h1>AI-Helper – Demoterminal</h1>
-    <p class="ai_demo_intro">
+    <h1 data-i18n="ai-title">AI-Helper – Demoterminal</h1>
+    <p class="ai_demo_intro" data-i18n="ai-page-intro">
       Hier läuft die originale Python-Fassung des AI-Helpers in deinem Browser:
       freie Eingabe, <code>/nachschauen</code>, <code>/aktionen</code>,
       <code>/aktion</code> mit Vorschau und Rückfrage, <code>/lernen</code>,
@@ -61,17 +63,17 @@
   </main>
 
   <footer class="site_footer">
-    <a href="../index.html">Startseite</a>
-    <a href="../impressum.html">Impressum</a>
-    <a href="../datenschutz.html">Datenschutz</a>
+    <a href="../index.html" data-i18n="footer-home">Startseite</a>
+    <a href="../impressum.html" data-i18n="footer-imprint">Impressum</a>
+    <a href="../datenschutz.html" data-i18n="footer-privacy">Datenschutz</a>
   </footer>
 
   <script type="module">
-    // Dieselbe Oberfläche wie im Modal: kein zweiter Bau.
-    import { getAiHelperTerminal } from './terminal.js';
+    // Dieselbe Oberfläche wie im Modal: kein zweiter Bau. initAiHelperPage
+    // wendet zuerst die Sprache der Seite an (Texte + <html lang>).
+    import { initAiHelperPage } from './terminal.js';
 
-    const container = document.getElementById('ai_helper_container');
-    if (container) getAiHelperTerminal(container).attach();
+    initAiHelperPage();
   </script>
 </body>
 

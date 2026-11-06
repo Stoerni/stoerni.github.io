@@ -104,8 +104,17 @@ const translations = {
         'ai-restart': 'Neu starten',
         'ai-chips-label': 'Vorschläge:',
         'ai-lang-tooltip': 'Sprache umschalten (Deutsch/Englisch)',
+        'ai-lang-note':
+          'Sprache gewechselt – „Neu starten“ beginnt auf Deutsch.',
+
+        // 📄 Demo-Seite des AI-Helpers (ai-helper-demo/index.html)
+        'ai-page-title': 'AI-Helper – Demoterminal | Dennis Poglitsch',
+        'ai-page-back': '← Zurück zum Portfolio',
+        'ai-page-intro':
+          'Hier läuft die originale Python-Fassung des AI-Helpers in deinem Browser: freie Eingabe, <code>/nachschauen</code>, <code>/aktionen</code>, <code>/aktion</code> mit Vorschau und Rückfrage, <code>/lernen</code>, <code>/protokoll</code> und <code>/rückgängig</code>. Die Demo hat kein Netz und keinen Schlüssel – es wird nichts an deinem Rechner ausgeführt und nichts an einen Dienst geschickt.',
 
         // ⚖️ Footer (Rechtsseiten)
+        'footer-home': 'Startseite',
         'footer-imprint': 'Impressum',
         'footer-privacy': 'Datenschutz',
       },
@@ -209,8 +218,17 @@ const translations = {
         'ai-restart': 'Restart',
         'ai-chips-label': 'Suggestions:',
         'ai-lang-tooltip': 'Switch language (German/English)',
+        'ai-lang-note':
+          'Language changed – “Restart” begins in English.',
+
+        // 📄 Demo page of the AI helper (ai-helper-demo/index.html)
+        'ai-page-title': 'AI Helper – Demo Terminal | Dennis Poglitsch',
+        'ai-page-back': '← Back to Portfolio',
+        'ai-page-intro':
+          "The original Python version of the AI helper runs in your browser: free input, <code>/nachschauen</code>, <code>/aktionen</code>, <code>/aktion</code> with preview and confirmation, <code>/lernen</code>, <code>/protokoll</code> and <code>/rückgängig</code>. The demo has no network and no keys – nothing runs on your computer and nothing is sent to any service.",
 
         // ⚖️ Footer (legal pages)
+        'footer-home': 'Home',
         'footer-imprint': 'Imprint',
         'footer-privacy': 'Privacy Policy',
        },

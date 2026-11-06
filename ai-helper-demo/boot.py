@@ -28,9 +28,17 @@ Zwei gemessene Hürden (Slice D1) werden hier NICHT mehr angefasst:
   gewöhnlichem ``os.makedirs``/``open`` abgelegt.
 
 Die Seite ruft: ``window.aiHelperStart()``, ``window.aiHelperFeed(<zeile>)``,
-``window.aiHelperAbort()``, ``window.aiHelperEnd()``. Die Seite hört:
+``window.aiHelperAbort()``, ``window.aiHelperEnd()`` und
+``window.aiHelperSetLanguage("de"|"en")``. Die Seite hört:
 ``window.aiHelperEvent(<json>)`` — Ereignisse sind ``line``, ``figure``,
-``chips``, ``prompt`` und ``fail``.
+``chips``, ``prompt``, ``language`` und ``fail``.
+
+Die Sprache kommt von der **Seite** (Slice 63): ``window.portfolioLang`` bzw.
+``localStorage['portfolio-lang']`` wird gelesen, **bevor** ein Kernmodul
+importiert wird — sonst fröre eine beim Import gerechnete Konstante die alte
+Sprache ein. Ein Sprachwechsel bei laufender Sitzung baut nichts um (sonst
+stünde Englisch mitten in einem deutschen Verlauf); gemerkt wird die Sprache
+für den nächsten Start („Neu starten“).
 
 Nichts hier schickt etwas nach außen: geholt werden nur die Dateien des eigenen
 Ursprungs (``files.json`` und das Paket), es gibt keinen Schlüssel und kein Netz.
@@ -57,6 +65,10 @@ __all__ = [
 ROOT = "/ai-helper-demo"
 #: Rückfall, falls die Seite ihren Ursprung nicht mitteilt.
 FALLBACK_BASE = "ai-helper-demo/"
+#: Die Sprachen, die der Kern kennt (``ai_helper.i18n``).
+SPRACHEN = ("de", "en")
+#: Voreinstellung, wenn die Seite nichts mitteilt — Deutsch bleibt die Vorgabe.
+STANDARD_SPRACHE = "de"
 
 
 # --------------------------------------------------------------- Verbindung
@@ -67,6 +79,37 @@ def _basis() -> str:
     except Exception:  # noqa: BLE001 - die Seite ist hier die einzige Quelle
         wert = ""
     return wert or FALLBACK_BASE
+
+
+def _seiten_sprache() -> str:
+    """Die Sprache der Seite lesen — ``window.portfolioLang``, sonst localStorage.
+
+    Wird **vor** dem ersten Import eines Kernmoduls aufgerufen: eine Sprache,
+    die erst nach dem Import gesetzt wird, kommt für beim Import gerechnete
+    Texte (etwa Messberichte) zu spät.
+    """
+    kandidaten: list[str] = []
+    try:
+        kandidaten.append(str(window.portfolioLang or ""))
+    except Exception:  # noqa: BLE001
+        pass
+    try:
+        kandidaten.append(str(window.localStorage.getItem("portfolio-lang") or ""))
+    except Exception:  # noqa: BLE001
+        pass
+    for wert in kandidaten:
+        if wert in SPRACHEN:
+            return wert
+    return STANDARD_SPRACHE
+
+
+def sprache_setzen(code: str) -> str:
+    """Die Sprache des i18n-Systems setzen (ungültige Codes fallen auf Deutsch)."""
+    from ai_helper.i18n import set_language as i18n_set_language
+
+    gewaehlt = code if code in SPRACHEN else STANDARD_SPRACHE
+    i18n_set_language(gewaehlt)
+    return gewaehlt
 
 
 def emit(ereignis: dict) -> None:
@@ -216,16 +259,27 @@ class Ausgabe:
 # ----------------------------------------------------------------- Treiber
 _ausgabe: Ausgabe | None = None
 _schleife = None
+#: Die Sprache, in der die nächste Sitzung aufgebaut wird (von der Seite).
+_sprache = STANDARD_SPRACHE
 
 
 def _neu() -> None:
-    """Eine frische Demo-Sitzung aufbauen (Anbieter, Bericht, Ausführender)."""
+    """Eine frische Demo-Sitzung aufbauen (Anbieter, Bericht, Ausführender).
+
+    Die Sprache wird **vor** dem Bauen gesetzt: ``demo_shell`` rechnet die
+    Beschriftungen der Figur und den Demo-Bericht mit ``t()``, und die
+    Schleife soll in genau der Sprache starten, die die Seite zeigt.
+    """
     global _ausgabe, _schleife
 
+    sprache_setzen(_sprache)
     from ai_helper.ui.web import LineCollector, demo_shell
 
     _ausgabe = Ausgabe()
-    _schleife = demo_shell(collector=LineCollector(on_line=_ausgabe.zeile))
+    _schleife = demo_shell(
+        collector=LineCollector(on_line=_ausgabe.zeile),
+        language=_sprache,
+    )
 
 
 def _lage() -> None:
@@ -273,6 +327,11 @@ def start() -> None:
     emit({"t": "line", "text": t("demo_hint")})
     emit({"t": "line", "text": ""})
     _schritt(_schleife.start)
+    _vorschlaege()
+
+
+def _vorschlaege() -> None:
+    """Die sprachabhängigen Vorschläge (Chips) neu an die Seite schicken."""
     try:
         from ai_helper.demo import suggestions
 
@@ -303,21 +362,46 @@ def beenden() -> None:
 
 
 def set_language(language: str) -> None:
-    """Schaltet die Sprache der Demo um (de/en) und startet die Sitzung neu."""
-    if _schleife is not None:
-        _schleife.set_language(language)
-    else:
-        # Noch keine Sitzung: Sprache für den nächsten Start merken
-        from ai_helper.i18n import set_language as i18n_set_language
-        i18n_set_language(language)
+    """Die Sprache der Seite übernehmen und der Seite melden, wie es steht.
+
+    Zwei Lagen (Slice 63):
+
+    * **Keine laufende Sitzung** — die Sprache wird gesetzt und die
+      Vorschläge neu geschickt; der nächste Start läuft in der neuen Sprache.
+    * **Laufende Sitzung** — es wird **nichts** umgebaut: das i18n-System
+      bleibt, wie es ist, sonst stünden englische Antworten in einem deutschen
+      Verlauf. Die Sprache wird nur für den nächsten Start gemerkt; die Seite
+      zeigt dazu einen Hinweis („Neu starten“).
+
+    Die Seite erfährt das Ergebnis über das Ereignis ``language``
+    (``code`` und ``running``).
+    """
+    global _sprache
+
+    gewaehlt = language if language in SPRACHEN else STANDARD_SPRACHE
+    _sprache = gewaehlt
+    laeuft = bool(_schleife is not None and _schleife.laeuft)
+    if not laeuft:
+        sprache_setzen(gewaehlt)
+        _vorschlaege()
+    emit({"t": "language", "code": gewaehlt, "running": laeuft})
 
 
 # ------------------------------------------------------------------- Start
 def _vorbereiten() -> None:
-    """Paket installieren und die vier Funktionen für die Seite bereitstellen."""
+    """Paket installieren und die Funktionen für die Seite bereitstellen.
+
+    Die Sprache wird **vor** dem ersten Kernimport gesetzt (Slice 63): Texte,
+    die beim Import gerechnet werden, stünden sonst dauerhaft in der alten
+    Sprache.
+    """
+    global _sprache
+
     beginn = performance.now()
     basis = _basis()
     bericht = installiere(basis)
+
+    _sprache = sprache_setzen(_seiten_sprache())
 
     window.aiHelperStart = start
     window.aiHelperFeed = feed
@@ -331,6 +415,7 @@ def _vorbereiten() -> None:
             "files": bericht["dateien"],
             "bytes": bericht["bytes"],
             "seconds": round((performance.now() - beginn) / 1000.0, 2),
+            "language": _sprache,
         }
     )
 
