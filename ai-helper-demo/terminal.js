@@ -72,6 +72,7 @@ export class AiHelperTerminal {
     this.inputValue = '';
     this.dom = null;
     this.busyPromise = null;
+    this.currentLang = 'de';     // aktuelle Sprache der Demo (de/en)
   }
 
   /* ------------------------- Zustände ------------------------- */
@@ -234,6 +235,28 @@ export class AiHelperTerminal {
     this.inputValue = value;
   }
 
+  /** Sprache umschalten (DE ↔ EN). */
+  async toggleLanguage() {
+    if (typeof window.aiHelperSetLanguage !== 'function') return;
+    const newLang = this.currentLang === 'de' ? 'en' : 'de';
+    this.currentLang = newLang;
+    // Python-Seite umschalten
+    window.aiHelperSetLanguage(newLang);
+    // UI-Texte sofort aktualisieren (ohne Neuaufbau)
+    this.updateLanguageButton();
+    // Die Terminal-Texte (Platzhalter, Buttons, etc.) neu rendern
+    this.refreshTexts();
+  }
+
+  /** Button-Text für Sprachumschalter aktualisieren. */
+  updateLanguageButton() {
+    if (this.dom && this.dom.langToggle) {
+      const langBtn = this.dom.langToggle;
+      langBtn.textContent = this.currentLang === 'de' ? 'EN' : 'DE';
+      langBtn.title = this.currentLang === 'de' ? 'Switch to English' : 'Auf Deutsch umschalten';
+    }
+  }
+
   /**
    * Das Modal wird geschlossen: ein laufendes Gespräch anhalten.
    * Die Ausgabe bleibt im Speicher und steht beim nächsten Öffnen wieder da.
@@ -319,6 +342,11 @@ export class AiHelperTerminal {
     bar.appendChild(make('span', 'ai_bar_title', t('ai-title')));
 
     const controls = make('div', 'ai_bar_controls');
+    const langToggle = make('button', 'ai_btn ai_lang_toggle', t('lang-de'));
+    langToggle.type = 'button';
+    langToggle.dataset.aiRole = 'lang-toggle';
+    langToggle.title = t('ai-lang-tooltip');
+    langToggle.addEventListener('click', () => this.toggleLanguage());
     const abort = make('button', 'ai_btn', t('ai-abort'));
     abort.type = 'button';
     abort.dataset.aiRole = 'abort';
@@ -327,7 +355,7 @@ export class AiHelperTerminal {
     restart.type = 'button';
     restart.dataset.aiRole = 'restart';
     restart.addEventListener('click', () => this.start());
-    controls.append(abort, restart);
+    controls.append(langToggle, abort, restart);
     bar.appendChild(controls);
     wrapper.appendChild(bar);
 
@@ -391,7 +419,7 @@ export class AiHelperTerminal {
 
     wrapper.appendChild(form);
 
-    this.dom = { wrapper, bar, controls, abort, restart, log, figure, chips, form, input, submit, prompt };
+    this.dom = { wrapper, bar, controls, abort, restart, langToggle, log, figure, chips, form, input, submit, prompt };
     this.renderChips();
     this.renderFigure();
     this.renderPrompt();
@@ -503,6 +531,7 @@ export class AiHelperTerminal {
   /** Beim Sprachwechsel: die Texte neu setzen (Ereignisse bleiben stehen). */
   refreshTexts() {
     this.render();
+    this.updateLanguageButton();
   }
 }
 

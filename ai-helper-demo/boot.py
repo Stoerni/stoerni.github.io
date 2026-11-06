@@ -49,6 +49,7 @@ __all__ = [
     "abbrechen",
     "beenden",
     "feed",
+    "set_language",
     "start",
 ]
 
@@ -301,6 +302,16 @@ def beenden() -> None:
     _schritt(_schleife.end)
 
 
+def set_language(language: str) -> None:
+    """Schaltet die Sprache der Demo um (de/en) und startet die Sitzung neu."""
+    if _schleife is not None:
+        _schleife.set_language(language)
+    else:
+        # Noch keine Sitzung: Sprache für den nächsten Start merken
+        from ai_helper.i18n import set_language as i18n_set_language
+        i18n_set_language(language)
+
+
 # ------------------------------------------------------------------- Start
 def _vorbereiten() -> None:
     """Paket installieren und die vier Funktionen für die Seite bereitstellen."""
@@ -312,6 +323,7 @@ def _vorbereiten() -> None:
     window.aiHelperFeed = feed
     window.aiHelperAbort = abbrechen
     window.aiHelperEnd = beenden
+    window.aiHelperSetLanguage = set_language
 
     emit(
         {
