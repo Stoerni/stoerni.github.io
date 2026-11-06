@@ -91,6 +91,13 @@ TEXTS: dict[str, str] = {
     "demo_hint": (
         "Demo: Es werden keine Befehle ausgeführt, und nichts verlässt deinen Browser."
     ),
+    # Die vorgeschlagenen Fragen der Demo (die Chips auf der Seite, Slice D7).
+    "demo_question_abilities": "Was kannst du?",
+    "demo_question_setup": "Wie ist mein Rechner eingerichtet?",
+    "demo_question_cpu": "Was für eine CPU habe ich?",
+    "demo_question_memory": "Wie viel Arbeitsspeicher habe ich?",
+    "demo_question_actions": "Kannst du etwas für mich einstellen?",
+    "demo_question_driver": "Was ist ein Gerätetreiber?",
     "demo_polite_answer": (
         "In dieser Demo antworte ich nur auf die vorbereiteten Fragen — probier einen "
         "der Vorschläge, oder einen Befehl wie /nachschauen, /aktionen, /protokoll oder "
