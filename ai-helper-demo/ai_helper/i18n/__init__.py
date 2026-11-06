@@ -8,8 +8,9 @@ Design-Dokument). Ein neuer Text wird dort ergänzt, nie im Code verstreut.
 from __future__ import annotations
 
 from ai_helper.i18n import de
+from ai_helper.i18n import en
 
-_LANGUAGES: dict[str, dict[str, str]] = {"de": de.TEXTS}
+_LANGUAGES: dict[str, dict[str, str]] = {"de": de.TEXTS, "en": en.TEXTS}
 DEFAULT_LANGUAGE = "de"
 
 _current = DEFAULT_LANGUAGE
@@ -43,3 +44,13 @@ def t(key: str, **values: object) -> str:
             f"Text {key!r} fehlt in der Sprachdatei {_current!r}"
         ) from None
     return template.format(**values) if values else template
+
+
+def format_number(value: float) -> str:
+    """Formats a float with the decimal separator of the current language.
+
+    German uses comma, English uses dot.
+    """
+    if _current == "de":
+        return f"{value:.1f}".replace(".", ",")
+    return f"{value:.1f}"

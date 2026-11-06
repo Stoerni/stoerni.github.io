@@ -2,7 +2,7 @@
   "generated_by": "scripts/build_demo.py",
   "source": "ai_helper/",
   "header": "# erzeugt von scripts/build_demo.py — nicht von Hand ändern",
-  "file_count": 40,
+  "file_count": 41,
   "files": [
     "ai_helper/__init__.py",
     "ai_helper/actions/__init__.py",
@@ -29,6 +29,7 @@
     "ai_helper/demo/script.py",
     "ai_helper/i18n/__init__.py",
     "ai_helper/i18n/de.py",
+    "ai_helper/i18n/en.py",
     "ai_helper/persona/__init__.py",
     "ai_helper/search/__init__.py",
     "ai_helper/search/exa.py",
@@ -45,8 +46,8 @@
     "ai_helper/ui/terminal.py",
     "ai_helper/ui/web.py"
   ],
-  "bytes_total": 210323,
-  "lines_total": 5531,
+  "bytes_total": 246691,
+  "lines_total": 6298,
   "lines": {
     "ai_helper/__init__.py": 9,
     "ai_helper/actions/__init__.py": 96,
@@ -68,11 +69,12 @@
     "ai_helper/core/session.py": 63,
     "ai_helper/demo/__init__.py": 56,
     "ai_helper/demo/executor.py": 85,
-    "ai_helper/demo/measurements.py": 93,
+    "ai_helper/demo/measurements.py": 127,
     "ai_helper/demo/provider.py": 74,
     "ai_helper/demo/script.py": 138,
-    "ai_helper/i18n/__init__.py": 45,
+    "ai_helper/i18n/__init__.py": 56,
     "ai_helper/i18n/de.py": 693,
+    "ai_helper/i18n/en.py": 673,
     "ai_helper/persona/__init__.py": 87,
     "ai_helper/search/__init__.py": 57,
     "ai_helper/search/exa.py": 161,
@@ -87,7 +89,7 @@
     "ai_helper/ui/__init__.py": 6,
     "ai_helper/ui/shell.py": 702,
     "ai_helper/ui/terminal.py": 159,
-    "ai_helper/ui/web.py": 296
+    "ai_helper/ui/web.py": 345
   },
   "checksums": {
     "ai_helper/__init__.py": "sha256:57c0832d602cfd781ac1b33f7be5b6e3a0e565f488bc6dfb0c02ad50639aca72",
@@ -110,11 +112,12 @@
     "ai_helper/core/session.py": "sha256:2f84ee1de96a582719badf8f8af7d7d7027f76bc7299b0fde051a313c00112a9",
     "ai_helper/demo/__init__.py": "sha256:9b781a29e55566882f14c05e09cd83a419eebbc59ff6b146bf2e19c89db27f44",
     "ai_helper/demo/executor.py": "sha256:a7fe62c7e7875302db01abeab9634af104d75cf1b99448cbb40fe2d6e48a6c00",
-    "ai_helper/demo/measurements.py": "sha256:92fe8e1b9d8bc011a65bbe3102db6446c550dce30fc42838db38eeb0a7653be5",
+    "ai_helper/demo/measurements.py": "sha256:5488bee40aa2d608166225db8f488319a7642b9db22a3e6bdd9cf9139495c5f2",
     "ai_helper/demo/provider.py": "sha256:2ce9fa14c2341c0231b2dd3fa775c060f1ff6ee95c1126433a518b01c4444daa",
     "ai_helper/demo/script.py": "sha256:d0b0fd074ca3a5df189641b4dbac316fae37411e47f8ac7095df4c1d49e5288f",
-    "ai_helper/i18n/__init__.py": "sha256:8b218272b99a5ea7a499563de56a7f201c03de1a001d87160b08b7476f1f086f",
+    "ai_helper/i18n/__init__.py": "sha256:a9239cc62345db818e6a7c8cedcf98bfba260af424557aa054440f6fb00cff78",
     "ai_helper/i18n/de.py": "sha256:505722fbd6e37050a1852c06a5fb89fa4ade77d03c31aa0cfd5053bfc719b630",
+    "ai_helper/i18n/en.py": "sha256:8ec6329c19803eaacb8fa008cfdd2064594c006bcb228d2ee7c394b52467a104",
     "ai_helper/persona/__init__.py": "sha256:1dc80e3dc159c835f7696089f5c19542cbe29cb5080bce890b3fdb9914c48cdd",
     "ai_helper/search/__init__.py": "sha256:e384decdb102b5e6904bf38112a6c4fdf42890bda7a8860ca324fb3404b4e982",
     "ai_helper/search/exa.py": "sha256:bf6931117c21f727878b0a88dd0f99580246e89a6cb48ec983a3d19dd1a69603",
@@ -129,6 +132,6 @@
     "ai_helper/ui/__init__.py": "sha256:7eec869d83c8bd55f99fc7e0dafae14d1ac309b44116a7ebf4452049846e7d63",
     "ai_helper/ui/shell.py": "sha256:ec57be69291b1f62bb3e5abc6b7ec1875e52b93e2121ef1adb4a5770a783a06b",
     "ai_helper/ui/terminal.py": "sha256:5949c73dccd5ec074a1efe0e3821450a4ff793009f18ea04cc98b36c70c3e507",
-    "ai_helper/ui/web.py": "sha256:96ba02f85ac36ae356105583113ab8f81c31e2a163d7317155a7f1b6677fca09"
+    "ai_helper/ui/web.py": "sha256:6fd4052a2a089c5286333dbd34c81117e510b277610086d19d7ae0a0b5614d30"
   }
 }

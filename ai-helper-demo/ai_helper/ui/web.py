@@ -39,7 +39,7 @@ from ai_helper.core.memory import Memory
 from ai_helper.core.provider import Provider
 from ai_helper.core.session import Session
 from ai_helper.demo import DemoExecutor, DemoProvider, DemoToolbox
-from ai_helper.i18n import t
+from ai_helper.i18n import t, set_language, current_language
 from ai_helper.persona import DEFAULT_PERSONA, Persona
 from ai_helper.search import SearchProvider
 from ai_helper.tools import Toolbox
@@ -160,6 +160,9 @@ class WebShell:
     ``frage`` ist die gerade offene Aufforderung (``Frage.prompt`` ist der Text,
     den das Eingabefeld zeigen kann), ``exit_code`` bleibt ``None``, solange das
     Gespräch läuft.
+
+    Die Sprache kann per ``set_language`` umgeschaltet werden — die Sitzung wird
+    neu gestartet und alle Texte werden in der neuen Sprache gerendert.
     """
 
     def __init__(
@@ -178,7 +181,12 @@ class WebShell:
         action_box: ActionBox | None = None,
         learn_mode: bool = False,
         search: SearchProvider | None = None,
+        language: str = "de",
     ) -> None:
+        self._provider = provider
+        self._action_box = action_box
+        self._language = language
+        set_language(language)
         self.eingabe = LineQueue(lines)
         self.ausgabe = LineCollector() if collector is None else collector
         self.frage: Frage | None = None
@@ -210,6 +218,11 @@ class WebShell:
         """Die bisher vollständigen Ausgabezeilen (Kurzform für die Seite)."""
         return self.ausgabe.lines
 
+    @property
+    def language(self) -> str:
+        """Aktuelle Sprache (de/en)."""
+        return self._language
+
     # --- Antrieb -----------------------------------------------------
     def start(self) -> None:
         """Gibt die Begrüßung aus und läuft bis zur ersten Aufforderung."""
@@ -229,6 +242,40 @@ class WebShell:
         """Escape bzw. Abbrechen-Knopf: das Gespräch ruhig beenden (Slice 10)."""
         self._weiter(ABBRUCH, senden=True)
         return self.laeuft
+
+    def set_language(self, language: str) -> None:
+        """Schaltet die Sprache um und startet die Sitzung neu.
+
+        Alle Texte (Begrüßung, Demo-Antworten, Messbericht, Hilfetexte) werden
+        in der neuen Sprache gerendert.
+        """
+        if language not in ("de", "en"):
+            raise ValueError(f"Unsupported language: {language!r}. Use 'de' or 'en'.")
+        if language == self._language:
+            return
+        self._language = language
+        set_language(language)
+        # Sitzung neu aufbauen mit der neuen Sprache
+        self._schleife = shell.conversation(
+            provider=self._provider,
+            session=Session(),
+            base_url=DEMO_BASE_URL,
+            mode_key=DEMO_MODE_KEY,
+            persona=DEFAULT_PERSONA,
+            memory=None,
+            memory_path=None,
+            toolbox=DemoToolbox(),
+            action_box=self._action_box,
+            learn_mode=False,
+            search=None,
+            show=self._zeile,
+            write=self.ausgabe.write,
+        )
+        self.eingabe = LineQueue()
+        self.ausgabe = LineCollector()
+        self.frage = None
+        self.exit_code = None
+        self.start()
 
     # --- Innen -------------------------------------------------------
     def _zeile(self, text: str = "") -> None:
@@ -259,6 +306,7 @@ def demo_shell(
     log_path: Path | None = DEMO_LOG_FILE,
     session: Session | None = None,
     persona: Persona = DEFAULT_PERSONA,
+    language: str = "de",
 ) -> WebShell:
     """Die Demo-Hülle für den Browser: alle drei Außenstellen aus ``ai_helper/demo``.
 
@@ -288,6 +336,7 @@ def demo_shell(
         action_box=box,
         learn_mode=False,
         search=None,
+        language=language,
     )
 
 

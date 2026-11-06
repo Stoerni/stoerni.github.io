@@ -85,133 +85,135 @@ const translations = {
     'weather-retry': 'Erneut versuchen',
 
     // 🤖 AI-Helper-Demoterminal: Python/PyScript wird erst nach Klick geladen
-    'ai-consent-note':
-      'Für das Demoterminal wird Python im Browser geladen (Dateien von pyscript.net und cdn.jsdelivr.net, ca. 4,9 MB). Dabei wird deine IP-Adresse an diese Anbieter übertragen. Die Demo selbst hat kein Netz und keinen Schlüssel.',
-    'ai-consent-button': 'Demo starten',
-    'ai-consent-privacy': 'Datenschutz',
-    'ai-loading': 'Demo wird geladen …',
-    'ai-error':
-      'Das Demoterminal konnte nicht geladen werden (Zeitüberschreitung oder blockierte Dateien von pyscript.net / cdn.jsdelivr.net). Bitte prüfe deine Verbindung und versuche es erneut.',
-    'ai-retry': 'Erneut versuchen',
-    'ai-badge': 'Demo',
-    'ai-title': 'AI-Helper – Demoterminal',
-    'ai-log-label': 'Ausgabe des Demoterminals',
-    'ai-input-label': 'Eingabezeile',
-    'ai-placeholder': 'Frage oder Befehl, z. B. /aktionen',
-    'ai-placeholder-ended': 'Sitzung beendet – mit „Neu starten“ beginnst du von vorn',
-    'ai-send': 'Senden',
-    'ai-abort': 'Abbrechen',
-    'ai-restart': 'Neu starten',
-    'ai-chips-label': 'Vorschläge:',
+        'ai-consent-note':
+          'Für das Demoterminal wird Python im Browser geladen (Dateien von pyscript.net und cdn.jsdelivr.net, ca. 4,9 MB). Dabei wird deine IP-Adresse an diese Anbieter übertragen. Die Demo selbst hat kein Netz und keinen Schlüssel.',
+        'ai-consent-button': 'Demo starten',
+        'ai-consent-privacy': 'Datenschutz',
+        'ai-loading': 'Demo wird geladen …',
+        'ai-error':
+          'Das Demoterminal konnte nicht geladen werden (Zeitüberschreitung oder blockierte Dateien von pyscript.net / cdn.jsdelivr.net). Bitte prüfe deine Verbindung und versuche es erneut.',
+        'ai-retry': 'Erneut versuchen',
+        'ai-badge': 'Demo',
+        'ai-title': 'AI-Helper – Demoterminal',
+        'ai-log-label': 'Ausgabe des Demoterminals',
+        'ai-input-label': 'Eingabezeile',
+        'ai-placeholder': 'Frage oder Befehl, z. B. /aktionen',
+        'ai-placeholder-ended': 'Sitzung beendet – mit „Neu starten“ beginnst du von vorn',
+        'ai-send': 'Senden',
+        'ai-abort': 'Abbrechen',
+        'ai-restart': 'Neu starten',
+        'ai-chips-label': 'Vorschläge:',
+        'ai-lang-tooltip': 'Sprache umschalten (Deutsch/Englisch)',
 
-    // ⚖️ Footer (Rechtsseiten)
-    'footer-imprint': 'Impressum',
-    'footer-privacy': 'Datenschutz',
-  },
+        // ⚖️ Footer (Rechtsseiten)
+        'footer-imprint': 'Impressum',
+        'footer-privacy': 'Datenschutz',
+      },
 
-  en: {
-    'nav-home': 'Home',
-    'nav-about': 'About Me',
-    'nav-projects': 'Projects',
-    'nav-contact': 'Contact',
+      en: {
+        'nav-home': 'Home',
+        'nav-about': 'About Me',
+        'nav-projects': 'Projects',
+        'nav-contact': 'Contact',
 
-    'home-hero': "Hi, my name is Dennis Poglitsch",
-    'home-prefix': 'I am ',
-    'home-cta': 'Contact Me',
+        'home-hero': "Hi, my name is Dennis Poglitsch",
+        'home-prefix': 'I am ',
+        'home-cta': 'Contact Me',
 
-    'about-header': 'About Me',
-    'about-text':
-      '<span class="first_word">Technology</span> doesn\'t just fascinate me — it drives me.<br>' +
-      'I am an open, eager-to-learn and solution-oriented person with strong motivation for software development. ' +
-      'Respectful interaction, honest communication, and collaborative problem-solving are natural to me.<br><br>' +
-      'Through my professional experience, I stay calm, structured, and reliable even in stressful situations. ' +
-      'I take responsibility, think proactively, and quickly acquire new skills.<br><br>' +
-      'My interest in application development comes from genuine passion for logic, structure, and creative problem-solving. ' +
-      'When programming, I analyze problems step by step and develop practical solutions — ' +
-      'I see mistakes as learning opportunities.',
-    'skills-header': 'My Skills',
+        'about-header': 'About Me',
+        'about-text':
+          '<span class="first_word">Technology</span> doesn\'t just fascinate me — it drives me.<br>' +
+          'I am an open, eager-to-learn and solution-oriented person with strong motivation for software development. ' +
+          'Respectful interaction, honest communication, and collaborative problem-solving are natural to me.<br><br>' +
+          'Through my professional experience, I stay calm, structured, and reliable even in stressful situations. ' +
+          'I take responsibility, think proactively, and quickly acquire new skills.<br><br>' +
+          'My interest in application development comes from genuine passion for logic, structure, and creative problem-solving. ' +
+          'When programming, I analyze problems step by step and develop practical solutions — ' +
+          'I see mistakes as learning opportunities.',
+        'skills-header': 'My Skills',
 
-    'lang-en': 'EN',
-    'lang-de': 'DE',
+        'lang-en': 'EN',
+        'lang-de': 'DE',
 
-    // 🏗️ Projects
-    'projects-header': 'Projects',
-    'project-mailpilot': 'MailPilot – Live Demo',
-    'project-crm': 'Workshop CRM (in Development)',
-    'project-weather': 'Live Weather Widget',
-    'project-portfolio': 'Developer Portfolio',
-    'project-desc-mailpilot':
-      'Multi-Tenant AI-powered email triage SaaS – live demo with fictional data, running entirely in the browser.',
-    'project-desc-crm':
-      'Workshop CRM with focus on digital orders, mobile use, and clean processes.',
-    'project-desc-weather':
-      'API-based weather widget with Python in the browser and dynamic location search.',
-    'project-desc-portfolio':
-      'Modern portfolio focused on structure, performance, and professional presentation.',
-    'project-ai-helper': 'AI Helper – Demo Terminal',
-    'project-desc-ai-helper':
-      'The AI helper runs as a real terminal in the browser – the original Python version with free input, /actions, preview and confirmation. Demo without network or keys: nothing is executed on your machine.',
+        // 🏗️ Projects
+        'projects-header': 'Projects',
+        'project-mailpilot': 'MailPilot – Live Demo',
+        'project-crm': 'Workshop CRM (in Development)',
+        'project-weather': 'Live Weather Widget',
+        'project-portfolio': 'Developer Portfolio',
+        'project-desc-mailpilot':
+          'Multi-Tenant AI-powered email triage SaaS – live demo with fictional data, running entirely in the browser.',
+        'project-desc-crm':
+          'Workshop CRM with focus on digital orders, mobile use, and clean processes.',
+        'project-desc-weather':
+          'API-based weather widget with Python in the browser and dynamic location search.',
+        'project-desc-portfolio':
+          'Modern portfolio focused on structure, performance, and professional presentation.',
+        'project-ai-helper': 'AI Helper – Demo Terminal',
+        'project-desc-ai-helper':
+          'The AI helper runs as a real terminal in the browser – the original Python version with free input, /actions, preview and confirmation. Demo without network or keys: nothing is executed on your machine.',
 
-    // 💬 Contact
-    'contact-header': 'Contact',
-    'contact-intro': 'Feel free to send me a message — I look forward to connecting.',
-    'contact-label-name': 'Name',
-    'contact-label-email': 'Email',
-    'contact-label-message': 'Message',
-    'contact-placeholder-name': 'Your Name',
-    'contact-placeholder-email': 'Your Email',
-    'contact-placeholder-message': 'Your Message...',
-    'contact-submit': 'Send',
-    'contact-sending': 'Sending...',
-    'contact-success': 'Thank you! Your message was sent successfully.',
-    'contact-error': 'Oops! Something went wrong. Please try again later.',
+        // 💬 Contact
+        'contact-header': 'Contact',
+        'contact-intro': 'Feel free to send me a message — I look forward to connecting.',
+        'contact-label-name': 'Name',
+        'contact-label-email': 'Email',
+        'contact-label-message': 'Message',
+        'contact-placeholder-name': 'Your Name',
+        'contact-placeholder-email': 'Your Email',
+        'contact-placeholder-message': 'Your Message...',
+        'contact-submit': 'Send',
+        'contact-sending': 'Sending...',
+        'contact-success': 'Thank you! Your message was sent successfully.',
+        'contact-error': 'Oops! Something went wrong. Please try again later.',
 
-    // 🎭 typing.js Words
-    'typing-word-0': 'Im old, not obsolete',
-    'typing-word-1': 'Solution-Oriented',
-    'typing-word-2': 'Analytical',
-    'typing-word-3': 'Structured',
+        // 🎭 typing.js Words
+        'typing-word-0': 'Im old, not obsolete',
+        'typing-word-1': 'Solution-Oriented',
+        'typing-word-2': 'Analytical',
+        'typing-word-3': 'Structured',
 
-    // 💻 Modal
-    'modal-live': 'View Live',
-    'modal-close': 'Close',
-    'modal-title-fallback': 'Title',
-    'modal-desc-fallback': 'Description',
+        // 💻 Modal
+        'modal-live': 'View Live',
+        'modal-close': 'Close',
+        'modal-title-fallback': 'Title',
+        'modal-desc-fallback': 'Description',
 
-    // 🌤️ Weather widget: Python/PyScript is loaded only after a click
-    'weather-consent-note':
-      'The live weather runs Python in your browser (files from pyscript.net and cdn.jsdelivr.net). Your IP address is transmitted to these providers.',
-    'weather-consent-button': 'Load weather',
-    'weather-consent-privacy': 'Privacy Policy',
-    'weather-loading': 'Loading …',
-    'weather-error':
-      'The weather widget could not be loaded (timeout or blocked files from pyscript.net / cdn.jsdelivr.net). Please check your connection and try again.',
-    'weather-retry': 'Try again',
+        // 🌤️ Weather widget: Python/PyScript is loaded only after a click
+        'weather-consent-note':
+          'The live weather runs Python in your browser (files from pyscript.net and cdn.jsdelivr.net). Your IP address is transmitted to these providers.',
+        'weather-consent-button': 'Load weather',
+        'weather-consent-privacy': 'Privacy Policy',
+        'weather-loading': 'Loading …',
+        'weather-error':
+          'The weather widget could not be loaded (timeout or blocked files from pyscript.net / cdn.jsdelivr.net). Please check your connection and try again.',
+        'weather-retry': 'Try again',
 
-    // 🤖 AI Helper demo terminal: Python/PyScript is loaded only after a click
-    'ai-consent-note':
-      'The demo terminal loads Python in your browser (files from pyscript.net and cdn.jsdelivr.net, about 4.9 MB). Your IP address is transmitted to these providers. The demo itself has no network access and no keys.',
-    'ai-consent-button': 'Start demo',
-    'ai-consent-privacy': 'Privacy Policy',
-    'ai-loading': 'Loading demo …',
-    'ai-error':
-      'The demo terminal could not be loaded (timeout or blocked files from pyscript.net / cdn.jsdelivr.net). Please check your connection and try again.',
-    'ai-retry': 'Try again',
-    'ai-badge': 'Demo',
-    'ai-title': 'AI Helper – Demo Terminal',
-    'ai-log-label': 'Demo terminal output',
-    'ai-input-label': 'Input line',
-    'ai-placeholder': 'Question or command, e.g. /aktionen',
-    'ai-placeholder-ended': 'Session finished – use “Restart” to begin again',
-    'ai-send': 'Send',
-    'ai-abort': 'Abort',
-    'ai-restart': 'Restart',
-    'ai-chips-label': 'Suggestions:',
+        // 🤖 AI Helper demo terminal: Python/PyScript is loaded only after a click
+        'ai-consent-note':
+          'The demo terminal loads Python in your browser (files from pyscript.net and cdn.jsdelivr.net, about 4.9 MB). Your IP address is transmitted to these providers. The demo itself has no network access and no keys.',
+        'ai-consent-button': 'Start demo',
+        'ai-consent-privacy': 'Privacy Policy',
+        'ai-loading': 'Loading demo …',
+        'ai-error':
+          'The demo terminal could not be loaded (timeout or blocked files from pyscript.net / cdn.jsdelivr.net). Please check your connection and try again.',
+        'ai-retry': 'Try again',
+        'ai-badge': 'Demo',
+        'ai-title': 'AI Helper – Demo Terminal',
+        'ai-log-label': 'Demo terminal output',
+        'ai-input-label': 'Input line',
+        'ai-placeholder': 'Question or command, e.g. /aktionen',
+        'ai-placeholder-ended': 'Session finished – use “Restart” to begin again',
+        'ai-send': 'Send',
+        'ai-abort': 'Abort',
+        'ai-restart': 'Restart',
+        'ai-chips-label': 'Suggestions:',
+        'ai-lang-tooltip': 'Switch language (German/English)',
 
-    // ⚖️ Footer (legal pages)
-    'footer-imprint': 'Imprint',
-    'footer-privacy': 'Privacy Policy',
-   },
+        // ⚖️ Footer (legal pages)
+        'footer-imprint': 'Imprint',
+        'footer-privacy': 'Privacy Policy',
+       },
 };
 
 let currentLang = localStorage.getItem('portfolio-lang') || 'de';
